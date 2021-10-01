@@ -3,10 +3,8 @@ package com.ruoyi.web.controller.location;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.location.domain.LocationInfo;
 import com.ruoyi.location.service.ILocationInfoService;
@@ -28,6 +26,7 @@ public class LocationInfoController extends BaseController
 {
     @Autowired
     private ILocationInfoService locationInfoService;
+
 
     /**
      * 查询地点信息列表
