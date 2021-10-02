@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.practicelog.mapper.SysPracticeLogMapper">
+
+    <resultMap type="SysPracticeLog" id="SysPracticeLogResult">
+        <result property="logId"    column="log_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="locationName"    column="location_name"    />
+        <result property="time"    column="time"    />
+        <result property="logContents"    column="log_contents"    />
+        <association property="user"    column="user_name" javaType="SysUser" resultMap="userResult" />
+<!--        <result property="delFlag"    column="del_flag"    />-->
+    </resultMap>
+
+    <resultMap id="userResult" type="SysUser">
+        <result property="nickName" column="nick_name"   />
+    </resultMap>
+
+    <sql id="selectSysPracticeLogVo">
+        select log.log_id, log.user_name, log.location_id, log.time, log.log_contents, log.del_flag,u.nick_name from sys_practice_log log,sys_user u
+    </sql>
+
+    <select id="selectSysPracticeLogList" parameterType="SysPracticeLog" resultMap="SysPracticeLogResult">
+        <include refid="selectSysPracticeLogVo"/>
+        <where>
+            log.user_name=u.user_name and log.del_flag=0
+            <if test="userName != null "> and log.user_name like concat('%', #{userName}, '%')</if>
+            <if test="locationId != null "> and log.location_id like concat('%', #{locationId}, '%')</if>
+            <if test="time != null "> and date_format(log.time,'%y%m%d')=date_format(#{time},'%y%m%d')</if>
+            <if test="logContents != null  and logContents != ''"> and log.log_contents = #{logContents}</if>
+        </where>
+    </select>
+
+    <select id="selectSysPracticeLogById" parameterType="Long" resultMap="SysPracticeLogResult">
+        <include refid="selectSysPracticeLogVo"/>
+        where log.log_id = #{logId} and log.del_flag=0 and  log.user_name=u.user_name
+    </select>
+
+    <insert id="insertSysPracticeLog" parameterType="SysPracticeLog">
+        insert into sys_practice_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logId != null">log_id,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="locationId != null">location_id,</if>
+            <if test="time != null">time,</if>
+            <if test="logContents != null">log_contents,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logId != null">#{logId},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="locationId != null">#{locationId},</if>
+            <if test="time != null">#{time},</if>
+            <if test="logContents != null">#{logContents},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysPracticeLog" parameterType="SysPracticeLog">
+        update sys_practice_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="time != null">time = #{time},</if>
+            <if test="logContents != null">log_contents = #{logContents},</if>
+             <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where user_name = #{userName} and log_id=#{logId}
+    </update>
+
+    <delete id="deleteSysPracticeLogById" parameterType="Long">
+        update sys_practice_log set del_flag = 1  where log_id = #{logId}
+--         update set del_flag = 1 from sys_practice_log where log_id = #{logId}
+    </delete>
+
+    <delete id="deleteSysPracticeLogByIds" parameterType="String">
+        update  sys_practice_log set del_flag = 1 where log_id in
+        <foreach item="logId" collection="array" open="(" separator="," close=")">
+            #{logId}
+        </foreach>
+    </delete>
+
+    <select id="isRepeatPracticalLogTimeByUName" parameterType="String" resultMap="SysPracticeLogResult">
+        <include refid="selectSysPracticeLogVo"/>
+        where date_format(time,'%m-%d')=date_format(now(),'%m-%d')
+            and log.del_flag=0
+            and log.user_name=#{userName}
+    </select>
+
+</mapper>
