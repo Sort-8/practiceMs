@@ -68,6 +68,12 @@
             <version>${ruoyi.version}</version>
         </dependency>
 
+        <!-- 实习成绩-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>practice-score</artifactId>
+        </dependency>
+        
     </dependencies>
 
     <build>

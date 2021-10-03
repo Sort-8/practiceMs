@@ -212,6 +212,12 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 实习成绩-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>practice-score</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -223,6 +229,7 @@
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
         <module>ruoyi-location</module>
+        <module>practice-score</module>
     </modules>
     <packaging>pom</packaging>
 
