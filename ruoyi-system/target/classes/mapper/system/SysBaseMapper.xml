@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysBaseMapper">
+    
+    <resultMap type="SysBase" id="SysBaseResult">
+        <result property="baseId"    column="base_id"    />
+        <result property="baseName"    column="base_name"    />
+    </resultMap>
+
+    <sql id="selectSysBaseVo">
+        select base_id, base_name from sys_base
+    </sql>
+
+    <select id="selectSysBaseList" parameterType="SysBase" resultMap="SysBaseResult">
+        <include refid="selectSysBaseVo"/>
+        <where>  
+            <if test="baseName != null  and baseName != ''"> and base_name like concat('%', #{baseName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSysBaseById" parameterType="Long" resultMap="SysBaseResult">
+        <include refid="selectSysBaseVo"/>
+        where base_id = #{baseId}
+    </select>
+        
+    <insert id="insertSysBase" parameterType="SysBase" useGeneratedKeys="true" keyProperty="baseId">
+        insert into sys_base
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="baseName != null">base_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="baseName != null">#{baseName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysBase" parameterType="SysBase">
+        update sys_base
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="baseName != null">base_name = #{baseName},</if>
+        </trim>
+        where base_id = #{baseId}
+    </update>
+
+    <delete id="deleteSysBaseById" parameterType="Long">
+        delete from sys_base where base_id = #{baseId}
+    </delete>
+
+    <delete id="deleteSysBaseByIds" parameterType="String">
+        delete from sys_base where base_id in 
+        <foreach item="baseId" collection="array" open="(" separator="," close=")">
+            #{baseId}
+        </foreach>
+    </delete>
+</mapper>
