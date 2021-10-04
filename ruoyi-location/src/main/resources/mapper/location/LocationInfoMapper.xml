@@ -22,7 +22,7 @@
     </sql>
 
     <select id="selectLocationTude" parameterType="LocationInfo" resultMap="LocationInfoResult">
-        select tude from sys_location_info
+        <include refid="selectLocationInfoVo"/>
         <where>
             del_flag=0
         </where>

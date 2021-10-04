@@ -17,7 +17,7 @@ public interface ILocationInfoService
      *
      * @return 所有地点信息的经纬度
      */
-    public List<List> selectLocationTude();
+    public List<LocationInfo> selectLocationTude();
 
     /**
      * 查询地点信息
