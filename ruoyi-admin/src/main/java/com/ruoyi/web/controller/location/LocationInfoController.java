@@ -27,6 +27,17 @@ public class LocationInfoController extends BaseController
     @Autowired
     private ILocationInfoService locationInfoService;
 
+    /**
+     * 获取所有地点信息的经纬度
+     *
+     * @return 所有地点信息的经纬度
+     */
+    @PreAuthorize("@ss.hasPermi('location:info:list')")
+    @GetMapping("/selectLocationTude")
+    public AjaxResult selectLocationTude()
+    {
+        return AjaxResult.success(locationInfoService.selectLocationTude());
+    }
 
     /**
      * 查询地点信息列表
