@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.location.mapper.LocationInfoMapper">
 
     <resultMap type="LocationInfo" id="LocationInfoResult">
-        <result property="locationId"    column="location_id"    />
-        <result property="companyName"    column="company_name"    />
-        <result property="address"    column="address"    />
-        <result property="contacts"    column="contacts"    />
-        <result property="phone"    column="phone"    />
-        <result property="nature"    column="nature"    />
-        <result property="leader"    column="leader"    />
-        <result property="status"    column="status"    />
-        <result property="delFlag"    column="del_flag"    />
+        <result property="locationId" column="location_id"/>
+        <result property="companyName" column="company_name"/>
+        <result property="address" column="address"/>
+        <result property="contacts" column="contacts"/>
+        <result property="tude" column="tude"/>
+        <result property="phone" column="phone"/>
+        <result property="nature" column="nature"/>
+        <result property="leader" column="leader"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
     </resultMap>
 
     <sql id="selectLocationInfoVo">
-        select location_id, company_name, address, contacts, phone, nature, leader, status, del_flag from sys_location_info
+        select location_id, company_name, address, contacts, tude, phone, nature, leader, status, del_flag from sys_location_info
     </sql>
+
+    <select id="selectLocationTude" parameterType="LocationInfo" resultMap="LocationInfoResult">
+        <include refid="selectLocationInfoVo"/>
+        <where>
+            del_flag=0
+        </where>
+    </select>
 
     <select id="selectLocationInfoList" parameterType="LocationInfo" resultMap="LocationInfoResult">
         <include refid="selectLocationInfoVo"/>
         <where>
-            <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
-            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
-            <if test="contacts != null  and contacts != ''"> and contacts like concat('%', #{contacts}, '%')</if>
-            <if test="phone != null  and phone != ''"> and phone like concat('%', #{phone}, '%')</if>
-            <if test="nature != null  and nature != ''"> and nature like concat('%', #{nature}, '%')</if>
-            <if test="leader != null  and leader != ''"> and leader like concat('%', #{leader}, '%')</if>
+            <if test="companyName != null  and companyName != ''">and company_name like concat('%', #{companyName},
+                '%')
+            </if>
+            <if test="address != null  and address != ''">and address like concat('%', #{address}, '%')</if>
+            <if test="contacts != null  and contacts != ''">and contacts like concat('%', #{contacts}, '%')</if>
+            del_flag=0
         </where>
     </select>
 
     <select id="selectLocationInfoById" parameterType="Long" resultMap="LocationInfoResult">
         <include refid="selectLocationInfoVo"/>
-        where location_id = #{locationId}
+        where location_id = #{locationId} and del_flag=0
     </select>
 
     <insert id="insertLocationInfo" parameterType="LocationInfo" useGeneratedKeys="true" keyProperty="locationId">
@@ -42,23 +50,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="companyName != null and companyName != ''">company_name,</if>
             <if test="address != null and address != ''">address,</if>
-            <if test="contacts != null and contacts != ''">contacts,</if>
-            <if test="phone != null and phone != ''">phone,</if>
+            <if test="contacts != null">contacts,</if>
+            <if test="tude != null">tude,</if>
+            <if test="phone != null">phone,</if>
             <if test="nature != null and nature != ''">nature,</if>
             <if test="leader != null and leader != ''">leader,</if>
             <if test="status != null">status,</if>
             <if test="delFlag != null">del_flag,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="companyName != null and companyName != ''">#{companyName},</if>
             <if test="address != null and address != ''">#{address},</if>
-            <if test="contacts != null and contacts != ''">#{contacts},</if>
-            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="contacts != null">#{contacts},</if>
+            <if test="tude != null">#{tude},</if>
+            <if test="phone != null">#{phone},</if>
             <if test="nature != null and nature != ''">#{nature},</if>
             <if test="leader != null and leader != ''">#{leader},</if>
             <if test="status != null">#{status},</if>
             <if test="delFlag != null">#{delFlag},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateLocationInfo" parameterType="LocationInfo">
@@ -66,8 +76,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="companyName != null and companyName != ''">company_name = #{companyName},</if>
             <if test="address != null and address != ''">address = #{address},</if>
-            <if test="contacts != null and contacts != ''">contacts = #{contacts},</if>
-            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="contacts != null">contacts = #{contacts},</if>
+            <if test="tude != null">tude = #{tude},</if>
+            <if test="phone != null">phone = #{phone},</if>
             <if test="nature != null and nature != ''">nature = #{nature},</if>
             <if test="leader != null and leader != ''">leader = #{leader},</if>
             <if test="status != null">status = #{status},</if>
@@ -76,16 +87,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where location_id = #{locationId}
     </update>
 
-    <delete id="deleteLocationInfoById" parameterType="Long">
-        delete from sys_location_info where location_id = #{locationId}
-    </delete>
+    <update id="deleteLocationInfoById" parameterType="Long">
+        update sys_location_info
+        set del_flag=2
+        where location_id = #{locationId}
+    </update>
 
-    <delete id="deleteLocationInfoByIds" parameterType="String">
-        delete from sys_location_info where location_id in
+    <update id="deleteLocationInfoByIds" parameterType="String">
+        update sys_location_info
+        set del_flag=2
+        where location_id in
         <foreach item="locationId" collection="array" open="(" separator="," close=")">
             #{locationId}
         </foreach>
-    </delete>
+    </update>
 
     <update id="updateLocationStatus" parameterType="LocationInfo">
         update sys_location_info

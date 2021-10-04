@@ -7,9 +7,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 地点信息对象 sys_location_info
- * 
+ *
  * @author ph
- * @date 2021-09-28
+ * @date 2021-10-04
  */
 public class LocationInfo extends BaseEntity
 {
@@ -30,6 +30,9 @@ public class LocationInfo extends BaseEntity
     @Excel(name = "联系人")
     private String contacts;
 
+    /** 地点经纬度 */
+    private String tude;
+
     /** 联系电话 */
     @Excel(name = "联系电话")
     private String phone;
@@ -39,7 +42,7 @@ public class LocationInfo extends BaseEntity
     private String nature;
 
     /** 法定代表（负责人） */
-    @Excel(name = "法定代表", readConverterExp = "负=责人")
+    @Excel(name = "法定代表")
     private String leader;
 
     /** 状态（0正常 1停用） */
@@ -49,84 +52,93 @@ public class LocationInfo extends BaseEntity
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
 
-    public void setLocationId(Long locationId) 
+    public void setLocationId(Long locationId)
     {
         this.locationId = locationId;
     }
 
-    public Long getLocationId() 
+    public Long getLocationId()
     {
         return locationId;
     }
-    public void setCompanyName(String companyName) 
+    public void setCompanyName(String companyName)
     {
         this.companyName = companyName;
     }
 
-    public String getCompanyName() 
+    public String getCompanyName()
     {
         return companyName;
     }
-    public void setAddress(String address) 
+    public void setAddress(String address)
     {
         this.address = address;
     }
 
-    public String getAddress() 
+    public String getAddress()
     {
         return address;
     }
-    public void setContacts(String contacts) 
+    public void setContacts(String contacts)
     {
         this.contacts = contacts;
     }
 
-    public String getContacts() 
+    public String getContacts()
     {
         return contacts;
     }
-    public void setPhone(String phone) 
+    public void setTude(String tude)
+    {
+        this.tude = tude;
+    }
+
+    public String getTude()
+    {
+        return tude;
+    }
+    public void setPhone(String phone)
     {
         this.phone = phone;
     }
 
-    public String getPhone() 
+    public String getPhone()
     {
         return phone;
     }
-    public void setNature(String nature) 
+    public void setNature(String nature)
     {
         this.nature = nature;
     }
 
-    public String getNature() 
+    public String getNature()
     {
         return nature;
     }
-    public void setLeader(String leader) 
+    public void setLeader(String leader)
     {
         this.leader = leader;
     }
 
-    public String getLeader() 
+    public String getLeader()
     {
         return leader;
     }
-    public void setStatus(String status) 
+    public void setStatus(String status)
     {
         this.status = status;
     }
 
-    public String getStatus() 
+    public String getStatus()
     {
         return status;
     }
-    public void setDelFlag(String delFlag) 
+    public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
     }
 
-    public String getDelFlag() 
+    public String getDelFlag()
     {
         return delFlag;
     }
@@ -134,15 +146,16 @@ public class LocationInfo extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("locationId", getLocationId())
-            .append("companyName", getCompanyName())
-            .append("address", getAddress())
-            .append("contacts", getContacts())
-            .append("phone", getPhone())
-            .append("nature", getNature())
-            .append("leader", getLeader())
-            .append("status", getStatus())
-            .append("delFlag", getDelFlag())
-            .toString();
+                .append("locationId", getLocationId())
+                .append("companyName", getCompanyName())
+                .append("address", getAddress())
+                .append("contacts", getContacts())
+                .append("tude", getTude())
+                .append("phone", getPhone())
+                .append("nature", getNature())
+                .append("leader", getLeader())
+                .append("status", getStatus())
+                .append("delFlag", getDelFlag())
+                .toString();
     }
 }

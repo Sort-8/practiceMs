@@ -11,13 +11,24 @@ import com.ruoyi.location.service.ILocationInfoService;
  * 地点信息Service业务层处理
  *
  * @author ph
- * @date 2021-09-28
+ * @date 2021-10-04
  */
 @Service
 public class LocationInfoServiceImpl implements ILocationInfoService
 {
     @Autowired
     private LocationInfoMapper locationInfoMapper;
+
+    /**
+     * 获取所有地点信息的经纬度
+     *
+     * @return 所有地点信息的经纬度
+     */
+    @Override
+    public LocationInfo selectLocationTude()
+    {
+        return locationInfoMapper.selectLocationTude();
+    }
 
     /**
      * 查询地点信息
