@@ -36,7 +36,7 @@
             </if>
             <if test="address != null  and address != ''">and address like concat('%', #{address}, '%')</if>
             <if test="contacts != null  and contacts != ''">and contacts like concat('%', #{contacts}, '%')</if>
-            del_flag=0
+            and del_flag=0
         </where>
     </select>
 

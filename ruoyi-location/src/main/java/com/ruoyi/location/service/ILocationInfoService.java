@@ -11,13 +11,13 @@ import com.ruoyi.location.domain.LocationInfo;
  */
 public interface ILocationInfoService
 {
-    
+
     /**
      * 获取所有地点信息的经纬度
      *
      * @return 所有地点信息的经纬度
      */
-    public LocationInfo selectLocationTude();
+    public List<List> selectLocationTude();
 
     /**
      * 查询地点信息

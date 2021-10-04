@@ -16,7 +16,7 @@ public interface LocationInfoMapper
      *
      * @return 所有地点信息的经纬度
      */
-    public LocationInfo selectLocationTude();
+    public List<LocationInfo> selectLocationTude();
 
     /**
      * 查询地点信息

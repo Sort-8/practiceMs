@@ -1,5 +1,6 @@
 package com.ruoyi.location.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,24 @@ public class LocationInfoServiceImpl implements ILocationInfoService
      * @return 所有地点信息的经纬度
      */
     @Override
-    public LocationInfo selectLocationTude()
+    public List<List> selectLocationTude()
     {
-        return locationInfoMapper.selectLocationTude();
+        List<List> resList = new ArrayList<>();
+        List<LocationInfo> l = locationInfoMapper.selectLocationTude();
+        for (int i = 0; i < l.size(); i++) {
+            LocationInfo locationInfo = l.get(i);
+            String tude = locationInfo.getTude();
+            String [] r = tude.split(",");
+            List<String> list = new ArrayList<>();
+            if(r.length>0){
+                list.add(r[0]);
+            }
+            if(r.length>1){
+                list.add(r[1]);
+            }
+            resList.add(list);
+        }
+        return resList;
     }
 
     /**
