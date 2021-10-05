@@ -45,6 +45,17 @@ public class SysPracticeScoreServiceImpl implements ISysPracticeScoreService
     }
 
     /**
+     * 查询实习成绩列表2
+     *
+     * @param sysPracticeScore 实习成绩
+     * @return 实习成绩
+     */
+    @Override
+    public List<SysPracticeScore> selectSysPracticeScoreList2(SysPracticeScore sysPracticeScore) {
+        return sysPracticeScoreMapper.selectSysPracticeScoreList(sysPracticeScore);
+    }
+
+    /**
      * 新增实习成绩
      * 
      * @param sysPracticeScore 实习成绩

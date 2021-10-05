@@ -46,6 +46,18 @@ public class SysPracticeScoreController extends BaseController
     }
 
     /**
+     * 查询实习成绩列表(自定义)
+     */
+    @PreAuthorize("@ss.hasPermi('practice-score:practiceScore:list')")
+    @GetMapping("/list2")
+    public TableDataInfo list2(SysPracticeScore sysPracticeScore)
+    {
+        startPage();
+        List<SysPracticeScore> list = sysPracticeScoreService.selectSysPracticeScoreList(sysPracticeScore);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出实习成绩列表
      */
     @PreAuthorize("@ss.hasPermi('practice-score:practiceScore:export')")

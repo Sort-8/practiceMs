@@ -25,6 +25,10 @@ public class SysPracticeScore extends BaseEntity
     @Excel(name = "用户ID")
     private Long userId;
 
+    /** 用户ID */
+    @Excel(name = "用户昵称")
+    private String nickname;
+
     /** 地点ID */
     @Excel(name = "地点ID")
     private Long locationId;
@@ -70,7 +74,16 @@ public class SysPracticeScore extends BaseEntity
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
 
-    public void setScoreId(Long scoreId) 
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setScoreId(Long scoreId)
     {
         this.scoreId = scoreId;
     }
@@ -190,20 +203,21 @@ public class SysPracticeScore extends BaseEntity
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("scoreId", getScoreId())
-            .append("userId", getUserId())
-            .append("locationId", getLocationId())
-            .append("startTime", getStartTime())
-            .append("endTime", getEndTime())
-            .append("sysScore", getSysScore())
-            .append("companyScore", getCompanyScore())
-            .append("teacherScore", getTeacherScore())
-            .append("finalScore", getFinalScore())
-            .append("appraisal", getAppraisal())
-            .append("summary", getSummary())
-            .append("status", getStatus())
-            .append("delFlag", getDelFlag())
-            .toString();
+        return "SysPracticeScore{" +
+                "scoreId=" + scoreId +
+                ", userId=" + userId +
+                ", nickname='" + nickname + '\'' +
+                ", locationId=" + locationId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", sysScore=" + sysScore +
+                ", companyScore=" + companyScore +
+                ", teacherScore=" + teacherScore +
+                ", finalScore=" + finalScore +
+                ", appraisal='" + appraisal + '\'' +
+                ", summary='" + summary + '\'' +
+                ", status='" + status + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                '}';
     }
 }

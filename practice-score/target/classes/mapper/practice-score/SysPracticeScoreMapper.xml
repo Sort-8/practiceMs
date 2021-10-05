@@ -20,14 +20,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="delFlag"    column="del_flag"    />
     </resultMap>
 
+    <resultMap type="SysPracticeScore" id="SysPracticeScoreResult2">
+        <result property="scoreId"    column="score_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="nickname"    column="nick_name"    />
+        <result property="locationId"    column="location_id"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="sysScore"    column="sys_score"    />
+        <result property="companyScore"    column="company_score"    />
+        <result property="teacherScore"    column="teacher_score"    />
+        <result property="finalScore"    column="final_score"    />
+        <result property="appraisal"    column="appraisal"    />
+        <result property="summary"    column="summary"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
     <sql id="selectSysPracticeScoreVo">
         select score_id, user_id, location_id, start_time, end_time, sys_score, company_score, teacher_score, final_score, appraisal, summary, status, del_flag from sys_practice_score
     </sql>
 
-    <select id="selectSysPracticeScoreList" parameterType="SysPracticeScore" resultMap="SysPracticeScoreResult">
-        <include refid="selectSysPracticeScoreVo"/>
+    <sql id="selectSysPracticeScoreVo2">
+       SELECT score_id,sys_user.user_id,sys_user.nick_name,location_id,start_time,end_time,sys_score,company_score,teacher_score,final_score,appraisal,summary,sys_practice_score.`status`,sys_practice_score.del_flag FROM sys_user,sys_practice_score WHERE sys_user.user_id=sys_practice_score.user_id
+    </sql>
+
+
+
+    <select id="selectSysPracticeScoreList" parameterType="SysPracticeScore" resultMap="SysPracticeScoreResult2">
+        <include refid="selectSysPracticeScoreVo2"/>
         <where>  
             <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="nickname != null "> and nick_name = #{nickname}</if>
             <if test="locationId != null "> and location_id = #{locationId}</if>
             <if test="startTime != null "> and start_time = #{startTime}</if>
             <if test="endTime != null "> and end_time = #{endTime}</if>
@@ -40,6 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>
     </select>
+
+
     
     <select id="selectSysPracticeScoreById" parameterType="Long" resultMap="SysPracticeScoreResult">
         <include refid="selectSysPracticeScoreVo"/>
@@ -93,6 +119,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="summary != null">summary = #{summary},</if>
             <if test="status != null">status = #{status},</if>
             <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where score_id = #{scoreId}
+    </update>
+
+    <update id="updateScoreSatus" parameterType="SysPracticeScore">
+        update sys_practice_score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="status != null">status = #{status},</if>
         </trim>
         where score_id = #{scoreId}
     </update>

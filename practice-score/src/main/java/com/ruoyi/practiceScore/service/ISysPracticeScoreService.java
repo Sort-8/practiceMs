@@ -22,11 +22,19 @@ public interface ISysPracticeScoreService
 
     /**
      * 查询实习成绩列表
-     * 
+     *
      * @param sysPracticeScore 实习成绩
      * @return 实习成绩集合
      */
     public List<SysPracticeScore> selectSysPracticeScoreList(SysPracticeScore sysPracticeScore);
+
+    /**
+     * 查询实习成绩列表
+     *
+     * @param sysPracticeScore 实习成绩
+     * @return 实习成绩自定义集合
+     */
+    public List<SysPracticeScore> selectSysPracticeScoreList2(SysPracticeScore sysPracticeScore);
 
     /**
      * 新增实习成绩
