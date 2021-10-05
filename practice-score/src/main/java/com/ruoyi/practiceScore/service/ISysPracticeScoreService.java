@@ -53,6 +53,14 @@ public interface ISysPracticeScoreService
     public int updateSysPracticeScore(SysPracticeScore sysPracticeScore);
 
     /**
+     * 修改实习成绩
+     *
+     * @param sysPracticeScore 实习成绩
+     * @return 结果
+     */
+    public int updateScoreStatus(SysPracticeScore sysPracticeScore);
+
+    /**
      * 批量删除实习成绩
      * 
      * @param scoreIds 需要删除的实习成绩ID

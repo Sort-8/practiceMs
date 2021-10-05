@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="selectSysPracticeScoreVo2">
-       SELECT score_id,sys_user.user_id,sys_user.nick_name,location_id,start_time,end_time,sys_score,company_score,teacher_score,final_score,appraisal,summary,sys_practice_score.`status`,sys_practice_score.del_flag FROM sys_user,sys_practice_score WHERE sys_user.user_id=sys_practice_score.user_id
+       SELECT score_id,sys_user.user_id,sys_user.nick_name,location_id,start_time,end_time,sys_score,company_score,teacher_score,final_score,appraisal,summary,sys_practice_score.`status`,sys_practice_score.del_flag FROM sys_user,sys_practice_score
     </sql>
 
 
@@ -50,8 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectSysPracticeScoreList" parameterType="SysPracticeScore" resultMap="SysPracticeScoreResult2">
         <include refid="selectSysPracticeScoreVo2"/>
         <where>  
-            <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="nickname != null "> and nick_name = #{nickname}</if>
+            <if test="userId != null "> and sys_practice_score.user_id = #{userId}</if>
             <if test="locationId != null "> and location_id = #{locationId}</if>
             <if test="startTime != null "> and start_time = #{startTime}</if>
             <if test="endTime != null "> and end_time = #{endTime}</if>
@@ -62,7 +61,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="appraisal != null  and appraisal != ''"> and appraisal = #{appraisal}</if>
             <if test="summary != null  and summary != ''"> and summary = #{summary}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
+            and sys_user.user_id=sys_practice_score.user_id
         </where>
+
     </select>
 
 

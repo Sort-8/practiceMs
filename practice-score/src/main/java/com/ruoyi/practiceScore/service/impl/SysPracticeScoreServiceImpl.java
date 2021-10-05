@@ -80,6 +80,17 @@ public class SysPracticeScoreServiceImpl implements ISysPracticeScoreService
     }
 
     /**
+     * 修改实习成绩状态
+     *
+     * @param sysPracticeScore 实习成绩
+     * @return 结果
+     */
+    @Override
+    public int updateScoreStatus(SysPracticeScore sysPracticeScore) {
+        return sysPracticeScoreMapper.updateScoreSatus(sysPracticeScore);
+    }
+
+    /**
      * 批量删除实习成绩
      * 
      * @param scoreIds 需要删除的实习成绩ID

@@ -103,6 +103,18 @@ public class SysPracticeScoreController extends BaseController
     }
 
     /**
+     * 修改实习成绩
+     */
+    @PreAuthorize("@ss.hasPermi('practice-score:practiceScore:edit')")
+    @Log(title = "实习成绩", businessType = BusinessType.UPDATE)
+    @PutMapping("/changeStatus")
+    public AjaxResult changeStatus(@RequestBody SysPracticeScore sysPracticeScore)
+    {
+        return toAjax(sysPracticeScoreService.updateScoreStatus(sysPracticeScore));
+    }
+
+
+    /**
      * 删除实习成绩
      */
     @PreAuthorize("@ss.hasPermi('practice-score:practiceScore:remove')")
