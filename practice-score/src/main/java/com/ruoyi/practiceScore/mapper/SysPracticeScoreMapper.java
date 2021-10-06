@@ -52,6 +52,25 @@ public interface SysPracticeScoreMapper
     public int updateScoreSatus(SysPracticeScore sysPracticeScore);
 
     /**
+     * 修改实习鉴定的路径
+     *
+     * @param sysPracticeScore 实习成绩
+     * @return 结果
+     */
+    public int updateScoreAppraisal(SysPracticeScore sysPracticeScore);
+
+
+    /**
+     * 修改实习总结的路径
+     *
+     * @param sysPracticeScore 实习成绩
+     * @return 结果
+     */
+    public int updateScoreSummary(SysPracticeScore sysPracticeScore);
+
+
+
+    /**
      * 删除实习成绩
      * 
      * @param scoreId 实习成绩ID

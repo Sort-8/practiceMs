@@ -91,6 +91,23 @@ public class SysPracticeScoreServiceImpl implements ISysPracticeScoreService
     }
 
     /**
+     * 更改实习鉴定的路径
+     * */
+    @Override
+    public int updateScoreAppraisal(SysPracticeScore sysPracticeScore) {
+        return sysPracticeScoreMapper.updateScoreAppraisal(sysPracticeScore);
+    }
+
+
+    /**
+     * 更改实习总结的路径
+     * */
+    @Override
+    public int updateScoreSummary(SysPracticeScore sysPracticeScore) {
+        return sysPracticeScoreMapper.updateScoreSummary(sysPracticeScore);
+    }
+
+    /**
      * 批量删除实习成绩
      * 
      * @param scoreIds 需要删除的实习成绩ID

@@ -53,12 +53,29 @@ public interface ISysPracticeScoreService
     public int updateSysPracticeScore(SysPracticeScore sysPracticeScore);
 
     /**
-     * 修改实习成绩
+     * 修改实习成绩的状态
      *
      * @param sysPracticeScore 实习成绩
      * @return 结果
      */
     public int updateScoreStatus(SysPracticeScore sysPracticeScore);
+
+
+    /**
+     * 修改实习鉴定的路径
+     *
+     * @param sysPracticeScore 实习成绩
+     * @return 结果
+     */
+    public int updateScoreAppraisal(SysPracticeScore sysPracticeScore);
+
+    /**
+     * 修改实习鉴定的路径
+     *
+     * @param sysPracticeScore 实习成绩
+     * @return 结果
+     */
+    public int updateScoreSummary(SysPracticeScore sysPracticeScore);
 
     /**
      * 批量删除实习成绩

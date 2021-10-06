@@ -2,6 +2,9 @@ package com.ruoyi.web.controller.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.practiceScore.domain.SysPracticeScore;
+import com.ruoyi.practiceScore.service.ISysPracticeScoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,9 @@ public class CommonController
 
     @Autowired
     private ServerConfig serverConfig;
+
+    @Autowired
+    private ISysPracticeScoreService sysPracticeScoreService;
 
     /**
      * 通用下载请求
@@ -91,7 +97,7 @@ public class CommonController
      * 上传实习鉴定
      */
     @PostMapping("/common/uploadAppraisal")
-    public AjaxResult uploadAppraisal(MultipartFile file,String nick_name,String user_id) throws Exception
+    public AjaxResult uploadAppraisal(MultipartFile file,String nick_name,String user_id,String scoreId) throws Exception
     {
         try
         {
@@ -100,11 +106,50 @@ public class CommonController
             String filePath = RuoYiConfig.getUploadPath();
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.uploadAppraisal(filePath, file,nick_name,user_id);
-
             String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileName", fileName);
             ajax.put("url", url);
+            if(scoreId!=null&&scoreId!=""){
+                System.out.println("ID为 "+scoreId);
+                SysPracticeScore sysPracticeScore = new SysPracticeScore();
+                sysPracticeScore.setScoreId(Long.valueOf(scoreId));
+                sysPracticeScore.setAppraisal(url);
+                sysPracticeScoreService.updateScoreAppraisal(sysPracticeScore);
+            }
+            System.out.println("文件上传成功："+url);
+            return ajax;
+        }
+        catch (Exception e)
+        {
+            return AjaxResult.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 上传实习总结
+     */
+    @PostMapping("/common/uploadSummary")
+    public AjaxResult uploadSummary(MultipartFile file,String nick_name,String user_id,String scoreId) throws Exception
+    {
+        try
+        {
+
+            // 上传文件路径
+            String filePath = RuoYiConfig.getUploadPath();
+            // 上传并返回新文件名称
+            String fileName = FileUploadUtils.uploadSummery(filePath, file,nick_name,user_id);
+            String url = serverConfig.getUrl() + fileName;
+            AjaxResult ajax = AjaxResult.success();
+            ajax.put("fileName", fileName);
+            ajax.put("url", url);
+            if(scoreId!=null&&scoreId!=""){
+                System.out.println("ID为 "+scoreId);
+                SysPracticeScore sysPracticeScore = new SysPracticeScore();
+                sysPracticeScore.setScoreId(Long.valueOf(scoreId));
+                sysPracticeScore.setSummary(url);
+                sysPracticeScoreService.updateScoreSummary(sysPracticeScore);
+            }
             System.out.println("文件上传成功："+url);
             return ajax;
         }

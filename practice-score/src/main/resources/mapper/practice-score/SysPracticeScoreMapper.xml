@@ -132,6 +132,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where score_id = #{scoreId}
     </update>
 
+    <update id="updateScoreAppraisal" parameterType="SysPracticeScore">
+        update sys_practice_score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appraisal != null">appraisal = #{appraisal},</if>
+        </trim>
+        where score_id = #{scoreId}
+    </update>
+
+    <update id="updateScoreSummary" parameterType="SysPracticeScore">
+        update sys_practice_score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="summary != null">summary = #{summary},</if>
+        </trim>
+        where score_id = #{scoreId}
+    </update>
+
     <delete id="deleteSysPracticeScoreById" parameterType="Long">
         delete from sys_practice_score where score_id = #{scoreId}
     </delete>

@@ -66,7 +66,7 @@ public class FileUploadUtils
 
 
     /**
-     * 根据文件路径上传  实习成绩专用
+     * 根据文件路径上传  实习鉴定专用 2参数
      * @apiNote Cai
      */
     public static final String uploadAppraisal(String baseDir, MultipartFile file,String nickname,String userId) throws IOException
@@ -82,7 +82,7 @@ public class FileUploadUtils
     }
 
     /**
-     * 文件上传  实习成绩专用
+     * 文件上传  实习鉴定专用 3参数
      * @apiNote Cai
      */
     public static final String uploadAppraisal(String baseDir, MultipartFile file, String[] allowedExtension,String nickname,String userId)
@@ -106,6 +106,49 @@ public class FileUploadUtils
         String pathFileName = getPathFileName(baseDir, fileName);
         return pathFileName;
     }
+
+    /**
+     * 根据文件路径上传  实习总结专用 2参数
+     *
+     */
+    public static final String uploadSummery(String baseDir, MultipartFile file,String nickname,String userId) throws IOException
+    {
+        try
+        {
+            return uploadSummery(baseDir, file, MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION,nickname,userId);
+        }
+        catch (Exception e)
+        {
+            throw new IOException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 文件上传  实习总结专用 3参数
+     *
+     */
+    public static final String uploadSummery(String baseDir, MultipartFile file, String[] allowedExtension,String nickname,String userId)
+            throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
+            InvalidExtensionException
+    {
+        int fileNamelength = file.getOriginalFilename().length();
+        if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH)
+        {
+            throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
+        }
+        //超出大小的处理
+        assertAllowed(file, allowedExtension);
+
+        //文件名字的编码，原版是UUID跟时间的加密
+        String fileName = extractFilenameForSummery(file,nickname,userId);
+
+        //在那个路径下创建一个新的文件，并且逻辑处理文件已经存在的情况
+        File desc = getAbsoluteFile(baseDir, fileName);
+        file.transferTo(desc);
+        String pathFileName = getPathFileName(baseDir, fileName);
+        return pathFileName;
+    }
+
 
 
     /**
@@ -182,6 +225,18 @@ public class FileUploadUtils
         String extension = getExtension(file);
         //fileName = DateUtils.datePath() + "/" + IdUtils.fastUUID() + "." + extension;
         fileName = "Appraisal"+"/"+userId+nickname+"的实习鉴定"+"."+extension;
+        return fileName;
+    }
+
+    /**
+     * 编码文件名，编码实习总结的路径
+     */
+    public static final String extractFilenameForSummery(MultipartFile file,String nickname,String userId)
+    {
+        String fileName = file.getOriginalFilename();
+        String extension = getExtension(file);
+        //fileName = DateUtils.datePath() + "/" + IdUtils.fastUUID() + "." + extension;
+        fileName = "Summary"+"/"+userId+nickname+"的实习总结"+"."+extension;
         return fileName;
     }
 
