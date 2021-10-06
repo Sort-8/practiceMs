@@ -105,9 +105,7 @@ public class CommonController
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileName", fileName);
             ajax.put("url", url);
-            System.out.println(filePath);
-            System.out.println(fileName);
-            System.out.println(url);
+            System.out.println("文件上传成功："+url);
             return ajax;
         }
         catch (Exception e)
