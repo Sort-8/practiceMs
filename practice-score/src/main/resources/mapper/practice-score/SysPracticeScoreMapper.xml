@@ -68,9 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     
-    <select id="selectSysPracticeScoreById" parameterType="Long" resultMap="SysPracticeScoreResult">
-        <include refid="selectSysPracticeScoreVo"/>
-        where score_id = #{scoreId}
+    <select id="selectSysPracticeScoreById" parameterType="Long" resultMap="SysPracticeScoreResult2">
+        <include refid="selectSysPracticeScoreVo2"/>
+        where score_id = #{scoreId} and sys_user.user_id=sys_practice_score.user_id
     </select>
         
     <insert id="insertSysPracticeScore" parameterType="SysPracticeScore" useGeneratedKeys="true" keyProperty="scoreId">
