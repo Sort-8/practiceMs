@@ -98,7 +98,7 @@ public class SysUserController extends BaseController {
     /**
      * 根据用户编号获取详细信息
      */
-    @ApiOperation("获取用户详细信息")
+    @ApiOperation("根据用户编号获取用户详细信息")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @PreAuthorize("@ss.hasPermi('system:user:query')")
     // @GetMapping(value = { "/", "/{userId}" })
@@ -124,12 +124,6 @@ public class SysUserController extends BaseController {
      * 新增用户
      */
     @ApiOperation("新增用户")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "userId", value = "用户ID", dataType = "Integer"),
-//            @ApiImplicitParam(name = "username", value = "用户名称", dataType = "String"),
-//            @ApiImplicitParam(name = "password", value = "用户密码", dataType = "String"),
-//            @ApiImplicitParam(name = "mobile", value = "用户手机", dataType = "String")
-//    })
     @PreAuthorize("@ss.hasPermi('system:user:add')")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping

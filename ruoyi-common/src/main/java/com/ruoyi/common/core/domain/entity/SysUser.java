@@ -33,7 +33,7 @@ public class SysUser extends BaseEntity
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
     private Long userId;
 
-    /** 部门ID */
+    /** 专业ID */
     @ApiModelProperty("专业ID")
     //@Excel(name = "部门编号", type = Type.IMPORT)
     private Long deptId;
@@ -73,7 +73,7 @@ public class SysUser extends BaseEntity
     private String password;
 
     /** 盐加密 */
-    @ApiModelProperty("盐加密")
+    @ApiModelProperty(hidden = true)
     private String salt;
 
     /** 帐号状态（0正常 1停用） */
@@ -95,7 +95,7 @@ public class SysUser extends BaseEntity
     @Excel(name = "最后登录时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
 
-    /** 部门对象 */
+    /** 专业对象 */
     @ApiModelProperty("专业对象")
     @Excels({
         @Excel(name = "专业", targetAttr = "deptName", type = Type.EXPORT),
