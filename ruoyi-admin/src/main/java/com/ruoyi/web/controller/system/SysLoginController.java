@@ -65,20 +65,16 @@ public class SysLoginController
 
 
     /**
-     * 用户名、密码方式登录
+     * 实习学生打卡登录
      *
      * @param loginBody 登录信息
      * @return 结果
      */
-    @ApiOperation("用户名、密码登录")
+    @ApiOperation("实习学生打卡登录")
     @PostMapping("/appLogin")
     public AjaxResult appLogin(@RequestBody LoginBody loginBody)
     {
-        AjaxResult ajax = AjaxResult.success();
-        // 生成令牌
-        String token = loginService.appLogin(loginBody.getUsername(), loginBody.getPassword());
-        ajax.put(Constants.TOKEN, token);
-        return ajax;
+        return loginService.isStudent(loginBody);
     }
 
 
