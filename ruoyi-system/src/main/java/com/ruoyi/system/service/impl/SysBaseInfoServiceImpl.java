@@ -24,6 +24,17 @@ public class SysBaseInfoServiceImpl implements ISysBaseInfoService
     private SysBaseInfoMapper sysBaseInfoMapper;
 
     /**
+     * 获取所有基地信息的经纬度
+     *
+     * @return 所有基地信息的经纬度
+     */
+    @Override
+    public List<SysBaseInfo> selectBaseTude()
+    {
+        return sysBaseInfoMapper.selectBaseTude();
+    }
+
+    /**
      * 查询基地信息管理
      * 
      * @param baseId 基地信息管理ID

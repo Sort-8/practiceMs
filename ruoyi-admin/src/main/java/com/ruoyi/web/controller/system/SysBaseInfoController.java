@@ -38,6 +38,18 @@ public class SysBaseInfoController extends BaseController
     private ISysBaseInfoService sysBaseInfoService;
 
     /**
+     * 获取所有基地信息的经纬度
+     *
+     * @return 所有基地信息的经纬度
+     */
+    @PreAuthorize("@ss.hasPermi('baseInfo:baseInfo:list')")
+    @GetMapping("/selectBaseTude")
+    public AjaxResult selectBaseTude()
+    {
+        return AjaxResult.success(sysBaseInfoService.selectBaseTude());
+    }
+
+    /**
      * 查询基地信息管理列表
      */
     @PreAuthorize("@ss.hasPermi('baseInfo:baseInfo:list')")

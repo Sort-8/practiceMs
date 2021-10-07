@@ -43,6 +43,9 @@ public class SysBaseInfo extends BaseEntity
     /** 基地单位地址 */
     private String baseAddress;
 
+    /** 地点经纬度 */
+    private String tude;
+
     /** 邮箱 */
     private String baseEmail;
 
@@ -60,6 +63,9 @@ public class SysBaseInfo extends BaseEntity
 
     /** 基地状态（0正常 1停用） */
     private String status;
+
+    /** 基地申请表存放地址（PDF） */
+    private String appliForm;
 
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
@@ -199,6 +205,7 @@ public class SysBaseInfo extends BaseEntity
     {
         return status;
     }
+
     public void setDelFlag(String delFlag) 
     {
         this.delFlag = delFlag;
@@ -209,6 +216,25 @@ public class SysBaseInfo extends BaseEntity
         return delFlag;
     }
 
+    public void setTude(String tude)
+    {
+        this.tude = tude;
+    }
+
+    public String getTude()
+    {
+        return tude;
+    }
+
+    public void setAppliForm(String appliForm)
+    {
+        this.appliForm = appliForm;
+    }
+
+    public String getAppliForm()
+    {
+        return appliForm;
+    }
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -221,12 +247,14 @@ public class SysBaseInfo extends BaseEntity
             .append("basePhone", getBasePhone())
             .append("baseFax", getBaseFax())
             .append("baseAddress", getBaseAddress())
+            .append("tude", getTude())
             .append("baseEmail", getBaseEmail())
             .append("schoolLeader", getSchoolLeader())
             .append("schoolPhone", getSchoolPhone())
             .append("baseIntroduction", getBaseIntroduction())
             .append("practiceEnvironment", getPracticeEnvironment())
             .append("status", getStatus())
+            .append("appliForm", getAppliForm())
             .append("delFlag", getDelFlag())
             .toString();
     }

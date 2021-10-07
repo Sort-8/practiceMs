@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.SysBaseInfoMapper">
-    
+
     <resultMap type="SysBaseInfo" id="SysBaseInfoResult">
         <result property="baseId"    column="base_id"    />
         <result property="companyName"    column="company_name"    />
@@ -14,22 +14,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="basePhone"    column="base_phone"    />
         <result property="baseFax"    column="base_fax"    />
         <result property="baseAddress"    column="base_address"    />
+        <result property="tude"    column="tude"    />
         <result property="baseEmail"    column="base_email"    />
         <result property="schoolLeader"    column="school_leader"    />
         <result property="schoolPhone"    column="school_phone"    />
         <result property="baseIntroduction"    column="base_introduction"    />
         <result property="practiceEnvironment"    column="practice_environment"    />
         <result property="status"    column="status"    />
+        <result property="appliForm"    column="appli_form"    />
         <result property="delFlag"    column="del_flag"    />
     </resultMap>
 
     <sql id="selectSysBaseInfoVo">
-        select base_id, company_name, base_name, base_nature, base_leader, base_contacts, base_phone, base_fax, base_address, base_email, school_leader, school_phone, base_introduction, practice_environment, status, del_flag from sys_base_info
+        select base_id, company_name, base_name, base_nature, base_leader, base_contacts, base_phone, base_fax, base_address, tude, base_email, school_leader, school_phone, base_introduction, practice_environment, status, appli_form, del_flag from sys_base_info
     </sql>
+
+    <select id="selectBaseTude" parameterType="SysBaseInfo" resultMap="SysBaseInfoResult">
+        <include refid="selectSysBaseInfoVo"/>
+        <where>
+            del_flag=0
+        </where>
+    </select>
 
     <select id="selectSysBaseInfoList" parameterType="SysBaseInfo" resultMap="SysBaseInfoResult">
         <include refid="selectSysBaseInfoVo"/>
-        <where>  
+        <where>
             <if test="baseId != null "> and base_id = #{baseId}</if>
             <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
             <if test="baseName != null  and baseName != ''"> and base_name like concat('%', #{baseName}, '%')</if>
@@ -46,12 +55,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
         </where>
     </select>
-    
+
     <select id="selectSysBaseInfoById" parameterType="Long" resultMap="SysBaseInfoResult">
         <include refid="selectSysBaseInfoVo"/>
         where base_id = #{baseId}
     </select>
-        
+
     <insert id="insertSysBaseInfo" parameterType="SysBaseInfo" useGeneratedKeys="true" keyProperty="baseId">
         insert into sys_base_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -61,16 +70,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="baseLeader != null and baseLeader != ''">base_leader,</if>
             <if test="baseContacts != null and baseContacts != ''">base_contacts,</if>
             <if test="basePhone != null and basePhone != ''">base_phone,</if>
-            <if test="baseFax != null and baseFax != ''">base_fax,</if>
+            <if test="baseFax != null">base_fax,</if>
             <if test="baseAddress != null and baseAddress != ''">base_address,</if>
-            <if test="baseEmail != null and baseEmail != ''">base_email,</if>
+            <if test="tude != null">tude,</if>
+            <if test="baseEmail != null">base_email,</if>
             <if test="schoolLeader != null and schoolLeader != ''">school_leader,</if>
             <if test="schoolPhone != null and schoolPhone != ''">school_phone,</if>
             <if test="baseIntroduction != null">base_introduction,</if>
             <if test="practiceEnvironment != null">practice_environment,</if>
             <if test="status != null and status != ''">status,</if>
+            <if test="appliForm != null">appli_form,</if>
             <if test="delFlag != null and delFlag != ''">del_flag,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="companyName != null and companyName != ''">#{companyName},</if>
             <if test="baseName != null and baseName != ''">#{baseName},</if>
@@ -78,16 +89,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="baseLeader != null and baseLeader != ''">#{baseLeader},</if>
             <if test="baseContacts != null and baseContacts != ''">#{baseContacts},</if>
             <if test="basePhone != null and basePhone != ''">#{basePhone},</if>
-            <if test="baseFax != null and baseFax != ''">#{baseFax},</if>
+            <if test="baseFax != null">#{baseFax},</if>
             <if test="baseAddress != null and baseAddress != ''">#{baseAddress},</if>
-            <if test="baseEmail != null and baseEmail != ''">#{baseEmail},</if>
+            <if test="tude != null">#{tude},</if>
+            <if test="baseEmail != null">#{baseEmail},</if>
             <if test="schoolLeader != null and schoolLeader != ''">#{schoolLeader},</if>
             <if test="schoolPhone != null and schoolPhone != ''">#{schoolPhone},</if>
             <if test="baseIntroduction != null">#{baseIntroduction},</if>
             <if test="practiceEnvironment != null">#{practiceEnvironment},</if>
             <if test="status != null and status != ''">#{status},</if>
+            <if test="appliForm != null">#{appliForm},</if>
             <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateSysBaseInfo" parameterType="SysBaseInfo">
@@ -99,14 +112,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="baseLeader != null and baseLeader != ''">base_leader = #{baseLeader},</if>
             <if test="baseContacts != null and baseContacts != ''">base_contacts = #{baseContacts},</if>
             <if test="basePhone != null and basePhone != ''">base_phone = #{basePhone},</if>
-            <if test="baseFax != null and baseFax != ''">base_fax = #{baseFax},</if>
+            <if test="baseFax != null">base_fax = #{baseFax},</if>
             <if test="baseAddress != null and baseAddress != ''">base_address = #{baseAddress},</if>
-            <if test="baseEmail != null and baseEmail != ''">base_email = #{baseEmail},</if>
+            <if test="tude != null">tude = #{tude},</if>
+            <if test="baseEmail != null">base_email = #{baseEmail},</if>
             <if test="schoolLeader != null and schoolLeader != ''">school_leader = #{schoolLeader},</if>
             <if test="schoolPhone != null and schoolPhone != ''">school_phone = #{schoolPhone},</if>
             <if test="baseIntroduction != null">base_introduction = #{baseIntroduction},</if>
             <if test="practiceEnvironment != null">practice_environment = #{practiceEnvironment},</if>
             <if test="status != null and status != ''">status = #{status},</if>
+            <if test="appliForm != null">appli_form = #{appliForm},</if>
             <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
         </trim>
         where base_id = #{baseId}
@@ -117,7 +132,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteSysBaseInfoByIds" parameterType="String">
-        delete from sys_base_info where base_id in 
+        delete from sys_base_info where base_id in
         <foreach item="baseId" collection="array" open="(" separator="," close=")">
             #{baseId}
         </foreach>

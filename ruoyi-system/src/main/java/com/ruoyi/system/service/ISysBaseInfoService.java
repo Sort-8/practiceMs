@@ -14,6 +14,14 @@ import java.util.List;
  */
 public interface ISysBaseInfoService 
 {
+
+    /**
+     * 获取所有基地信息的经纬度
+     *
+     * @return 所有基地信息的经纬度
+     */
+    public List<SysBaseInfo> selectBaseTude();
+
     /**
      * 查询基地信息管理
      * 
