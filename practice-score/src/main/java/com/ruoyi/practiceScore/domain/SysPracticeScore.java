@@ -26,6 +26,10 @@ public class SysPracticeScore extends BaseEntity
     private Long userId;
 
     /** 用户ID */
+    @Excel(name = "学号")
+    private String username;
+
+    /** 用户ID */
     @Excel(name = "用户昵称")
     private String nickname;
 
@@ -81,6 +85,14 @@ public class SysPracticeScore extends BaseEntity
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setScoreId(Long scoreId)
@@ -200,6 +212,7 @@ public class SysPracticeScore extends BaseEntity
     {
         return delFlag;
     }
+
 
     @Override
     public String toString() {
