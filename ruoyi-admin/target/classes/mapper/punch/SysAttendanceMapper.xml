@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.punch.mapper.SysAttendanceMapper">
+
+    <resultMap type="SysAttendance" id="SysAttendanceResult">
+        <result property="attendanceId"    column="attendance_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="location"    column="location"    />
+        <result property="notes"    column="notes"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <association property="user"    column="user_name" javaType="SysUser" resultMap="userResult" />
+    </resultMap>
+
+    <resultMap id="userResult" type="SysUser">
+        <result property="nickName" column="nick_name"   />
+    </resultMap>
+
+    <sql id="selectSysAttendanceVo">
+        select attend.attendance_id, attend.user_name, attend.location,attend.create_time, attend.notes, attend.status,u.nick_name from sys_attendance attend,sys_user u
+</sql>
+
+    <select id="selectSysAttendanceList" parameterType="SysAttendance" resultMap="SysAttendanceResult">
+        <include refid="selectSysAttendanceVo"/>
+        <where>
+            attend.user_name=u.user_name and attend.del_flag=0
+            <if test="userName != null  and userName != ''"> and attend.user_name like concat('%', #{userName}, '%')</if>
+            <if test="location != null  and location != ''"> and attend.location = #{location}</if>
+            <if test="createTime != null "> and date_format(attend.create_time,'%y%m%d')=date_format(#{createTime},'%y%m%d')</if>
+            <if test="notes != null  and notes != ''"> and attend.notes = #{notes}</if>
+            <if test="status != null  and status != ''"> and attend.status = #{status}</if>
+        </where>
+        ORDER BY attend.create_time DESC
+    </select>
+
+    <select id="selectSysAttendanceById" parameterType="Long" resultMap="SysAttendanceResult">
+        <include refid="selectSysAttendanceVo"/>
+        where attend.attendance_id = #{attendanceId} and attend.del_flag=0 and attend.user_name=u.user_name
+    </select>
+
+    <insert id="insertSysAttendance" parameterType="SysAttendance" useGeneratedKeys="true" keyProperty="attendanceId">
+        insert into sys_attendance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            create_time,
+            <if test="attendanceId != null and attendanceId != ''">attendance_id,</if>
+            <if test="userName != null and userName != ''">user_name,</if>
+            <if test="location != null">location,</if>
+            <if test="notes != null">notes,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            NOW(),
+            <if test="attendanceId != null and attendanceId != ''">#{attendanceId},</if>
+            <if test="userName != null and userName != ''">#{userName},</if>
+            <if test="location != null">#{location},</if>
+            <if test="notes != null">#{notes},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysAttendance" parameterType="SysAttendance">
+        update sys_attendance
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userName != null and userName != ''">user_name = #{userName},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where attendance_id = #{attendanceId}
+    </update>
+
+    <delete id="deleteSysAttendanceById" parameterType="Long">
+        delete from sys_attendance where attendance_id = #{attendanceId}
+    </delete>
+
+    <delete id="deleteSysAttendanceByIds" parameterType="String">
+        delete from sys_attendance where attendance_id in
+        <foreach item="attendanceId" collection="array" open="(" separator="," close=")">
+            #{attendanceId}
+        </foreach>
+    </delete>
+
+    <select id="isRepeatPunchTimeByUName" parameterType="String" resultMap="SysAttendanceResult">
+        <include refid="selectSysAttendanceVo"/>
+        where date_format(attend.create_time,'%m-%d')=date_format(now(),'%m-%d')
+        and attend.del_flag=0
+        and attend.user_name=#{userName}
+    </select>
+</mapper>

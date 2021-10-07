@@ -72,8 +72,23 @@
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>practice-score</artifactId>
+            <version>${ruoyi.version}</version>
         </dependency>
-        
+
+        <!-- 实习安排-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>practice-program</artifactId>
+            <version>${ruoyi.version}</version>
+        </dependency>
+
+        <!-- 实习信息-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>practice-basicInfo</artifactId>
+            <version>${ruoyi.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

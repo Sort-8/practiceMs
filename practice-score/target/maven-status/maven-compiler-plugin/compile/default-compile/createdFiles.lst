@@ -1,0 +1,4 @@
+com\ruoyi\practiceScore\mapper\SysPracticeScoreMapper.class
+com\ruoyi\practiceScore\service\impl\SysPracticeScoreServiceImpl.class
+com\ruoyi\practiceScore\service\ISysPracticeScoreService.class
+com\ruoyi\practiceScore\domain\SysPracticeScore.class

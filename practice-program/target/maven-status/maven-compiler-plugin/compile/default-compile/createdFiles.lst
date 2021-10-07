@@ -1,0 +1,4 @@
+com\ruoyi\arrangement\domain\SysPracticeArrangement.class
+com\ruoyi\arrangement\mapper\SysPracticeArrangementMapper.class
+com\ruoyi\arrangement\service\impl\SysPracticeArrangementServiceImpl.class
+com\ruoyi\arrangement\service\ISysPracticeArrangementService.class

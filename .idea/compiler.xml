@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="practice-program" />
+        <module name="ruoyi-framework" />
+        <module name="practice-score" />
+        <module name="ruoyi-system" />
+        <module name="practice-basicInfo" />
+        <module name="ruoyi-generator" />
+        <module name="ruoyi-common" />
+        <module name="ruoyi-quartz" />
+        <module name="ruoyi-location" />
+        <module name="ruoyi-admin" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="baseInfos" target="1.8" />
+      <module name="practice-arrangement" target="1.8" />
+      <module name="practice-baseInfo" target="1.8" />
+      <module name="practice-basicInfo" target="1.8" />
+      <module name="practice-info" target="1.8" />
+      <module name="practice-program" target="1.8" />
+      <module name="practice-score" target="1.8" />
+      <module name="ruoyi" target="1.8" />
+      <module name="ruoyi-admin" target="1.8" />
+      <module name="ruoyi-common" target="1.8" />
+      <module name="ruoyi-framework" target="1.8" />
+      <module name="ruoyi-generator" target="1.8" />
+      <module name="ruoyi-location" target="1.8" />
+      <module name="ruoyi-quartz" target="1.8" />
+      <module name="ruoyi-system" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
