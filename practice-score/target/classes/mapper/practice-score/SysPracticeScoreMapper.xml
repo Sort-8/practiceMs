@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="SysPracticeScore" id="SysPracticeScoreResult2">
         <result property="scoreId"    column="score_id"    />
         <result property="userId"    column="user_id"    />
+        <result property="username"    column="user_name"  />
         <result property="nickname"    column="nick_name"    />
         <result property="locationId"    column="location_id"    />
         <result property="startTime"    column="start_time"    />
@@ -42,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="selectSysPracticeScoreVo2">
-       SELECT score_id,sys_user.user_id,sys_user.nick_name,location_id,start_time,end_time,sys_score,company_score,teacher_score,final_score,appraisal,summary,sys_practice_score.`status`,sys_practice_score.del_flag FROM sys_user,sys_practice_score
+       SELECT score_id,sys_user.user_id,user_name,sys_user.nick_name,location_id,start_time,end_time,sys_score,company_score,teacher_score,final_score,appraisal,summary,sys_practice_score.`status`,sys_practice_score.del_flag FROM sys_user,sys_practice_score
     </sql>
 
 
