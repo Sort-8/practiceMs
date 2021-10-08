@@ -40,7 +40,7 @@ public class SysPracticeScoreServiceImpl implements ISysPracticeScoreService
      * @return 实习成绩
      */
     @Override
-    @DataScope(userAlias = "sys_user")
+    @DataScope(userAlias = "sys_user",deptAlias = "sys_user")
     public List<SysPracticeScore> selectSysPracticeScoreList(SysPracticeScore sysPracticeScore)
     {
         return sysPracticeScoreMapper.selectSysPracticeScoreList(sysPracticeScore);
