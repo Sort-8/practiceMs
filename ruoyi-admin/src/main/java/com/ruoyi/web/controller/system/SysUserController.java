@@ -112,8 +112,7 @@ public class SysUserController extends BaseController {
     @ApiOperation("根据用户编号获取用户详细信息")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @PreAuthorize("@ss.hasPermi('system:user:query')")
-    // @GetMapping(value = { "/", "/{userId}" })
-    @GetMapping(value = {"/{userId}"})
+    @GetMapping(value = { "/", "/{userId}" })
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
         AjaxResult ajax = AjaxResult.success();
         List<SysRole> roles = roleService.selectRoleAll();
