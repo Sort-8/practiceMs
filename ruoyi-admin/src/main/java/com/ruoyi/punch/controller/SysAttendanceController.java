@@ -106,4 +106,19 @@ public class SysAttendanceController extends BaseController
     {
         return toAjax(sysAttendanceService.deleteSysAttendanceByIds(attendanceIds));
     }
+
+    /**
+     * 小程序获得用户打卡列表
+     */
+    @PreAuthorize("@ss.hasPermi('punch:punch:list')")
+    @GetMapping("/listDetail")
+    public AjaxResult list()
+    {
+        SysAttendance sysAttendance = new SysAttendance();
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        SysUser user = loginUser.getUser();
+        sysAttendance.setUserName(user.getUserName());
+        List<SysAttendance> list = sysAttendanceService.selectSysAttendanceList(sysAttendance);
+        return AjaxResult.success(list);
+    }
 }

@@ -107,6 +107,9 @@ public class SysUser extends BaseEntity
     @ApiModelProperty("角色对象")
     private List<SysRole> roles;
 
+    /** 角色名称*/
+    private String roleName;
+
     /** 角色组 */
     @ApiModelProperty("角色组")
     private Long[] roleIds;
@@ -122,6 +125,14 @@ public class SysUser extends BaseEntity
     public SysUser()
     {
 
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public SysUser(Long userId)

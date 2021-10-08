@@ -1,6 +1,11 @@
 package com.ruoyi.framework.web.service;
 
 import javax.annotation.Resource;
+
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.SysRole;
+import com.ruoyi.common.core.domain.model.LoginBody;
+import com.ruoyi.framework.web.domain.server.Sys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,6 +28,8 @@ import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
+
+import java.util.List;
 
 /**
  * 登录校验方法
@@ -94,7 +101,7 @@ public class SysLoginService
 
 
     /**
-     * 用户名、密码方式登录
+     * 实习学生打卡登录
      *
      * @param username 用户名
      * @param password 密码
@@ -126,10 +133,36 @@ public class SysLoginService
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         recordLoginInfo(loginUser.getUser());
-        // 生成token
-        return tokenService.createToken(loginUser);
+
+        //判断登录用户是否为实习学生
+        List<SysRole> roleList = loginUser.getUser().getRoles();
+        for(SysRole roles: roleList) {
+            if (roles.getRoleId() == 6) {   //是实习学生
+                // 生成token
+                return tokenService.createToken(loginUser);
+            }
+        }
+
+        return "notStudent";
     }
 
+    /**
+     * 处理是否为实习学生登录返回结果
+     *
+     * @param loginBody 登录信息
+     * @return 结果
+     */
+    public AjaxResult isStudent(LoginBody loginBody) {
+        String token = appLogin(loginBody.getUsername(), loginBody.getPassword());
+        if ("notStudent".equals(token)) {   //不是实习学生
+            AjaxResult ajaxError = AjaxResult.error("你无权登录");
+            return ajaxError;
+        } else {
+            AjaxResult ajaxSuccess = AjaxResult.success();
+            ajaxSuccess.put(Constants.TOKEN, token);
+            return ajaxSuccess;
+        }
+    }
 
     /**
      * 校验验证码
