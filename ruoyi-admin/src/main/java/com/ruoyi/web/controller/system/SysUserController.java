@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system;
 
+import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
@@ -55,7 +56,6 @@ public class SysUserController extends BaseController {
     /**
      * 获取用户列表
      */
-
     @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/list")
     @ApiOperation("获取用户列表")

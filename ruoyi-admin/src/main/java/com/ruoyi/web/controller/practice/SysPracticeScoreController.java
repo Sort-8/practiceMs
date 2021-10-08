@@ -22,7 +22,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 实习成绩Controller
- * 
+ *
  * @author ruoyi
  * @date 2021-10-03
  */
