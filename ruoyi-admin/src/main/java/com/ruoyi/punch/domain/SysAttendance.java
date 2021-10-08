@@ -2,10 +2,10 @@ package com.ruoyi.punch.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excels;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 import java.util.Date;
@@ -17,7 +17,7 @@ import java.util.Date;
  * @date 2021-09-29
  */
 
-public class SysAttendance
+public class SysAttendance extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

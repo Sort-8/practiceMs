@@ -2,6 +2,7 @@ package com.ruoyi.practicelog.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class SysPracticeLogServiceImpl implements ISysPracticeLogService
      * @return 实习日志
      */
     @Override
+    @DataScope(deptAlias = "u", userAlias = "u")
     public SysPracticeLog selectSysPracticeLogById(Long logId)
     {
         return sysPracticeLogMapper.selectSysPracticeLogById(logId);
@@ -40,6 +42,7 @@ public class SysPracticeLogServiceImpl implements ISysPracticeLogService
      * @return 实习日志
      */
     @Override
+    @DataScope(deptAlias = "u", userAlias = "u")
     public List<SysPracticeLog> selectSysPracticeLogList(SysPracticeLog sysPracticeLog)
     {
         return sysPracticeLogMapper.selectSysPracticeLogList(sysPracticeLog);

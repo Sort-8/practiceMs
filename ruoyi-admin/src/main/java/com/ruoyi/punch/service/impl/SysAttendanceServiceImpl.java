@@ -2,6 +2,7 @@ package com.ruoyi.punch.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class SysAttendanceServiceImpl implements ISysAttendanceService
      * @return 打卡签到
      */
     @Override
+    @DataScope(deptAlias = "u", userAlias = "u")
     public List<SysAttendance> selectSysAttendanceList(SysAttendance sysAttendance)
     {
         return sysAttendanceMapper.selectSysAttendanceList(sysAttendance);
