@@ -3,8 +3,12 @@ package com.ruoyi.web.controller.common;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.qcloud.cos.COSClient;
+import com.qcloud.cos.model.PutObjectRequest;
+import com.qcloud.cos.model.PutObjectResult;
 import com.ruoyi.practiceScore.domain.SysPracticeScore;
 import com.ruoyi.practiceScore.service.ISysPracticeScoreService;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,10 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.framework.config.ServerConfig;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * 通用请求处理
@@ -102,11 +110,21 @@ public class CommonController
         try
         {
 
+            ConnectTencentCloud connectTencentCloud = new ConnectTencentCloud();
+            System.out.println("初始化");
+
+            File localFile = new File(file.getOriginalFilename());
+
+            org.apache.commons.io.FileUtils.copyInputStreamToFile(file.getInputStream(),localFile);
+
+
+            connectTencentCloud.uploadObject(localFile,"实习管理系统/"+user_id+nick_name+"的实习实习鉴定.pdf");
+
             // 上传文件路径
             String filePath = RuoYiConfig.getUploadPath();
             // 上传并返回新文件名称
-            String fileName = FileUploadUtils.uploadAppraisal(filePath, file,nick_name,user_id);
-            String url = serverConfig.getUrl() + fileName;
+            String fileName = "实习管理系统/"+user_id+nick_name+"的实习实习鉴定.pdf";
+            String url = "https://shenwo-1302502474.cos.ap-nanjing.myqcloud.com/" + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileName", fileName);
             ajax.put("url", url);
@@ -187,4 +205,20 @@ public class CommonController
             log.error("下载文件失败", e);
         }
     }
+
+    private File transferToFile(MultipartFile multipartFile) {
+//        选择用缓冲区来实现这个转换即使用java 创建的临时文件 使用 MultipartFile.transferto()方法 。
+        File file = null;
+        try {
+            String originalFilename = multipartFile.getOriginalFilename();
+            String[] filename = originalFilename.split(".");
+            file=File.createTempFile(filename[0], filename[1]);
+            multipartFile.transferTo(file);
+            file.deleteOnExit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
 }
