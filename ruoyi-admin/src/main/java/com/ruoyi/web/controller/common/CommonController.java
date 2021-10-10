@@ -109,21 +109,16 @@ public class CommonController
     {
         try
         {
-
+            //初始化腾讯云连接
             ConnectTencentCloud connectTencentCloud = new ConnectTencentCloud();
-            System.out.println("初始化");
-
             File localFile = new File(file.getOriginalFilename());
-
+            //将MultipartiFile转化为File
             org.apache.commons.io.FileUtils.copyInputStreamToFile(file.getInputStream(),localFile);
-
-
-            connectTencentCloud.uploadObject(localFile,"实习管理系统/"+user_id+nick_name+"的实习实习鉴定.pdf");
-
-            // 上传文件路径
-            String filePath = RuoYiConfig.getUploadPath();
-            // 上传并返回新文件名称
-            String fileName = "实习管理系统/"+user_id+nick_name+"的实习实习鉴定.pdf";
+            //上传指定路径
+            connectTencentCloud.uploadObject(localFile,"实习管理系统/实习鉴定/"+user_id+nick_name+"的实习鉴定.pdf");
+            // 新文件名称
+            String fileName = "实习管理系统/实习鉴定/"+user_id+nick_name+"的实习鉴定.pdf";
+            //得到访问的URL
             String url = "https://shenwo-1302502474.cos.ap-nanjing.myqcloud.com/" + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileName", fileName);
@@ -152,12 +147,16 @@ public class CommonController
     {
         try
         {
-
-            // 上传文件路径
-            String filePath = RuoYiConfig.getUploadPath();
-            // 上传并返回新文件名称
-            String fileName = FileUploadUtils.uploadSummery(filePath, file,nick_name,user_id);
-            String url = serverConfig.getUrl() + fileName;
+            //初始化腾讯云连接
+            ConnectTencentCloud connectTencentCloud = new ConnectTencentCloud();
+            File localFile = new File(file.getOriginalFilename());
+            //将MultipartiFile转化为File
+            org.apache.commons.io.FileUtils.copyInputStreamToFile(file.getInputStream(),localFile);
+            //上传指定路径
+            connectTencentCloud.uploadObject(localFile,"实习管理系统/实习总结/"+user_id+nick_name+"的实习总结.pdf");
+            // 新文件名称
+            String fileName = "实习管理系统/实习总结/"+user_id+nick_name+"的实习总结.pdf";
+            String url = "https://shenwo-1302502474.cos.ap-nanjing.myqcloud.com/" + fileName;
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileName", fileName);
             ajax.put("url", url);
