@@ -121,4 +121,18 @@ public class SysAttendanceController extends BaseController
         List<SysAttendance> list = sysAttendanceService.selectSysAttendanceList(sysAttendance);
         return AjaxResult.success(list);
     }
+
+    /**
+     * 小程序获得当前用户当天是否打卡
+     */
+//    @PreAuthorize("@ss.hasPermi('punch:punch:repeat')")
+    @GetMapping("/getTodayPunch")
+    public AjaxResult getTodayPunch()
+    {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        SysUser user = loginUser.getUser();
+        SysAttendance sysAttendance = sysAttendanceService.selectSysAttendanceByUName(user.getUserName());
+        return AjaxResult.success(sysAttendance);
+    }
+
 }

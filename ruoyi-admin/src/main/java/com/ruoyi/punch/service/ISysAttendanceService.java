@@ -5,15 +5,15 @@ import com.ruoyi.punch.domain.SysAttendance;
 
 /**
  * 打卡签到Service接口
- * 
+ *
  * @author ruoyi
  * @date 2021-09-29
  */
-public interface ISysAttendanceService 
+public interface ISysAttendanceService
 {
     /**
      * 查询打卡签到
-     * 
+     *
      * @param attendanceId 打卡签到ID
      * @return 打卡签到
      */
@@ -21,7 +21,7 @@ public interface ISysAttendanceService
 
     /**
      * 查询打卡签到列表
-     * 
+     *
      * @param sysAttendance 打卡签到
      * @return 打卡签到集合
      */
@@ -29,7 +29,7 @@ public interface ISysAttendanceService
 
     /**
      * 新增打卡签到
-     * 
+     *
      * @param sysAttendance 打卡签到
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface ISysAttendanceService
 
     /**
      * 修改打卡签到
-     * 
+     *
      * @param sysAttendance 打卡签到
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface ISysAttendanceService
 
     /**
      * 批量删除打卡签到
-     * 
+     *
      * @param attendanceIds 需要删除的打卡签到ID
      * @return 结果
      */
@@ -53,9 +53,18 @@ public interface ISysAttendanceService
 
     /**
      * 删除打卡签到信息
-     * 
+     *
      * @param attendanceId 打卡签到ID
      * @return 结果
      */
     public int deleteSysAttendanceById(Long attendanceId);
+
+
+    /**
+     * 当天打卡状态
+     * @param userName
+     * @return
+     */
+    public SysAttendance selectSysAttendanceByUName(String userName);
+
 }
