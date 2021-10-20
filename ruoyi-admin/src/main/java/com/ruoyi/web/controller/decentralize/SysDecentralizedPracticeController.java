@@ -8,10 +8,12 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
 import com.ruoyi.decentralize.service.ISysDecentralizedPracticeService;
+import com.ruoyi.framework.web.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -27,6 +29,9 @@ public class SysDecentralizedPracticeController extends BaseController
     @Autowired
     private ISysDecentralizedPracticeService sysDecentralizedPracticeService;
 
+    @Autowired
+    private TokenService tokenService;
+
     /**
      * 查询分散实习申请列表
      */
@@ -37,6 +42,16 @@ public class SysDecentralizedPracticeController extends BaseController
         startPage();
         List<SysDecentralizedPractice> list = sysDecentralizedPracticeService.selectSysDecentralizedPracticeList(sysDecentralizedPractice);
         return getDataTable(list);
+    }
+
+    /**
+     * 查询分散实习学生
+     */
+    @PreAuthorize("@ss.hasPermi('decentralize:decentralize:list')")
+    @GetMapping("/getPracticeStudentInfo")
+    public AjaxResult getPracticeStudentInfo(HttpServletRequest request)
+    {
+        return AjaxResult.success(sysDecentralizedPracticeService.getPracticeStudentInfo(tokenService.getLoginUser(request).getUsername()));
     }
 
     /**

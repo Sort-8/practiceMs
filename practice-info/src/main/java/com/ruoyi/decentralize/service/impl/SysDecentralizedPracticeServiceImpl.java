@@ -9,19 +9,19 @@ import com.ruoyi.decentralize.service.ISysDecentralizedPracticeService;
 
 /**
  * 分散实习申请Service业务层处理
- * 
+ *
  * @author YuYang
  * @date 2021-10-20
  */
 @Service
-public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPracticeService 
+public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPracticeService
 {
     @Autowired
     private SysDecentralizedPracticeMapper sysDecentralizedPracticeMapper;
 
     /**
      * 查询分散实习申请
-     * 
+     *
      * @param applyId 分散实习申请ID
      * @return 分散实习申请
      */
@@ -32,8 +32,21 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
     }
 
     /**
+     * 查询分散实习学生状况
+     *
+     * @param username 学生学号
+     * @return 分散实习申请
+     */
+    @Override
+    public SysDecentralizedPractice getPracticeStudentInfo(String username)
+    {
+
+        return sysDecentralizedPracticeMapper.getPracticeStudentInfo(username);
+    }
+
+    /**
      * 查询分散实习申请列表
-     * 
+     *
      * @param sysDecentralizedPractice 分散实习申请
      * @return 分散实习申请
      */
@@ -45,7 +58,7 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
 
     /**
      * 新增分散实习申请
-     * 
+     *
      * @param sysDecentralizedPractice 分散实习申请
      * @return 结果
      */
@@ -57,7 +70,7 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
 
     /**
      * 修改分散实习申请
-     * 
+     *
      * @param sysDecentralizedPractice 分散实习申请
      * @return 结果
      */
@@ -69,7 +82,7 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
 
     /**
      * 批量删除分散实习申请
-     * 
+     *
      * @param applyIds 需要删除的分散实习申请ID
      * @return 结果
      */
@@ -81,7 +94,7 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
 
     /**
      * 删除分散实习申请信息
-     * 
+     *
      * @param applyId 分散实习申请ID
      * @return 结果
      */

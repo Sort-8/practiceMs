@@ -103,6 +103,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where apply_id = #{applyId}
     </select>
 
+    <select id="getPracticeStudentInfo" parameterType="String" resultMap="SysDecentralizedPracticeResult">
+        <include refid="selectSysDecentralizedPracticeVo"/>
+        where tu.user_name = #{username} and dp.status = '1'
+    </select>
+
     <insert id="insertSysDecentralizedPractice" parameterType="SysDecentralizedPractice" useGeneratedKeys="true" keyProperty="applyId">
         insert into sys_decentralized_practice
         <trim prefix="(" suffix=")" suffixOverrides=",">
