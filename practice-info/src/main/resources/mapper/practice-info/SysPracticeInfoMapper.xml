@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.practiceInfo.mapper.SysPracticeInfoMapper">
+
+    <resultMap type="SysPracticeInfo" id="SysPracticeInfoResult">
+        <result property="infoId"    column="info_id"    />
+        <result property="locationId"    column="location_id"    />
+        <result property="postName"    column="post_name"    />
+        <result property="number"    column="number"    />
+        <result property="surplus"    column="surplus"    />
+        <result property="entryTime"    column="entry_time"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="teacherId"    column="teacher_id"    />
+        <association property="baseInfo"    column="base_id" javaType="SysBaseInfo" resultMap="SysBaseInfoResult" />
+        <association property="teacher"    column="user_id" javaType="SysUser" resultMap="TeacherInfoResult" />
+    </resultMap>
+
+    <resultMap type="SysUser" id="TeacherInfoResult">
+        <id     property="userId"       column="user_id"      />
+        <result property="userName"     column="user_name"    />
+        <result property="nickName"     column="nick_name"    />
+        <result property="email"        column="email"        />
+        <result property="phonenumber"  column="phonenumber"  />
+        <result property="sex"          column="sex"          />
+        <result property="avatar"       column="avatar"       />
+        <result property="password"     column="password"     />
+        <result property="status"       column="status"       />
+        <result property="delFlag"      column="del_flag"     />
+        <result property="loginIp"      column="login_ip"     />
+        <result property="loginDate"    column="login_date"   />
+        <result property="createBy"     column="create_by"    />
+        <result property="createTime"   column="create_time"  />
+        <result property="updateBy"     column="update_by"    />
+        <result property="updateTime"   column="update_time"  />
+        <result property="remark"       column="remark"       />
+    </resultMap>
+
+    <resultMap type="SysBaseInfo" id="SysBaseInfoResult">
+        <result property="baseId"    column="base_id"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="baseName"    column="base_name"    />
+        <result property="baseNature"    column="base_nature"    />
+        <result property="baseLeader"    column="base_leader"    />
+        <result property="baseContacts"    column="base_contacts"    />
+        <result property="basePhone"    column="base_phone"    />
+        <result property="baseFax"    column="base_fax"    />
+        <result property="baseAddress"    column="base_address"    />
+        <result property="baseEmail"    column="base_email"    />
+        <result property="schoolLeader"    column="school_leader"    />
+        <result property="schoolPhone"    column="school_phone"    />
+        <result property="baseIntroduction"    column="base_introduction"    />
+        <result property="practiceEnvironment"    column="practice_environment"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectSysPracticeInfoVo">
+        select info_id, location_id, post_name, number, entry_time, pi.status, pi.del_flag, teacher_id ,
+               base_id , company_name , base_name , base_nature , base_leader , base_contacts ,
+               base_phone , base_fax , base_address , base_email , school_leader , school_phone ,
+               base_introduction , practice_environment , bi.status , bi.del_flag , surplus ,
+                u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark
+                from sys_practice_info pi
+                left join sys_base_info bi on location_id = base_id
+                left join sys_user u on teacher_id = user_id
+    </sql>
+
+    <select id="selectSysPracticeInfoList" parameterType="SysPracticeInfo" resultMap="SysPracticeInfoResult">
+        <include refid="selectSysPracticeInfoVo"/>
+        <where>
+            <if test="locationId != null "> and location_id = #{locationId}</if>
+            <if test="postName != null  and postName != ''"> and post_name like concat('%', #{postName}, '%')</if>
+            <if test="number != null "> and number = #{number}</if>
+            <if test="surplus != null "> and surplus = #{surplus}</if>
+            <if test="entryTime != null "> and entry_time = #{entryTime}</if>
+            <if test="status != null  and status != ''"> and pi.status = #{status}</if>
+            <if test="teacherId != null "> and teacher_id = #{teacherId}</if>
+            <if test="teacherName != null and teacherName != ''"> and u.nick_name like concat('%',#{teacherName},'%')</if>
+            <if test="locationName != null and locationName != ''"> and bi.base_name like concat('%',#{locationName},'%')</if>
+        </where>
+    </select>
+
+    <select id="selectSysPracticeInfoById" parameterType="Long" resultMap="SysPracticeInfoResult">
+        <include refid="selectSysPracticeInfoVo"/>
+        where info_id = #{infoId}
+    </select>
+
+    <select id="selectPracticeStudentId" parameterType="Long" resultType="Long">
+        select stu_id from sys_practice_arrangement where info_id = #{infoId}
+    </select>
+
+    <insert id="insertBatchSysPracticeArrangement" parameterType="List" useGeneratedKeys="true" keyProperty="arrangementId">
+        insert into sys_practice_arrangement(stu_id , info_id)
+        VALUES
+        <foreach collection ="list" item="arrangement" separator =",">
+            (#{arrangement.stuId}, #{arrangement.infoId})
+        </foreach >
+    </insert>
+
+    <insert id="insertSysPracticeInfo" parameterType="SysPracticeInfo" useGeneratedKeys="true" keyProperty="infoId">
+        insert into sys_practice_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="locationId != null">location_id,</if>
+            <if test="postName != null and postName != ''">post_name,</if>
+            <if test="number != null">number,</if>
+            <if test="entryTime != null">entry_time,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="teacherId != null">teacher_id,</if>
+            <if test="surplus != null">surplus,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="locationId != null">#{locationId},</if>
+            <if test="postName != null and postName != ''">#{postName},</if>
+            <if test="number != null">#{number},</if>
+            <if test="entryTime != null">#{entryTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="teacherId != null">#{teacherId},</if>
+            <if test="surplus != null">#{surplus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysPracticeInfo" parameterType="SysPracticeInfo">
+        update sys_practice_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="locationId != null">location_id = #{locationId},</if>
+            <if test="postName != null and postName != ''">post_name = #{postName},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="entryTime != null">entry_time = #{entryTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="teacherId != null">teacher_id = #{teacherId},</if>
+            <if test="surplus != null">surplus = #{surplus},</if>
+        </trim>
+        where info_id = #{infoId}
+    </update>
+
+    <delete id="deleteSysPracticeInfoById" parameterType="Long">
+        delete from sys_practice_info where info_id = #{infoId}
+    </delete>
+
+    <delete id="deleteSysPracticeInfoByIds" parameterType="String">
+        delete from sys_practice_info where info_id in
+        <foreach item="infoId" collection="array" open="(" separator="," close=")">
+            #{infoId}
+        </foreach>
+    </delete>
+</mapper>

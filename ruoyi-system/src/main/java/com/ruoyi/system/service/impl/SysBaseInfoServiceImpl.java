@@ -13,7 +13,7 @@ import com.ruoyi.system.domain.SysBaseInfo;
 
 /**
  * 基地信息管理Service业务层处理
- * 
+ *
  * @author xieweiming
  * @date 2021-10-01
  */
@@ -29,14 +29,14 @@ public class SysBaseInfoServiceImpl implements ISysBaseInfoService
      * @return 所有基地信息的经纬度
      */
     @Override
-    public List<SysBaseInfo> selectBaseTude()
+    public List<SysBaseInfo> selectBaseTudeAndID()
     {
-        return sysBaseInfoMapper.selectBaseTude();
+        return sysBaseInfoMapper.selectBaseTudeAndID();
     }
 
     /**
      * 查询基地信息管理
-     * 
+     *
      * @param baseId 基地信息管理ID
      * @return 基地信息管理
      */
@@ -48,7 +48,7 @@ public class SysBaseInfoServiceImpl implements ISysBaseInfoService
 
     /**
      * 查询基地信息管理列表
-     * 
+     *
      * @param sysBaseInfo 基地信息管理
      * @return 基地信息管理
      */
@@ -60,7 +60,7 @@ public class SysBaseInfoServiceImpl implements ISysBaseInfoService
 
     /**
      * 新增基地信息管理
-     * 
+     *
      * @param sysBaseInfo 基地信息管理
      * @return 结果
      */
@@ -72,7 +72,7 @@ public class SysBaseInfoServiceImpl implements ISysBaseInfoService
 
     /**
      * 修改基地信息管理
-     * 
+     *
      * @param sysBaseInfo 基地信息管理
      * @return 结果
      */
@@ -96,7 +96,7 @@ public class SysBaseInfoServiceImpl implements ISysBaseInfoService
 
     /**
      * 批量删除基地信息管理
-     * 
+     *
      * @param baseIds 需要删除的基地信息管理ID
      * @return 结果
      */
@@ -108,7 +108,7 @@ public class SysBaseInfoServiceImpl implements ISysBaseInfoService
 
     /**
      * 删除基地信息管理信息
-     * 
+     *
      * @param baseId 基地信息管理ID
      * @return 结果
      */

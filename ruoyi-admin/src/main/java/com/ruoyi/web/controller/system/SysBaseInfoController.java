@@ -26,7 +26,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 基地信息管理Controller
- * 
+ *
  * @author xieweiming
  * @date 2021-10-01
  */
@@ -43,10 +43,10 @@ public class SysBaseInfoController extends BaseController
      * @return 所有基地信息的经纬度
      */
     @PreAuthorize("@ss.hasPermi('baseInfo:baseInfo:list')")
-    @GetMapping("/selectBaseTude")
-    public AjaxResult selectBaseTude()
+    @GetMapping("/selectBaseTudeAndID")
+    public AjaxResult selectBaseTudeAndID()
     {
-        return AjaxResult.success(sysBaseInfoService.selectBaseTude());
+        return AjaxResult.success(sysBaseInfoService.selectBaseTudeAndID());
     }
 
     /**

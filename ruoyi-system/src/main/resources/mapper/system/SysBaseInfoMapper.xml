@@ -29,7 +29,7 @@
         select base_id, company_name, base_name, base_nature, base_leader, base_contacts, base_phone, base_fax, base_address, tude, base_email, school_leader, school_phone, base_introduction, practice_environment, status, appli_form, del_flag from sys_base_info
     </sql>
 
-    <select id="selectBaseTude" parameterType="SysBaseInfo" resultMap="SysBaseInfoResult">
+    <select id="selectBaseTudeAndID" parameterType="SysBaseInfo" resultMap="SysBaseInfoResult">
         <include refid="selectSysBaseInfoVo"/>
         <where>
             del_flag=0

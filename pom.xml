@@ -242,17 +242,10 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
-            <!-- 实习成绩-->
+            <!-- 实习信息-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
-                <artifactId>practice-program</artifactId>
-                <version>${ruoyi.version}</version>
-            </dependency>
-
-            <!-- 实习成绩-->
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>practice-basicInfo</artifactId>
+                <artifactId>practice-info</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
@@ -275,8 +268,7 @@
         <module>ruoyi-common</module>
         <module>ruoyi-location</module>
         <module>practice-score</module>
-        <module>practice-basicInfo</module>
-        <module>practice-program</module>
+        <module>practice-info</module>
     </modules>
     <packaging>pom</packaging>
 

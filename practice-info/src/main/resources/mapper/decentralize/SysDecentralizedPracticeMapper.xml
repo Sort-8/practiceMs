@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.decentralize.mapper.SysDecentralizedPracticeMapper">
+
+    <resultMap type="SysDecentralizedPractice" id="SysDecentralizedPracticeResult">
+        <result property="applyId"    column="apply_id"    />
+        <result property="stuId"    column="stu_id"    />
+        <result property="businessScope"    column="business_scope"    />
+        <result property="acceptanceCertificate"    column="acceptance_certificate"    />
+        <result property="notes"    column="notes"    />
+        <result property="auditorId"    column="auditor_id"    />
+        <result property="auditTime"    column="audit_time"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="locationId"    column="location_id"    />
+        <association property="student"    column="stu_id" javaType="SysUser" resultMap="StudentInfoResult" />
+        <association property="auditor"    column="auditor_id" javaType="SysUser" resultMap="AuditorInfoResult" />
+        <association property="location"    column="location_id" javaType="LocationInfo" resultMap="LocationInfoResult" />
+    </resultMap>
+
+    <resultMap type="SysUser" id="StudentInfoResult">
+        <id     property="userId"       column="user_id"      />
+        <result property="userName"     column="user_name"    />
+        <result property="nickName"     column="nick_name"    />
+        <result property="email"        column="email"        />
+        <result property="phonenumber"  column="phonenumber"  />
+        <result property="sex"          column="sex"          />
+        <result property="avatar"       column="avatar"       />
+        <result property="password"     column="password"     />
+        <result property="status"       column="status"       />
+        <result property="delFlag"      column="del_flag"     />
+        <result property="loginIp"      column="login_ip"     />
+        <result property="loginDate"    column="login_date"   />
+        <result property="createBy"     column="create_by"    />
+        <result property="createTime"   column="create_time"  />
+        <result property="updateBy"     column="update_by"    />
+        <result property="updateTime"   column="update_time"  />
+        <result property="remark"       column="remark"       />
+    </resultMap>
+
+    <resultMap type="SysUser" id="AuditorInfoResult">
+        <id     property="userId"       column="user_id"      />
+        <result property="userName"     column="user_name"    />
+        <result property="nickName"     column="nick_name"    />
+        <result property="email"        column="email"        />
+        <result property="phonenumber"  column="phonenumber"  />
+        <result property="sex"          column="sex"          />
+        <result property="avatar"       column="avatar"       />
+        <result property="password"     column="password"     />
+        <result property="status"       column="status"       />
+        <result property="delFlag"      column="del_flag"     />
+        <result property="loginIp"      column="login_ip"     />
+        <result property="loginDate"    column="login_date"   />
+        <result property="createBy"     column="create_by"    />
+        <result property="createTime"   column="create_time"  />
+        <result property="updateBy"     column="update_by"    />
+        <result property="updateTime"   column="update_time"  />
+        <result property="remark"       column="remark"       />
+    </resultMap>
+
+    <resultMap type="LocationInfo" id="LocationInfoResult">
+        <result property="locationId" column="location_id"/>
+        <result property="companyName" column="company_name"/>
+        <result property="address" column="address"/>
+        <result property="contacts" column="contacts"/>
+        <result property="tude" column="tude"/>
+        <result property="phone" column="phone"/>
+        <result property="nature" column="nature"/>
+        <result property="leader" column="leader"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectSysDecentralizedPracticeVo">
+        select apply_id, stu_id, business_scope, acceptance_certificate, notes, auditor_id, audit_time, dp.status, dp.del_flag, dp.location_id ,
+               tu.user_id, tu.dept_id, tu.user_name, tu.nick_name, tu.email, tu.avatar, tu.phonenumber, tu.password, tu.sex, tu.status, tu.del_flag, tu.login_ip, tu.login_date, tu.create_by, tu.create_time, tu.remark ,
+               au.user_id, au.dept_id, au.user_name, au.nick_name, au.email, au.avatar, au.phonenumber, au.password, au.sex, au.status, au.del_flag, au.login_ip, au.login_date, au.create_by, au.create_time, au.remark ,
+               li.location_id, li.company_name, li.address, li.contacts, li.tude, li.phone, li.nature, li.leader, li.status, li.del_flag
+        from sys_decentralized_practice dp
+                 left join sys_user tu on dp.stu_id = tu.user_id
+                 left join sys_user au on dp.auditor_id = au.user_id
+                 left join sys_location_info li on li.location_id = dp.location_id
+    </sql>
+
+    <select id="selectSysDecentralizedPracticeList" parameterType="SysDecentralizedPractice" resultMap="SysDecentralizedPracticeResult">
+        <include refid="selectSysDecentralizedPracticeVo"/>
+        <where>
+            <if test="stuId != null "> and stu_id = #{stuId}</if>
+            <if test="businessScope != null  and businessScope != ''"> and business_scope = #{businessScope}</if>
+            <if test="acceptanceCertificate != null  and acceptanceCertificate != ''"> and acceptance_certificate = #{acceptanceCertificate}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
+            <if test="auditorId != null "> and auditor_id = #{auditorId}</if>
+            <if test="auditTime != null "> and audit_time = #{auditTime}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="locationId != null "> and location_id = #{locationId}</if>
+        </where>
+    </select>
+
+    <select id="selectSysDecentralizedPracticeById" parameterType="Long" resultMap="SysDecentralizedPracticeResult">
+        <include refid="selectSysDecentralizedPracticeVo"/>
+        where apply_id = #{applyId}
+    </select>
+
+    <insert id="insertSysDecentralizedPractice" parameterType="SysDecentralizedPractice" useGeneratedKeys="true" keyProperty="applyId">
+        insert into sys_decentralized_practice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stuId != null">stu_id,</if>
+            <if test="businessScope != null">business_scope,</if>
+            <if test="acceptanceCertificate != null">acceptance_certificate,</if>
+            <if test="notes != null">notes,</if>
+            <if test="auditorId != null">auditor_id,</if>
+            <if test="auditTime != null">audit_time,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="locationId != null">location_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stuId != null">#{stuId},</if>
+            <if test="businessScope != null">#{businessScope},</if>
+            <if test="acceptanceCertificate != null">#{acceptanceCertificate},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="auditorId != null">#{auditorId},</if>
+            <if test="auditTime != null">#{auditTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="locationId != null">#{locationId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysDecentralizedPractice" parameterType="SysDecentralizedPractice">
+        update sys_decentralized_practice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stuId != null">stu_id = #{stuId},</if>
+            <if test="businessScope != null">business_scope = #{businessScope},</if>
+            <if test="acceptanceCertificate != null">acceptance_certificate = #{acceptanceCertificate},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="auditorId != null">auditor_id = #{auditorId},</if>
+            <if test="auditTime != null">audit_time = #{auditTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="locationId != null">location_id = #{locationId},</if>
+        </trim>
+        where apply_id = #{applyId}
+    </update>
+
+    <delete id="deleteSysDecentralizedPracticeById" parameterType="Long">
+        delete from sys_decentralized_practice where apply_id = #{applyId}
+    </delete>
+
+    <delete id="deleteSysDecentralizedPracticeByIds" parameterType="String">
+        delete from sys_decentralized_practice where apply_id in
+        <foreach item="applyId" collection="array" open="(" separator="," close=")">
+            #{applyId}
+        </foreach>
+    </delete>
+</mapper>

@@ -75,17 +75,10 @@
             <version>${ruoyi.version}</version>
         </dependency>
 
-        <!-- 实习安排-->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>practice-program</artifactId>
-            <version>${ruoyi.version}</version>
-        </dependency>
-
         <!-- 实习信息-->
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>practice-basicInfo</artifactId>
+            <artifactId>practice-info</artifactId>
             <version>${ruoyi.version}</version>
         </dependency>
 
