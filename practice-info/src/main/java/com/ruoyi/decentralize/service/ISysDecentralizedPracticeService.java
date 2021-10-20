@@ -5,23 +5,31 @@ import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
 
 /**
  * 分散实习申请Service接口
- * 
+ *
  * @author YuYang
  * @date 2021-10-20
  */
-public interface ISysDecentralizedPracticeService 
+public interface ISysDecentralizedPracticeService
 {
     /**
      * 查询分散实习申请
-     * 
+     *
      * @param applyId 分散实习申请ID
      * @return 分散实习申请
      */
     public SysDecentralizedPractice selectSysDecentralizedPracticeById(Long applyId);
 
     /**
+     * 查询分散实习申请
+     *
+     * @param username 实习学生学号
+     * @return 分散实习信息
+     */
+    public SysDecentralizedPractice getPracticeStudentInfo(String username);
+
+    /**
      * 查询分散实习申请列表
-     * 
+     *
      * @param sysDecentralizedPractice 分散实习申请
      * @return 分散实习申请集合
      */
@@ -29,7 +37,7 @@ public interface ISysDecentralizedPracticeService
 
     /**
      * 新增分散实习申请
-     * 
+     *
      * @param sysDecentralizedPractice 分散实习申请
      * @return 结果
      */
@@ -37,7 +45,7 @@ public interface ISysDecentralizedPracticeService
 
     /**
      * 修改分散实习申请
-     * 
+     *
      * @param sysDecentralizedPractice 分散实习申请
      * @return 结果
      */
@@ -45,7 +53,7 @@ public interface ISysDecentralizedPracticeService
 
     /**
      * 批量删除分散实习申请
-     * 
+     *
      * @param applyIds 需要删除的分散实习申请ID
      * @return 结果
      */
@@ -53,7 +61,7 @@ public interface ISysDecentralizedPracticeService
 
     /**
      * 删除分散实习申请信息
-     * 
+     *
      * @param applyId 分散实习申请ID
      * @return 结果
      */
