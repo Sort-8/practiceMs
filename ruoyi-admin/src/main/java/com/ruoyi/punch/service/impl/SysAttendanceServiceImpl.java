@@ -99,4 +99,18 @@ public class SysAttendanceServiceImpl implements ISysAttendanceService
     {
         return sysAttendanceMapper.deleteSysAttendanceById(attendanceId);
     }
+
+
+    /**
+     * 当天打卡状态
+     *
+     * @param userNname
+     * @return
+     */
+    @Override
+    public SysAttendance selectSysAttendanceByUName(String userNname)
+    {
+        SysAttendance repeatPunchTimeByUName = sysAttendanceMapper.isRepeatPunchTimeByUName(userNname);
+        return repeatPunchTimeByUName;
+    }
 }
