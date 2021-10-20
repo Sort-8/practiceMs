@@ -30,12 +30,11 @@ public class SysUser extends BaseEntity
 
     /** 用户ID */
     @ApiModelProperty("用户ID")
-    @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
+    @Excel(name = "用户序号",  type = Type.EXPORT)
     private Long userId;
 
     /** 专业ID */
     @ApiModelProperty("专业ID")
-    //@Excel(name = "部门编号", type = Type.IMPORT)
     private Long deptId;
 
     /** 用户账号 */
@@ -60,7 +59,7 @@ public class SysUser extends BaseEntity
 
     /** 用户性别 */
     @ApiModelProperty("用户性别")
-    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
+    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知", prompt = "男、女、未知")
     private String sex;
 
     /** 用户头像 */
@@ -78,7 +77,7 @@ public class SysUser extends BaseEntity
 
     /** 帐号状态（0正常 1停用） */
     @ApiModelProperty("帐号状态（0正常 1停用）")
-    @Excel(name = "帐号状态", readConverterExp = "0=正常,1=停用")
+    @Excel(name = "帐号状态", readConverterExp = "0=正常,1=停用", prompt = "正常、停用")
     private String status;
 
     /** 删除标志（0代表存在 2代表删除） */
@@ -108,6 +107,7 @@ public class SysUser extends BaseEntity
     private List<SysRole> roles;
 
     /** 角色名称*/
+    @Excel(name = "角色", type = Type.IMPORT)
     private String roleName;
 
     /** 角色组 */
@@ -371,6 +371,7 @@ public class SysUser extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
             .append("dept", getDept())
+            .append("roleName", getRoleName())
             .toString();
     }
 }
