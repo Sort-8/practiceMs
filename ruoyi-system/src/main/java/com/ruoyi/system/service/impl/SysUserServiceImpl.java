@@ -3,6 +3,8 @@ package com.ruoyi.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ruoyi.common.core.domain.entity.SysDept;
+import com.ruoyi.system.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,6 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.domain.SysUserPost;
 import com.ruoyi.system.domain.SysUserRole;
-import com.ruoyi.system.mapper.SysPostMapper;
-import com.ruoyi.system.mapper.SysRoleMapper;
-import com.ruoyi.system.mapper.SysUserMapper;
-import com.ruoyi.system.mapper.SysUserPostMapper;
-import com.ruoyi.system.mapper.SysUserRoleMapper;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
 
@@ -52,6 +49,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Autowired
     private ISysConfigService configService;
+
+    @Autowired
+    private SysDeptMapper deptMapper;
 
     /**
      * 根据条件分页查询用户列表
@@ -452,30 +452,33 @@ public class SysUserServiceImpl implements ISysUserService {
                 // 验证是否存在这个用户
                 SysUser u = userMapper.selectUserByUserName(user.getUserName());
                 if (StringUtils.isNull(u)) {
-                    System.out.println(user.getRoleName());
-                    if ("指导老师".equals(user.getRoleName())) {
-                        Long roleIds[] = {5L};
-                        user.setRoleIds(roleIds);
-                    } else if ("教学秘书".equals(user.getRoleName())) {
-                        Long roleIds[] = {4L};
-                        user.setRoleIds(roleIds);
-                    } else {        //实习学生
-                        Long roleIds[] = {6L};
-                        user.setRoleIds(roleIds);
-                    }
-
+                    user.setRoleIds(judgeUserRole(user));
                     user.setPassword(SecurityUtils.encryptPassword(password));
                     user.setCreateBy(operName);
-                    user.setDeptId(deptId);
-                    this.insertUser(user);
-                    successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 导入成功");
+
+                    SysDept existDept = isExistDept(deptId, user);
+                    if (existDept != null) {    //判断导入用户专业是否为操作者所属学院
+                        user.setDeptId(existDept.getDeptId());
+                        this.insertUser(user);
+                        successNum++;
+                        successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 导入成功");
+                    } else {
+                        failureNum++;
+                        failureMsg.append("<br/>" + failureNum + "、账号 " + user.getUserName() + " 专业不符");
+                    }
                 } else if (isUpdateSupport) {
+                    user.setRoleIds(judgeUserRole(user));
                     user.setUpdateBy(operName);
-                    user.setDeptId(deptId);
-                    this.updateUser(user);
-                    successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 更新成功");
+                    SysDept existDept = isExistDept(deptId, user);
+                    if (existDept != null) {    //判断导入用户专业是否为操作者所属学院
+                        user.setDeptId(existDept.getDeptId());
+                        this.updateUser(user);
+                        successNum++;
+                        successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 更新成功");
+                    } else {
+                        failureNum++;
+                        failureMsg.append("<br/>" + failureNum + "、账号 " + user.getUserName() + " 专业不符");
+                    }
                 } else {
                     failureNum++;
                     failureMsg.append("<br/>" + failureNum + "、账号 " + user.getUserName() + " 已存在");
@@ -494,5 +497,39 @@ public class SysUserServiceImpl implements ISysUserService {
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();
+    }
+
+    /**
+     * 判断导入用户专业是否为操作者所属学院
+     *
+     * @param deptId 专业ID
+     * @param user   专业ID
+     * @return SysDept
+     */
+    public SysDept isExistDept(Long deptId, SysUser user) {
+        //获取操作人学院及以下专业
+        List<SysDept> deptList = deptMapper.selectChildrenDeptById(deptId);
+        boolean existFlag = false;
+        for (SysDept dept : deptList) {//循环遍历判断导入用户的专业是否为本学院专业
+            if (user.getDeptName().equals(dept.getDeptName())) {
+                return dept;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 通过角色名称获取角色ID
+     * @param user   专业ID
+     * @return Long[]
+     */
+    public Long[] judgeUserRole(SysUser user){
+        Long roleIds[] = {6L};  //默认为实习学生
+        if ("指导老师".equals(user.getRoleName())) {
+            roleIds[0] = 5L;
+        } else if ("教学秘书".equals(user.getRoleName())) {
+            roleIds[0] = 4L;
+        }
+        return roleIds;
     }
 }

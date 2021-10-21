@@ -30,12 +30,14 @@ public class SysUser extends BaseEntity
 
     /** 用户ID */
     @ApiModelProperty("用户ID")
-    @Excel(name = "用户序号",  type = Type.EXPORT)
+    @Excel(name = "用户序号")
     private Long userId;
 
     /** 专业ID */
     @ApiModelProperty("专业ID")
     private Long deptId;
+
+
 
     /** 用户账号 */
     @ApiModelProperty("用户名")
@@ -121,6 +123,11 @@ public class SysUser extends BaseEntity
     /** 角色ID */
     @ApiModelProperty("角色ID")
     private Long roleId;
+
+    /** 专业名称 */
+    @ApiModelProperty(hidden = true)
+    @Excel(name = "专业名称", type = Type.IMPORT)
+    private String deptName;
 
     public SysUser()
     {
@@ -346,6 +353,14 @@ public class SysUser extends BaseEntity
     public void setRoleId(Long roleId)
     {
         this.roleId = roleId;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 
     @Override
