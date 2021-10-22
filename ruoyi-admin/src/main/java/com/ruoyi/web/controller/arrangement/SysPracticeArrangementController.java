@@ -9,15 +9,17 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.framework.web.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
  * 实习安排Controller
- * 
+ *
  * @author YuYang
  * @date 2021-09-23
  */
@@ -27,6 +29,9 @@ public class SysPracticeArrangementController extends BaseController
 {
     @Autowired
     private ISysPracticeArrangementService sysPracticeArrangementService;
+
+    @Autowired
+    private TokenService tokenService;
 
     /**
      * 查询实习安排列表
@@ -38,6 +43,18 @@ public class SysPracticeArrangementController extends BaseController
         startPage();
         List<SysPracticeArrangement> list = sysPracticeArrangementService.selectSysPracticeArrangementList(sysPracticeArrangement);
         return getDataTable(list);
+    }
+
+    /**
+     * 查询学生实习情况
+     */
+    @GetMapping("/getPracticeInfo")
+    public AjaxResult getPracticeInfo(HttpServletRequest request)
+    {
+        SysPracticeArrangement pa = new SysPracticeArrangement();
+        pa.setStuId(tokenService.getLoginUser(request).getUser().getUserId());
+        pa.setUserName(tokenService.getLoginUser(request).getUsername());
+        return AjaxResult.success(sysPracticeArrangementService.getPracticeInfo(pa));
     }
 
     /**

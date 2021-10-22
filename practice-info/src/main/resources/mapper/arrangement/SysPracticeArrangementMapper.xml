@@ -18,20 +18,111 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap type="SysUser" id="SysUserResult">
         <id     property="userId"       column="user_id"      />
+        <result property="deptId"       column="dept_id"      />
         <result property="userName"     column="user_name"    />
         <result property="nickName"     column="nick_name"    />
+        <result property="email"        column="email"        />
+        <result property="phonenumber"  column="phonenumber"  />
+        <result property="sex"          column="sex"          />
+        <result property="avatar"       column="avatar"       />
+        <result property="password"     column="password"     />
+        <result property="status"       column="status"       />
+        <result property="delFlag"      column="del_flag"     />
+        <result property="loginIp"      column="login_ip"     />
+        <result property="loginDate"    column="login_date"   />
+        <result property="createBy"     column="create_by"    />
+        <result property="createTime"   column="create_time"  />
+        <result property="updateBy"     column="update_by"    />
+        <result property="updateTime"   column="update_time"  />
+        <result property="remark"       column="remark"       />
+        <association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" />
+        <collection  property="roles"   javaType="java.util.List"        resultMap="RoleResult" />
+    </resultMap>
+
+    <resultMap id="deptResult" type="SysDept">
+        <id     property="deptId"   column="dept_id"     />
+        <result property="parentId" column="parent_id"   />
+        <result property="deptName" column="dept_name"   />
+        <result property="orderNum" column="order_num"   />
+        <result property="leader"   column="leader"      />
+        <result property="status"   column="dept_status" />
+    </resultMap>
+
+    <resultMap id="RoleResult" type="SysRole">
+        <id     property="roleId"       column="role_id"        />
+        <result property="roleName"     column="role_name"      />
+        <result property="roleKey"      column="role_key"       />
+        <result property="roleSort"     column="role_sort"      />
+        <result property="dataScope"     column="data_scope"    />
+        <result property="status"       column="role_status"    />
     </resultMap>
 
     <resultMap type="SysPracticeInfo" id="SysPracticeInfoResult">
-        <id     property="infoId"       column="info_id"      />
-        <result property="postName"     column="post_name"    />
+        <result property="infoId"    column="info_id"    />
+        <result property="locationId"    column="location_id"    />
+        <result property="postName"    column="post_name"    />
+        <result property="number"    column="number"    />
+        <result property="surplus"    column="surplus"    />
+        <result property="entryTime"    column="entry_time"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="teacherId"    column="teacher_id"    />
+        <association property="baseInfo"    column="base_id" javaType="SysBaseInfo" resultMap="SysBaseInfoResult" />
+        <association property="teacher"    column="user_id" javaType="SysUser" resultMap="TeacherInfoResult" />
+    </resultMap>
+
+    <resultMap type="SysUser" id="TeacherInfoResult">
+        <id     property="userId"       column="user_id"      />
+        <result property="userName"     column="user_name"    />
+        <result property="nickName"     column="nick_name"    />
+        <result property="email"        column="email"        />
+        <result property="phonenumber"  column="phonenumber"  />
+        <result property="sex"          column="sex"          />
+        <result property="avatar"       column="avatar"       />
+        <result property="password"     column="password"     />
+        <result property="status"       column="status"       />
+        <result property="delFlag"      column="del_flag"     />
+        <result property="loginIp"      column="login_ip"     />
+        <result property="loginDate"    column="login_date"   />
+        <result property="createBy"     column="create_by"    />
+        <result property="createTime"   column="create_time"  />
+        <result property="updateBy"     column="update_by"    />
+        <result property="updateTime"   column="update_time"  />
+    </resultMap>
+
+    <resultMap type="SysBaseInfo" id="SysBaseInfoResult">
+        <result property="baseId"    column="base_id"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="baseName"    column="base_name"    />
+        <result property="baseNature"    column="base_nature"    />
+        <result property="baseLeader"    column="base_leader"    />
+        <result property="baseContacts"    column="base_contacts"    />
+        <result property="basePhone"    column="base_phone"    />
+        <result property="baseFax"    column="base_fax"    />
+        <result property="baseAddress"    column="base_address"    />
+        <result property="baseEmail"    column="base_email"    />
+        <result property="schoolLeader"    column="school_leader"    />
+        <result property="schoolPhone"    column="school_phone"    />
+        <result property="baseIntroduction"    column="base_introduction"    />
+        <result property="practiceEnvironment"    column="practice_environment"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
     </resultMap>
 
     <sql id="selectSysPracticeArrangementVo">
-        select arrangement_id, stu_id, pa.info_id, notes, stu_option, pa.status, pa.del_flag , pi.post_name , u.user_id , u.user_name , u.nick_name
+        select arrangement_id, stu_id, pa.info_id, notes, stu_option, pa.status, pa.del_flag ,
+               pa.info_id, location_id, post_name, number, entry_time, pi.status, pi.del_flag, teacher_id ,
+               base_id , company_name , base_name , base_nature , base_leader , base_contacts ,
+               base_phone , base_fax , base_address , base_email , school_leader , school_phone ,
+               base_introduction , practice_environment , bi.status , bi.del_flag , surplus ,
+               su.user_id, su.dept_id, su.user_name, su.nick_name, su.email, su.avatar, su.phonenumber, su.password, su.sex, su.status, su.del_flag, su.login_ip, su.login_date, su.create_by, su.create_time, su.remark ,
+               tu.user_id, tu.dept_id, tu.user_name, tu.nick_name, tu.email, tu.avatar, tu.phonenumber, tu.password, tu.sex, tu.status, tu.del_flag, tu.login_ip, tu.login_date, tu.create_by, tu.create_time
+
         from sys_practice_arrangement pa
-            left join sys_practice_info pi on pa.info_id = pi.info_id
-            left join sys_user u on pa.stu_id = u.user_id
+                 left join sys_practice_info pi on pa.info_id = pi.info_id
+                 left join sys_user su on stu_id = su.user_id
+                 left join sys_base_info bi on location_id = base_id
+                 left join sys_user tu on teacher_id = tu.user_id
     </sql>
 
     <select id="selectSysPracticeArrangementList" parameterType="SysPracticeArrangement" resultMap="SysPracticeArrangementResult">
@@ -44,10 +135,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="stuOption != null  and stuOption != ''"> and stu_option = #{stuOption}</if>
             <if test="status != null  and status != ''"> and pa.status = #{status}</if>
             <if test="delFlag != null  and delFlag != ''"> and pa.del_flag = #{delFlag}</if>
-            <if test="stuId != null  and stuId != ''"> and u.user_id = #{stuId}</if>
-            <if test="user != null  and user.userName != null"> and u.user_name = #{user.userName}</if>
-            <if test="nickName != null  and nickName != ''"> and u.nick_name like concat('%',#{nickName},'%')</if>
-            <if test="userName != null  and userName != ''"> and u.user_name like concat('%',#{userName},'%')</if>
+            <if test="stuId != null  and stuId != ''"> and su.user_id = #{stuId}</if>
+            <if test="user != null  and user.userName != null"> and su.user_name = #{user.userName}</if>
+            <if test="nickName != null  and nickName != ''"> and su.nick_name like concat('%',#{nickName},'%')</if>
+            <if test="userName != null  and userName != ''"> and su.user_name like concat('%',#{userName},'%')</if>
             <if test="postName != null  and postName != ''"> and pi.post_name like concat('%',#{postName},'%')</if>
         </where>
     </select>

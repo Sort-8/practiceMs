@@ -1,8 +1,15 @@
 package com.ruoyi.arrangement.service.impl;
 
+import java.beans.PropertyDescriptor;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
+import com.ruoyi.decentralize.service.ISysDecentralizedPracticeService;
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.arrangement.mapper.SysPracticeArrangementMapper;
@@ -20,6 +27,9 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
 {
     @Autowired
     private SysPracticeArrangementMapper sysPracticeArrangementMapper;
+
+    @Autowired
+    private ISysDecentralizedPracticeService iSysDecentralizedPracticeService;
 
     /**
      * 查询实习安排
@@ -42,6 +52,37 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
     @Override
     public SysUser getAllTeacher(SysUser teacher) {
         return sysPracticeArrangementMapper.getAllTeacher(teacher);
+    }
+
+    @Override
+    public Map getPracticeInfo(SysPracticeArrangement pa) {
+        List<SysPracticeArrangement> list = selectSysPracticeArrangementList(pa);
+        if(list.size() > 0){
+            return beanToMap(list.get(0));
+        }else{
+            SysDecentralizedPractice dp = iSysDecentralizedPracticeService.getPracticeStudentInfo(pa.getUserName());
+            if(dp != null){
+                return beanToMap(dp);
+            }
+        }
+        return null;
+    }
+
+    public static Map<String, Object> beanToMap(Object obj) {
+        Map<String, Object> params = new HashMap<String, Object>(0);
+        try {
+            PropertyUtilsBean propertyUtilsBean = new PropertyUtilsBean();
+            PropertyDescriptor[] descriptors = propertyUtilsBean.getPropertyDescriptors(obj);
+            for (int i = 0; i < descriptors.length; i++) {
+                String name = descriptors[i].getName();
+                if (!"class".equals(name)) {
+                    params.put(name, propertyUtilsBean.getNestedProperty(obj, name));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return params;
     }
 
     /**

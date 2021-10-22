@@ -1,6 +1,8 @@
 package com.ruoyi.arrangement.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.arrangement.domain.SysPracticeArrangement;
 import com.ruoyi.common.core.domain.entity.SysUser;
 
@@ -21,11 +23,18 @@ public interface ISysPracticeArrangementService
     public SysPracticeArrangement selectSysPracticeArrangementById(Long arrangementId);
 
     /**
-     * 查询实习安排
+     * 查询所有老师
      *
-     * @return 实习安排
+     * @return 老师实体
      */
     public SysUser getAllTeacher(SysUser teacher);
+
+    /**
+     * 查询学生实习信息
+     *
+     * @return 学生
+     */
+    public Map getPracticeInfo(SysPracticeArrangement pa);
 
     /**
      * 查询实习安排列表

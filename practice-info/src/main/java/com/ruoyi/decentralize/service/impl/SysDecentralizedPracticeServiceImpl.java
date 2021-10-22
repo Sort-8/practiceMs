@@ -40,7 +40,6 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
     @Override
     public SysDecentralizedPractice getPracticeStudentInfo(String username)
     {
-
         return sysDecentralizedPracticeMapper.getPracticeStudentInfo(username);
     }
 
