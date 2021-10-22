@@ -95,7 +95,9 @@ public class SysUserController extends BaseController {
         List<SysUser> userList = util.importExcel(file.getInputStream());
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         String operName = loginUser.getUsername();
-        String message = userService.importUser(userList, updateSupport, operName);
+        Long deptId = loginUser.getUser().getDeptId();
+
+        String message = userService.importUser(userList, updateSupport, operName, deptId);
         return AjaxResult.success(message);
     }
 

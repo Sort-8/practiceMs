@@ -31,7 +31,7 @@ public class LoginBody
     /**
      * 唯一标识
      */
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty("唯一标识")
     private String uuid = "";
 
     public String getUsername()
