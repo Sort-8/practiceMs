@@ -27,6 +27,10 @@ public class SysNotice extends BaseEntity
     /** 公告内容 */
     private String noticeContent;
 
+
+    /** 发布人真实姓名 */
+    private String nickname;
+
     /** 公告状态（0正常 1关闭） */
     private String status;
 
@@ -80,6 +84,14 @@ public class SysNotice extends BaseEntity
     public String getStatus()
     {
         return status;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @Override
