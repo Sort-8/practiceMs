@@ -72,7 +72,7 @@ public class SysAttendanceController extends BaseController
     /**
      * 新增打卡签到
      */
-    @PreAuthorize("@ss.hasPermi('punch:punch:add')")
+//    @PreAuthorize("@ss.hasPermi('punch:punch:add')")
     @Log(title = "打卡签到", businessType = BusinessType.INSERT)
     @GetMapping(value = "/addPunch")
     public AjaxResult add(@RequestParam String address)
