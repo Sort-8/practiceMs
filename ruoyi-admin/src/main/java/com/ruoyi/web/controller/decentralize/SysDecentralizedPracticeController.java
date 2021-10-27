@@ -51,7 +51,7 @@ public class SysDecentralizedPracticeController extends BaseController
     /**
      * 查询分散实习学生
      */
-    @PreAuthorize("@ss.hasPermi('decentralize:decentralize:list')")
+//    @PreAuthorize("@ss.hasPermi('decentralize:decentralize:list')")
     @GetMapping("/getPracticeStudentInfo")
     public AjaxResult getPracticeStudentInfo(HttpServletRequest request)
     {
