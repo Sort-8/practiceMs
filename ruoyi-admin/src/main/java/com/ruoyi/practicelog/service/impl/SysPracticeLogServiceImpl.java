@@ -61,6 +61,8 @@ public class SysPracticeLogServiceImpl implements ISysPracticeLogService
         sysPracticeLog.setLocationId(1L);
         SysPracticeLog isRepeatLog = sysPracticeLogMapper.isRepeatPracticalLogTimeByUName(sysPracticeLog.getUserName());
         if(isRepeatLog!=null){
+            isRepeatLog.setLogContents(sysPracticeLog.getLogContents());
+            sysPracticeLogMapper.updateSysPracticeLog(isRepeatLog);
             return 0;
         }
         return sysPracticeLogMapper.insertSysPracticeLog(sysPracticeLog);
