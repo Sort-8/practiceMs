@@ -31,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectNoticeById" parameterType="Long" resultMap="SysNoticeResult">
         <include refid="selectNoticeVo2"/>
         where notice_id = #{noticeId}
+        and sys_notice.create_by = sys_user.user_name
     </select>
     
     <select id="selectNoticeList" parameterType="SysNotice" resultMap="SysNoticeResult">
@@ -48,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="createBy != null and createBy != ''">
 				AND sys_notice.create_by like concat('%', #{createBy}, '%')
 			</if>
-            sys_notice.create_by = sys_user.user_name
+            AND sys_notice.create_by = sys_user.user_name
 		</where>
 
     </select>
