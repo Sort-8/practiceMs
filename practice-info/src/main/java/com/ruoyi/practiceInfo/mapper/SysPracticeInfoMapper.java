@@ -57,10 +57,10 @@ public interface SysPracticeInfoMapper
     /**
      * 修改实习信息
      *
-     * @param sysPracticeInfo 实习信息
+     * @param list 实习信息
      * @return 结果
      */
-    public int insertBatchSysPracticeArrangement(List<SysPracticeArrangement> sysPracticeInfo);
+    public int insertBatchSysPracticeArrangement(List<SysPracticeArrangement> list);
 
     /**
      * 删除实习信息

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ruoyi.arrangement.domain.SysPracticeArrangement;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.model.LoginUser;
 
 /**
  * 实习安排Service接口
@@ -34,7 +35,7 @@ public interface ISysPracticeArrangementService
      *
      * @return 学生
      */
-    public Map getPracticeInfo(SysPracticeArrangement pa);
+    public Map getPracticeInfo(LoginUser pa);
 
     /**
      * 查询实习安排列表

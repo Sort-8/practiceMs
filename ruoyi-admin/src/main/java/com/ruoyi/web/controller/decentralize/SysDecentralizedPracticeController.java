@@ -9,11 +9,15 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
 import com.ruoyi.decentralize.service.ISysDecentralizedPracticeService;
 import com.ruoyi.framework.web.service.TokenService;
+import com.ruoyi.practiceScore.domain.SysPracticeScore;
+import com.ruoyi.web.controller.common.ConnectTencentCloud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -86,6 +90,42 @@ public class SysDecentralizedPracticeController extends BaseController
     public AjaxResult add(@RequestBody SysDecentralizedPractice sysDecentralizedPractice)
     {
         return toAjax(sysDecentralizedPracticeService.insertSysDecentralizedPractice(sysDecentralizedPractice));
+    }
+
+    /**
+     * 上传实习证明
+     */
+    @PostMapping("/uploadCertificate")
+    public AjaxResult uploadAppraisal(MultipartFile file, SysDecentralizedPractice sysDecentralizedPractice) throws Exception
+    {
+        try
+        {
+            //初始化腾讯云连接
+            ConnectTencentCloud connectTencentCloud = new ConnectTencentCloud();
+            File localFile = new File(file.getOriginalFilename());
+            //将MultipartiFile转化为File
+            org.apache.commons.io.FileUtils.copyInputStreamToFile(file.getInputStream(),localFile);
+            //上传指定路径
+            connectTencentCloud.uploadObject(localFile,"实习管理系统/实习鉴定/"+sysDecentralizedPractice.getStuId()+sysDecentralizedPractice.getStuName()+"的实习鉴定.pdf");
+            // 新文件名称
+            String fileName = "实习管理系统/实习鉴定/"+sysDecentralizedPractice.getStuId()+sysDecentralizedPractice.getStuName()+"的实习鉴定.pdf";
+            //得到访问的URL
+            String url = "https://shenwo-1302502474.cos.ap-nanjing.myqcloud.com/" + fileName;
+            AjaxResult ajax = AjaxResult.success();
+            ajax.put("fileName", fileName);
+            ajax.put("url", url);
+            if(sysDecentralizedPractice != null && sysDecentralizedPractice.getStuId() != null){
+                System.out.println("ID为 " + sysDecentralizedPractice.getStuId());
+                sysDecentralizedPractice.setAcceptanceCertificate(url);
+                sysDecentralizedPracticeService.insertSysDecentralizedPractice(sysDecentralizedPractice);
+            }
+            System.out.println("文件上传成功："+url);
+            return ajax;
+        }
+        catch (Exception e)
+        {
+            return AjaxResult.error(e.getMessage());
+        }
     }
 
     /**

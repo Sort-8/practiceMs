@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
 import com.ruoyi.decentralize.service.ISysDecentralizedPracticeService;
 import org.apache.commons.beanutils.PropertyUtilsBean;
@@ -55,7 +56,10 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
     }
 
     @Override
-    public Map getPracticeInfo(SysPracticeArrangement pa) {
+    public Map getPracticeInfo(LoginUser u) {
+        SysPracticeArrangement pa = new SysPracticeArrangement();
+        pa.setStuId(u.getUser().getUserId());
+        pa.setUserName(u.getUsername());
         List<SysPracticeArrangement> list = selectSysPracticeArrangementList(pa);
         if(list.size() > 0){
             return beanToMap(list.get(0));
@@ -65,7 +69,9 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
                 return beanToMap(dp);
             }
         }
-        return null;
+        Map<String , Object> map = new HashMap<>();
+        map.put("user" , u.getUser());
+        return map;
     }
 
     public static Map<String, Object> beanToMap(Object obj) {

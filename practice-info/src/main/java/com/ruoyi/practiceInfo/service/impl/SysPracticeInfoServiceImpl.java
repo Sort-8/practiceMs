@@ -1,9 +1,7 @@
 package com.ruoyi.practiceInfo.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.ruoyi.arrangement.domain.SysPracticeArrangement;
 import com.ruoyi.arrangement.mapper.SysPracticeArrangementMapper;
@@ -12,6 +10,7 @@ import com.ruoyi.arrangement.service.impl.SysPracticeArrangementServiceImpl;
 import com.ruoyi.practiceInfo.domain.SysPracticeInfo;
 import com.ruoyi.practiceInfo.mapper.SysPracticeInfoMapper;
 import com.ruoyi.practiceInfo.service.ISysPracticeInfoService;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +41,7 @@ public class SysPracticeInfoServiceImpl implements ISysPracticeInfoService
         SysPracticeInfo practiceInfo = sysPracticeInfoMapper.selectSysPracticeInfoById(infoId);
         practiceInfo.setStudentsId(selectPracticeStudentId(infoId));
         return practiceInfo;
+
     }
 
     @Override
@@ -82,22 +82,32 @@ public class SysPracticeInfoServiceImpl implements ISysPracticeInfoService
     @Override
     public int updateSysPracticeInfo(SysPracticeInfo sysPracticeInfo)
     {
-        Long[] studentIds = sysPracticeInfo.getStudentsId();
-        Long infoId = sysPracticeInfo.getInfoId();
-        List<SysPracticeArrangement> list = new ArrayList<>();
-        SysPracticeArrangement arrangement = null;
-        for (int i = 0; i < studentIds.length; i++) {
-            arrangement = new SysPracticeArrangement();
-            arrangement.setStuId(studentIds[i]);
-            arrangement.setInfoId(infoId);
-            list.add(arrangement);
-        }
-        if( sysPracticeArrangementService.deleteSysPracticeArrangementByInfoId(infoId) > 0){
+        if(sysPracticeInfo.getTeacherId() == null){
+            Long[] studentIds = stringToLong(sysPracticeInfo.getStuStrings().split(","));
+            Long infoId = sysPracticeInfo.getInfoId();
+            List<SysPracticeArrangement> list = new ArrayList<>();
+            SysPracticeArrangement arrangement = null;
+            for (int i = 0; i < studentIds.length; i++) {
+                arrangement = new SysPracticeArrangement();
+                arrangement.setStuId(studentIds[i]);
+                arrangement.setInfoId(infoId);
+                list.add(arrangement);
+            }
+            sysPracticeArrangementService.deleteSysPracticeArrangementByInfoId(infoId);
             if(sysPracticeInfoMapper.insertBatchSysPracticeArrangement(list) == 0){
                 return 0;
             }
         }
         return sysPracticeInfoMapper.updateSysPracticeInfo(sysPracticeInfo);
+    }
+
+    public static Long[] stringToLong(String[] args) {
+        String[] strAry = args;
+        Long[] longAry= new Long[strAry.length];
+        for(int i = 0, len = strAry.length; i < len; i++){
+            longAry[i] = new Long(strAry[i]);//这里最好用object,当然JDK 1.5以上直接用数字也可以
+        }
+        return longAry;
     }
 
     /**

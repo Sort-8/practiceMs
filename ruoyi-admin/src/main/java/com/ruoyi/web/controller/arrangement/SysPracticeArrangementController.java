@@ -54,7 +54,7 @@ public class SysPracticeArrangementController extends BaseController
         SysPracticeArrangement pa = new SysPracticeArrangement();
         pa.setStuId(tokenService.getLoginUser(request).getUser().getUserId());
         pa.setUserName(tokenService.getLoginUser(request).getUsername());
-        return AjaxResult.success(sysPracticeArrangementService.getPracticeInfo(pa));
+        return AjaxResult.success(sysPracticeArrangementService.getPracticeInfo(tokenService.getLoginUser(request)));
     }
 
     /**

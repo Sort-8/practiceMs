@@ -43,10 +43,15 @@ public class SysPracticeInfo extends BaseEntity
     @Excel(name = "岗位剩余量")
     private Long surplus;
 
-    /** 进点时间 */
+    /** 实习时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "进点时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "实习时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date entryTime;
+
+    /** 结束时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date endingTime;
 
     /** 状态（0启用 1停用） */
     @Excel(name = "状态", readConverterExp = "0=启用,1=停用")
@@ -64,6 +69,8 @@ public class SysPracticeInfo extends BaseEntity
     /** 实习学生组*/
     private Long[] studentIds;
 
+    private String stuStrings;
+
     public String getLocationName() {
         return locationName;
     }
@@ -75,6 +82,30 @@ public class SysPracticeInfo extends BaseEntity
     /** 指导老师ID */
     @Excel(name = "指导老师ID")
     private Long teacherId;
+
+    public Date getEndingTime() {
+        return endingTime;
+    }
+
+    public void setEndingTime(Date endingTime) {
+        this.endingTime = endingTime;
+    }
+
+    public Long[] getStudentIds() {
+        return studentIds;
+    }
+
+    public void setStudentIds(Long[] studentIds) {
+        this.studentIds = studentIds;
+    }
+
+    public String getStuStrings() {
+        return stuStrings;
+    }
+
+    public void setStuStrings(String stuStrings) {
+        this.stuStrings = stuStrings;
+    }
 
     public Long[] getStudentsId() {
         return studentIds;
