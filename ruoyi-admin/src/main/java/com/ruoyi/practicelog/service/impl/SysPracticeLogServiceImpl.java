@@ -1,6 +1,8 @@
 package com.ruoyi.practicelog.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.utils.StringUtils;
@@ -103,5 +105,18 @@ public class SysPracticeLogServiceImpl implements ISysPracticeLogService
     public int deleteSysPracticeLogById(Long logId)
     {
         return sysPracticeLogMapper.deleteSysPracticeLogById(logId);
+    }
+
+    /**
+     * 获得当天日志填写人数
+     *
+     * @return 打卡签到
+     */
+    @Override
+    public Map<String,Object> selectTodayPracLogList()
+    {
+        Map<String,Object> map = new HashMap<>();
+        map.put("PracLogCount",sysPracticeLogMapper.selectTodayPracLogList());
+        return map;
     }
 }

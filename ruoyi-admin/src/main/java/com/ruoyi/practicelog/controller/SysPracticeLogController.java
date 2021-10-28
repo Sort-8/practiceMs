@@ -113,4 +113,15 @@ public class SysPracticeLogController extends BaseController
     {
         return toAjax(sysPracticeLogService.deleteSysPracticeLogByIds(logIds));
     }
+
+    /**
+     * 获得当天所有打卡人数
+     */
+//    @PreAuthorize("@ss.hasPermi('punch:punch:list')")
+    @GetMapping("/getTodayPracLogList")
+    public AjaxResult getTodayPracLogList()
+    {
+//        List<SysAttendance> list = sysAttendanceService.selectTodayPunchList();
+        return AjaxResult.success(sysPracticeLogService.selectTodayPracLogList());
+    }
 }

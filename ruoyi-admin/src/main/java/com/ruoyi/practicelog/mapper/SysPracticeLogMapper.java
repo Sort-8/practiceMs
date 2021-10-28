@@ -67,6 +67,11 @@ public interface SysPracticeLogMapper
      */
     public SysPracticeLog isRepeatPracticalLogTimeByUName(String userName);
 
+    /**
+     *获得当天填写日志人数
+     * @return
+     */
+    public int selectTodayPracLogList();
 
 
 

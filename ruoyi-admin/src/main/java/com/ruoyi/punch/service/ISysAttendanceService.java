@@ -1,6 +1,8 @@
 package com.ruoyi.punch.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.punch.domain.SysAttendance;
 
 /**
@@ -66,5 +68,12 @@ public interface ISysAttendanceService
      * @return
      */
     public SysAttendance selectSysAttendanceByUName(String userName);
+
+
+    /**
+     * 当天所有打卡信息
+     * @return
+     */
+    public Map<String,Object> selectTodayPunchList();
 
 }

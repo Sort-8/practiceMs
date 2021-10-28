@@ -1,6 +1,8 @@
 package com.ruoyi.punch.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.utils.StringUtils;
@@ -45,6 +47,19 @@ public class SysAttendanceServiceImpl implements ISysAttendanceService
     public List<SysAttendance> selectSysAttendanceList(SysAttendance sysAttendance)
     {
         return sysAttendanceMapper.selectSysAttendanceList(sysAttendance);
+    }
+
+    /**
+     * 查询打卡签到列表
+     *
+     * @return 打卡签到
+     */
+    @Override
+    public Map<String,Object> selectTodayPunchList()
+    {
+        Map<String,Object> map = new HashMap<>();
+        map.put("punchCount",sysAttendanceMapper.selectTodayPunchList());
+        return map;
     }
 
     /**
