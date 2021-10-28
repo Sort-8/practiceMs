@@ -66,6 +66,18 @@ public class SysUserController extends BaseController {
     }
 
     /**
+     * 获取用户列表
+     */
+    @PreAuthorize("@ss.hasPermi('system:user:list')")
+    @GetMapping("/getNoPracticeUser")
+    @ApiOperation("获取未实习用户列表")
+    public TableDataInfo getNoPracticeUser(SysUser user) {
+        startPage();
+        List<SysUser> list = userService.selectNoPracticeStudent(user);
+        return getDataTable(list);
+    }
+
+    /**
      * 获取指定角色的用户
      */
     @PreAuthorize("@ss.hasPermi('system:user:list')")

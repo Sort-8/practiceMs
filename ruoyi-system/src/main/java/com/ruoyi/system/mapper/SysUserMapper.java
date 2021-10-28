@@ -20,6 +20,15 @@ public interface SysUserMapper
     public List<SysUser> selectUserList(SysUser sysUser);
 
     /**
+     * 获取未实习的学生
+     *
+     * @param sysUser 用户信息
+     * @return 用户信息集合信息
+     */
+    public List<SysUser> selectNoPracticeStudent(SysUser sysUser);
+
+
+    /**
      * 分页查询未分配角色用户列表
      *
      * @param sysUser 用户信息

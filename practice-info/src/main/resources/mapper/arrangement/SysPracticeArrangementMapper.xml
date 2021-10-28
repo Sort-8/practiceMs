@@ -100,6 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="basePhone"    column="base_phone"    />
         <result property="baseFax"    column="base_fax"    />
         <result property="baseAddress"    column="base_address"    />
+        <result property="tude"    column="tude"    />
         <result property="baseEmail"    column="base_email"    />
         <result property="schoolLeader"    column="school_leader"    />
         <result property="schoolPhone"    column="school_phone"    />
@@ -110,7 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectSysPracticeArrangementVo">
-        select arrangement_id, stu_id, pa.info_id, notes, stu_option, pa.status, pa.del_flag ,
+        select arrangement_id, stu_id, pa.info_id, notes, stu_option, pa.status, pa.del_flag , bi.tude ,
                pa.info_id, location_id, post_name, number, entry_time, pi.status, pi.del_flag, teacher_id ,
                base_id , company_name , base_name , base_nature , base_leader , base_contacts ,
                base_phone , base_fax , base_address , base_email , school_leader , school_phone ,

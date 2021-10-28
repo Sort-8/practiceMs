@@ -20,6 +20,14 @@ public interface ISysUserService
     public List<SysUser> selectUserList(SysUser user);
 
     /**
+     * 获取未实习的学生
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    public List<SysUser> selectNoPracticeStudent(SysUser user);
+
+    /**
      * 根据角色名称查询所属的用户
      *
      * @param user 用户信息

@@ -71,6 +71,16 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
+    public List<SysUser> selectNoPracticeStudent(SysUser user) {
+        if (user.getRoleId() == null) {
+            user.setRoleId(6L);     //默认获取学生角色信息
+        } else if (user.getRoleId() == 0L) {
+            return userMapper.selectUserListNoRole(user);
+        }
+        return userMapper.selectNoPracticeStudent(user);
+    }
+
+    @Override
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserListByRole(SysUser user) {
         return userMapper.selectUserListByRole(user);
