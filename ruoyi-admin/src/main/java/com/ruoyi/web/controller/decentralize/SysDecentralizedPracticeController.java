@@ -3,6 +3,8 @@ package com.ruoyi.web.controller.decentralize;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -20,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -157,8 +161,11 @@ public class SysDecentralizedPracticeController extends BaseController
     @PreAuthorize("@ss.hasPermi('decentralize:decentralize:edit')")
     @Log(title = "分散实习申请", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody SysDecentralizedPractice sysDecentralizedPractice)
+    public AjaxResult edit(@RequestBody SysDecentralizedPractice sysDecentralizedPractice , HttpServletRequest request)
     {
+        SysUser u = tokenService.getLoginUser(request).getUser();
+        sysDecentralizedPractice.setAuditorId(u.getUserId());
+        sysDecentralizedPractice.setAuditTime(new Date());
         return toAjax(sysDecentralizedPracticeService.updateSysDecentralizedPractice(sysDecentralizedPractice));
     }
 
