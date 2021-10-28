@@ -88,4 +88,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and attend.del_flag=0
         and attend.user_name=#{userName}
     </select>
+
+
+    <select id="selectTodayPunchList" parameterType="String" resultType="int">
+        select count(*) from sys_attendance attend
+        where date_format(attend.create_time,'%m-%d')=date_format(now(),'%m-%d')
+        and attend.del_flag=0
+    </select>
 </mapper>

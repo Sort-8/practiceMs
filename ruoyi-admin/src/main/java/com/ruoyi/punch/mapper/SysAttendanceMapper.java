@@ -60,9 +60,18 @@ public interface SysAttendanceMapper
     public int deleteSysAttendanceByIds(Long[] attendanceIds);
 
 
-
+    /**
+     * 是否重复打卡
+     * @param userName
+     * @return
+     */
     public SysAttendance isRepeatPunchTimeByUName(String userName);
 
+    /**
+     *获得当天所有打卡人数信息
+     * @return
+     */
+    public int selectTodayPunchList();
 
 
 }

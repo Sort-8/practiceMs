@@ -123,6 +123,17 @@ public class SysAttendanceController extends BaseController
     }
 
     /**
+     * 获得当天所有打卡人数
+     */
+//    @PreAuthorize("@ss.hasPermi('punch:punch:list')")
+    @GetMapping("/getTodayPunchList")
+    public AjaxResult getTodayPunchList()
+    {
+//        List<SysAttendance> list = sysAttendanceService.selectTodayPunchList();
+        return AjaxResult.success(sysAttendanceService.selectTodayPunchList());
+    }
+
+    /**
      * 小程序获得当前用户当天是否打卡
      */
 //    @PreAuthorize("@ss.hasPermi('punch:punch:repeat')")
