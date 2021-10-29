@@ -37,6 +37,14 @@ public interface SysPracticeArrangementMapper
     public List<SysPracticeArrangement> selectSysPracticeArrangementList(SysPracticeArrangement sysPracticeArrangement);
 
     /**
+     * 查询老师指导的学生信息
+     *
+     * @param
+     * @return
+     */
+    public List<SysPracticeArrangement> selectStudentInfo(SysPracticeArrangement sysPracticeArrangement);
+
+    /**
      * 新增实习安排
      *
      * @param sysPracticeArrangement 实习安排
@@ -82,4 +90,6 @@ public interface SysPracticeArrangementMapper
      * @return 结果
      */
     public int deleteSysPracticeArrangementByIds(Long[] arrangementIds);
+
+    List<SysPracticeArrangement> selectStudentInfo(SysPracticeArrangement sysPracticeArrangement, Long teacherId);
 }
