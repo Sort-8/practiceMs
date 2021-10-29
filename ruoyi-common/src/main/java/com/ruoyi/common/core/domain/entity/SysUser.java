@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.poi.hpsf.Decimal;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -40,18 +41,18 @@ public class SysUser extends BaseEntity
 
 
     /** 用户账号 */
-    @ApiModelProperty("用户名")
-    @Excel(name = "登录名称")
+    @ApiModelProperty("账号")
+    @Excel(name = "账号")
     private String userName;
 
     /** 用户昵称 */
-    @ApiModelProperty("用户昵称")
-    @Excel(name = "用户名称")
+    @ApiModelProperty("姓名")
+    @Excel(name = "姓名")
     private String nickName;
 
     /** 用户邮箱 */
     @ApiModelProperty("用户邮箱")
-    @Excel(name = "用户邮箱")
+    @Excel(name = "邮箱")
     private String email;
 
     /** 手机号码 */
@@ -60,8 +61,8 @@ public class SysUser extends BaseEntity
     private String phonenumber;
 
     /** 用户性别 */
-    @ApiModelProperty("用户性别")
-    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知", prompt = "男、女、未知")
+    @ApiModelProperty("性别")
+    @Excel(name = "性别", readConverterExp = "0=男,1=女,2=未知", prompt = "男、女、未知")
     private String sex;
 
     /** 用户头像 */
@@ -70,7 +71,7 @@ public class SysUser extends BaseEntity
     private String avatar;
 
     /** 密码 **/
-    @ApiModelProperty("用户密码")
+    @ApiModelProperty("密码")
     private String password;
 
     /** 盐加密 */
@@ -115,6 +116,8 @@ public class SysUser extends BaseEntity
     /** 角色组 */
     @ApiModelProperty("角色组")
     private Long[] roleIds;
+
+    
 
     /** 岗位组 */
     @ApiModelProperty(hidden = true)

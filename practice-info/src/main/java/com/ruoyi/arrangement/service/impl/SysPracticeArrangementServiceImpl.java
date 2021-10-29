@@ -104,6 +104,17 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
     }
 
     /**
+     * 查询老师指导的学生信息
+     *
+     * @param
+     * @return
+     */
+    @Override
+    public List<SysPracticeArrangement> selectStudentInfo(SysPracticeArrangement sysPracticeArrangement) {
+        return sysPracticeArrangementMapper.selectStudentInfo(sysPracticeArrangement);
+    }
+
+    /**
      * 新增实习安排
      *
      * @param sysPracticeArrangement 实习安排

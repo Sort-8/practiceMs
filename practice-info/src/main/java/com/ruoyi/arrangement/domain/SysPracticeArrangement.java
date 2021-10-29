@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 实习安排对象 sys_practice_arrangement
- * 
+ *
  * @author YuYang
  * @date 2021-09-23
  */
@@ -37,6 +37,10 @@ public class SysPracticeArrangement extends BaseEntity
     /** 实习信息ID */
     @Excel(name = "实习信息ID")
     private Long infoId;
+
+    /** 表示老师ID */
+    private Long teacherId;
+
 
     /** 备注 */
     @Excel(name = "备注")
@@ -112,63 +116,71 @@ public class SysPracticeArrangement extends BaseEntity
         this.arrangementId = arrangementId;
     }
 
-    public Long getArrangementId() 
+    public Long getArrangementId()
     {
         return arrangementId;
     }
-    public void setStuId(Long stuId) 
+    public void setStuId(Long stuId)
     {
         this.stuId = stuId;
     }
 
-    public Long getStuId() 
+    public Long getStuId()
     {
         return stuId;
     }
-    public void setInfoId(Long infoId) 
+    public void setInfoId(Long infoId)
     {
         this.infoId = infoId;
     }
 
-    public Long getInfoId() 
+    public Long getInfoId()
     {
         return infoId;
     }
-    public void setNotes(String notes) 
+    public void setNotes(String notes)
     {
         this.notes = notes;
     }
 
-    public String getNotes() 
+    public String getNotes()
     {
         return notes;
     }
-    public void setStuOption(String stuOption) 
+    public void setStuOption(String stuOption)
     {
         this.stuOption = stuOption;
     }
 
-    public String getStuOption() 
+    public String getStuOption()
     {
         return stuOption;
     }
-    public void setStatus(String status) 
+    public void setStatus(String status)
     {
         this.status = status;
     }
 
-    public String getStatus() 
+    public String getStatus()
     {
         return status;
     }
-    public void setDelFlag(String delFlag) 
+    public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
     }
 
-    public String getDelFlag() 
+    public String getDelFlag()
     {
         return delFlag;
+    }
+
+    public Long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
     }
 
     @Override

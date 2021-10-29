@@ -46,6 +46,17 @@ public class SysPracticeArrangementController extends BaseController
     }
 
     /**
+     * 老师指导的学生信息列表
+     */
+    @GetMapping("/stuInfoList")
+    public TableDataInfo stuInfoList(SysPracticeArrangement sysPracticeArrangement)
+    {
+        startPage();
+        List<SysPracticeArrangement> list = sysPracticeArrangementService.selectStudentInfo(sysPracticeArrangement);
+        return getDataTable(list);
+    }
+
+    /**
      * 查询学生实习情况
      */
     @GetMapping("/getPracticeInfo")
@@ -79,6 +90,8 @@ public class SysPracticeArrangementController extends BaseController
     {
         return AjaxResult.success(sysPracticeArrangementService.selectSysPracticeArrangementById(arrangementId));
     }
+
+
 
     /**
      * 获取实习指导老师
