@@ -66,4 +66,12 @@ public interface ISysDecentralizedPracticeService
      * @return 结果
      */
     public int deleteSysDecentralizedPracticeById(Long applyId);
+
+    /**
+     * 删除学生分散实习申请信息
+     *
+     * @param userId 学生ID
+     * @return 结果
+     */
+    public int deleteSysDecentralizedPracticeByUserId(Long userId);
 }

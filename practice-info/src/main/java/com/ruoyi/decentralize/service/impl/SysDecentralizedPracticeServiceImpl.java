@@ -64,7 +64,14 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
     @Override
     public int insertSysDecentralizedPractice(SysDecentralizedPractice sysDecentralizedPractice)
     {
-        return sysDecentralizedPracticeMapper.insertSysDecentralizedPractice(sysDecentralizedPractice);
+        if("reset".equals(sysDecentralizedPractice.getRemark())){
+            if(deleteSysDecentralizedPracticeByUserId(sysDecentralizedPractice.getStuId()) > 0){
+                return sysDecentralizedPracticeMapper.insertSysDecentralizedPractice(sysDecentralizedPractice);
+            }
+        }else{
+            return sysDecentralizedPracticeMapper.insertSysDecentralizedPractice(sysDecentralizedPractice);
+        }
+        return 0;
     }
 
     /**
@@ -101,5 +108,10 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
     public int deleteSysDecentralizedPracticeById(Long applyId)
     {
         return sysDecentralizedPracticeMapper.deleteSysDecentralizedPracticeById(applyId);
+    }
+
+    @Override
+    public int deleteSysDecentralizedPracticeByUserId(Long userId) {
+        return sysDecentralizedPracticeMapper.deleteSysDecentralizedPracticeByUserId(userId);
     }
 }

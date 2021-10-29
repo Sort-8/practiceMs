@@ -70,7 +70,7 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
             }
         }
         Map<String , Object> map = new HashMap<>();
-        map.put("user" , u.getUser());
+        map.put("student" , u.getUser());
         return map;
     }
 

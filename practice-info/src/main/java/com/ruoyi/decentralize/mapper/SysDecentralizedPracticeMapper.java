@@ -60,6 +60,14 @@ public interface SysDecentralizedPracticeMapper
     public int deleteSysDecentralizedPracticeById(Long applyId);
 
     /**
+     * 删除学生分散实习申请
+     *
+     * @param userId 学生ID
+     * @return 结果
+     */
+    public int deleteSysDecentralizedPracticeByUserId(Long userId);
+
+    /**
      * 批量删除分散实习申请
      *
      * @param applyIds 需要删除的数据ID

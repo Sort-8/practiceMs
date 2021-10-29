@@ -154,6 +154,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from sys_decentralized_practice where apply_id = #{applyId}
     </delete>
 
+    <delete id="deleteSysDecentralizedPracticeByUserId" parameterType="Long">
+        delete from sys_decentralized_practice where stu_id = #{userId}
+    </delete>
+
     <delete id="deleteSysDecentralizedPracticeByIds" parameterType="String">
         delete from sys_decentralized_practice where apply_id in
         <foreach item="applyId" collection="array" open="(" separator="," close=")">

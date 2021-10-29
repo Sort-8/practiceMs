@@ -136,13 +136,17 @@ public class SysDecentralizedPracticeController extends BaseController
                 int id ;
                 if((id = locationInfoService.insertLocationInfo(locationInfo)) > 0){
                     SysDecentralizedPractice practice = new SysDecentralizedPractice();
-                    practice.setAcceptanceCertificate(url);
-                    practice.setStuId(Long.parseLong(stuId));
-                    practice.setBusinessScope(businessScope);
-                    practice.setNotes(notes);
-                    practice.setDelFlag("0");
-                    practice.setLocationId((long) id);
-                    practice.setStatus("0");
+                    try{
+                        practice.setAcceptanceCertificate(url);
+                        practice.setStuId(Long.parseLong(stuId));
+                        practice.setBusinessScope(businessScope);
+                        practice.setNotes(notes);
+                        practice.setDelFlag("0");
+                        practice.setLocationId((long) id);
+                        practice.setStatus("1");
+                    }catch (Exception e){
+                        return AjaxResult.error(e.getMessage());
+                    }
                     sysDecentralizedPracticeService.insertSysDecentralizedPractice(practice);
                 }
             }
