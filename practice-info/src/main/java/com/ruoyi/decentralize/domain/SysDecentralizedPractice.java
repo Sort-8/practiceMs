@@ -59,6 +59,9 @@ public class SysDecentralizedPractice extends BaseEntity
     @Excel(name = "审核人姓名")
     private String auditorName;
 
+    /** 标识符 */
+    private String flag;
+
     /** 审核时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "审核时间", width = 30, dateFormat = "yyyy-MM-dd")
@@ -81,6 +84,14 @@ public class SysDecentralizedPractice extends BaseEntity
 
     public void setLocation(LocationInfo location) {
         this.location = location;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
     public SysUser getStudent() {

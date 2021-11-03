@@ -98,6 +98,7 @@
         <result property="baseLeader" column="base_leader"/>
         <result property="baseContacts" column="base_contacts"/>
         <result property="basePhone" column="base_phone"/>
+        <result property="tude" column="tude"/>
         <result property="baseFax" column="base_fax"/>
         <result property="baseAddress" column="base_address"/>
         <result property="baseEmail" column="base_email"/>
@@ -112,7 +113,7 @@
     <sql id="selectSysPracticeArrangementVo">
         select arrangement_id, stu_id, pa.info_id, notes, stu_option, pa.status, pa.del_flag ,
                pa.info_id, location_id, post_name, number, entry_time, pi.status, pi.del_flag, teacher_id ,
-               base_id , company_name , base_name , base_nature , base_leader , base_contacts ,
+               base_id , company_name , base_name , base_nature , base_leader , base_contacts , tude ,
                base_phone , base_fax , base_address , base_email , school_leader , school_phone ,
                base_introduction , practice_environment , bi.status , bi.del_flag , surplus ,
                su.user_id, su.dept_id, su.user_name, su.nick_name, su.email, su.avatar, su.phonenumber, su.password, su.sex, su.status, su.del_flag, su.login_ip, su.login_date, su.create_by, su.create_time, su.remark ,

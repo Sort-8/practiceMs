@@ -105,7 +105,7 @@ public class SysDecentralizedPracticeController extends BaseController
      * 上传实习证明
      */
     @PostMapping("/uploadCertificate")
-    public AjaxResult uploadCertificate(MultipartFile file, String companyName , String address , String tude , String contacts , String phone , String nature , String leader , String businessScope , String notes , String stuId , String nickName) throws Exception
+    public AjaxResult uploadCertificate(MultipartFile file, String companyName , String address , String tude , String contacts , String phone , String nature , String leader , String businessScope , String notes , String stuId , String nickName , String flag) throws Exception
     {
         try
         {
@@ -144,6 +144,7 @@ public class SysDecentralizedPracticeController extends BaseController
                         practice.setDelFlag("0");
                         practice.setLocationId((long) id);
                         practice.setStatus("1");
+                        practice.setFlag(flag);
                     }catch (Exception e){
                         return AjaxResult.error(e.getMessage());
                     }

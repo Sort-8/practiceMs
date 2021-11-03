@@ -64,7 +64,7 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
     @Override
     public int insertSysDecentralizedPractice(SysDecentralizedPractice sysDecentralizedPractice)
     {
-        if("reset".equals(sysDecentralizedPractice.getRemark())){
+        if("reset".equals(sysDecentralizedPractice.getFlag())){
             if(deleteSysDecentralizedPracticeByUserId(sysDecentralizedPractice.getStuId()) > 0){
                 return sysDecentralizedPracticeMapper.insertSysDecentralizedPractice(sysDecentralizedPractice);
             }
