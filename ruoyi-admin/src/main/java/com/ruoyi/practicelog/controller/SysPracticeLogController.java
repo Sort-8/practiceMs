@@ -7,6 +7,11 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.framework.web.service.TokenService;
+import com.ruoyi.punch.domain.SysAttendance;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +39,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/practicelog/practicelog")
+@Api(value="SysPracticeLogController",tags="日志接口")
 public class SysPracticeLogController extends BaseController
 {
     @Autowired
@@ -115,7 +121,7 @@ public class SysPracticeLogController extends BaseController
     }
 
     /**
-     * 获得当天所有打卡人数
+     * 获得当天填写日志人数
      */
 //    @PreAuthorize("@ss.hasPermi('punch:punch:list')")
     @GetMapping("/getTodayPracLogList")
@@ -124,4 +130,23 @@ public class SysPracticeLogController extends BaseController
 //        List<SysAttendance> list = sysAttendanceService.selectTodayPunchList();
         return AjaxResult.success(sysPracticeLogService.selectTodayPracLogList());
     }
+    /**
+     * 小程序获得用户填写日志列表
+     */
+//    @PreAuthorize("@ss.hasPermi('punch:punch:list')")
+    @GetMapping("/listDetail")
+    @ApiOperation(value = "小程序获得用户填写日志列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", name = "Authorization", value = "用户令牌", dataType = "String", required = true),
+    })
+    public AjaxResult list()
+    {
+        SysPracticeLog sysPracticeLog = new SysPracticeLog();
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        SysUser user = loginUser.getUser();
+        sysPracticeLog.setUserName(user.getUserName());
+        List<SysPracticeLog> list = sysPracticeLogService.selectSysPracticeLogList(sysPracticeLog);
+        return AjaxResult.success(list);
+    }
+
 }
