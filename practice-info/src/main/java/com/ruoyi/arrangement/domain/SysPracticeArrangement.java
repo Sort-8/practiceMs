@@ -41,7 +41,6 @@ public class SysPracticeArrangement extends BaseEntity
     /** 表示老师ID */
     private Long teacherId;
 
-
     /** 备注 */
     @Excel(name = "备注")
     private String notes;

@@ -101,6 +101,12 @@ public class SysPracticeInfoServiceImpl implements ISysPracticeInfoService
         return sysPracticeInfoMapper.updateSysPracticeInfo(sysPracticeInfo);
     }
 
+    @Override
+    public int changeStatus(SysPracticeInfo sysPracticeInfo)
+    {
+        return sysPracticeInfoMapper.updateSysPracticeInfo(sysPracticeInfo);
+    }
+
     public static Long[] stringToLong(String[] args) {
         String[] strAry = args;
         Long[] longAry= new Long[strAry.length];

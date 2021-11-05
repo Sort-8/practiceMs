@@ -48,7 +48,6 @@ public class SysDecentralizedPracticeController extends BaseController
     /**
      * 查询分散实习申请列表
      */
-    @PreAuthorize("@ss.hasPermi('decentralize:decentralize:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysDecentralizedPractice sysDecentralizedPractice)
     {

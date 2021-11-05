@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 实习信息Controller
- * 
+ *
  * @author YuYang
  * @date 2021-09-23
  */
@@ -82,6 +82,17 @@ public class SysPracticeInfoController extends BaseController
     public AjaxResult edit(@RequestBody SysPracticeInfo sysPracticeInfo)
     {
         return toAjax(sysPracticeInfoService.updateSysPracticeInfo(sysPracticeInfo));
+    }
+
+    /**
+     * 修改实习信息状态
+     */
+    @PreAuthorize("@ss.hasPermi('practice-info:practiceInfo:edit')")
+    @Log(title = "实习信息状态", businessType = BusinessType.UPDATE)
+    @PostMapping("/changeStatus")
+    public AjaxResult changeStatus(@RequestBody SysPracticeInfo sysPracticeInfo)
+    {
+        return toAjax(sysPracticeInfoService.changeStatus(sysPracticeInfo));
     }
 
     /**

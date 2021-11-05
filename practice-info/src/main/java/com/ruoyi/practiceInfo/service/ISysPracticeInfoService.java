@@ -53,6 +53,14 @@ public interface ISysPracticeInfoService
     public int updateSysPracticeInfo(SysPracticeInfo sysPracticeInfo);
 
     /**
+     * 修改实习信息状态
+     *
+     * @param sysPracticeInfo 实习信息
+     * @return 结果
+     */
+    public int changeStatus(SysPracticeInfo sysPracticeInfo);
+
+    /**
      * 批量删除实习信息
      *
      * @param infoIds 需要删除的实习信息ID
