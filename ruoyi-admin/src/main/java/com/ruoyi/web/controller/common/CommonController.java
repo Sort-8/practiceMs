@@ -28,6 +28,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 通用请求处理
@@ -123,13 +124,36 @@ public class CommonController
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileName", fileName);
             ajax.put("url", url);
-            if(scoreId!=null&&scoreId!=""){
+            /**输入0表示用户从个人的日志页面上传*/
+            if(scoreId.equals("0")){
+                SysPracticeScore sysPracticeScore = new SysPracticeScore();
+                sysPracticeScore.setUserId(Long.valueOf(user_id));
+                List<SysPracticeScore> list = sysPracticeScoreService.selectSysPracticeScoreList(sysPracticeScore);
+                if(list.size()==0)
+                {
+                    /**表中不存在会自动创建*/
+                    sysPracticeScore.setAppraisal(url);
+                    sysPracticeScoreService.insertSysPracticeScore(sysPracticeScore);
+                    System.out.println("找不到，自己创建了");
+                }
+                else {
+                    sysPracticeScore.setScoreId(list.get(0).getScoreId());
+                    sysPracticeScore.setAppraisal(url);
+                    sysPracticeScoreService.updateScoreAppraisal(sysPracticeScore);
+
+                }
+                scoreId = null;
+
+            }
+            if(scoreId!=null&&scoreId.equals("")==false){
                 System.out.println("ID为 "+scoreId);
                 SysPracticeScore sysPracticeScore = new SysPracticeScore();
                 sysPracticeScore.setScoreId(Long.valueOf(scoreId));
                 sysPracticeScore.setAppraisal(url);
+                System.out.println();
                 sysPracticeScoreService.updateScoreAppraisal(sysPracticeScore);
             }
+
             System.out.println("文件上传成功："+url);
             return ajax;
         }
@@ -160,7 +184,26 @@ public class CommonController
             AjaxResult ajax = AjaxResult.success();
             ajax.put("fileName", fileName);
             ajax.put("url", url);
-            if(scoreId!=null&&scoreId!=""){
+            /**输入0表示用户从个人的日志页面上传*/
+            if(scoreId.equals("0")){
+                SysPracticeScore sysPracticeScore = new SysPracticeScore();
+                sysPracticeScore.setUserId(Long.valueOf(user_id));
+                List<SysPracticeScore> list = sysPracticeScoreService.selectSysPracticeScoreList(sysPracticeScore);
+                if(list.size()==0)
+                {
+                    /**表中不存在会自动创建*/
+                    sysPracticeScore.setSummary(url);
+                    sysPracticeScoreService.insertSysPracticeScore(sysPracticeScore);
+                    System.out.println("找不到，自己创建了");
+                }
+                else {
+                    sysPracticeScore.setScoreId(list.get(0).getScoreId());
+                    sysPracticeScore.setSummary(url);
+                    sysPracticeScoreService.updateScoreSummary(sysPracticeScore);
+                }
+                scoreId = null;
+            }
+            if(scoreId!=null&&scoreId.equals("")==false){
                 System.out.println("ID为 "+scoreId);
                 SysPracticeScore sysPracticeScore = new SysPracticeScore();
                 sysPracticeScore.setScoreId(Long.valueOf(scoreId));
