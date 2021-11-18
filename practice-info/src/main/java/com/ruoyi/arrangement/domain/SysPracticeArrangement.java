@@ -1,5 +1,6 @@
 package com.ruoyi.arrangement.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excels;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -7,6 +8,8 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.practiceInfo.domain.SysPracticeInfo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Date;
 
 /**
  * 实习安排对象 sys_practice_arrangement
@@ -67,8 +70,32 @@ public class SysPracticeArrangement extends BaseEntity
     @Excel(name = "状态", readConverterExp = "0=启用,1=停用")
     private String status;
 
+    /** 最后一次打卡时间*/
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date punchTime;
+
+    /** 最后一次填写日志时间*/
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date logTime;
+
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
+
+    public Date getPunchTime() {
+        return punchTime;
+    }
+
+    public void setPunchTime(Date punchTime) {
+        this.punchTime = punchTime;
+    }
+
+    public Date getLogTime() {
+        return logTime;
+    }
+
+    public void setLogTime(Date logTime) {
+        this.logTime = logTime;
+    }
 
     public String getPostName() {
         return postName;
