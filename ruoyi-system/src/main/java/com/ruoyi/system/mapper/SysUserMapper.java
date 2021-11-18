@@ -27,6 +27,14 @@ public interface SysUserMapper
      */
     public List<SysUser> selectNoPracticeStudent(SysUser sysUser);
 
+    /**
+     * 获取未实习的学生
+     *
+     * @param teacherId 教师编号
+     * @return 获取教师的实习学生
+     */
+    public List<SysUser> selectGuideStudent(Long teacherId);
+
 
     /**
      * 分页查询未分配角色用户列表

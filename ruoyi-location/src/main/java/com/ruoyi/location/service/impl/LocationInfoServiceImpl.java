@@ -64,7 +64,14 @@ public class LocationInfoServiceImpl implements ILocationInfoService
     @Override
     public int insertLocationInfo(LocationInfo locationInfo)
     {
-        return locationInfoMapper.insertLocationInfo(locationInfo);
+        locationInfoMapper.insertLocationInfo(locationInfo);
+        int id = 0;
+        try{
+            id = Integer.parseInt(locationInfo.getLocationId().toString());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return id;
     }
 
     /**

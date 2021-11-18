@@ -41,23 +41,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <resultMap type="SysUser" id="AuditorInfoResult">
-        <id     property="userId"       column="user_id"      />
-        <result property="userName"     column="user_name"    />
-        <result property="nickName"     column="nick_name"    />
-        <result property="email"        column="email"        />
-        <result property="phonenumber"  column="phonenumber"  />
-        <result property="sex"          column="sex"          />
-        <result property="avatar"       column="avatar"       />
-        <result property="password"     column="password"     />
-        <result property="status"       column="status"       />
-        <result property="delFlag"      column="del_flag"     />
-        <result property="loginIp"      column="login_ip"     />
-        <result property="loginDate"    column="login_date"   />
-        <result property="createBy"     column="create_by"    />
-        <result property="createTime"   column="create_time"  />
-        <result property="updateBy"     column="update_by"    />
-        <result property="updateTime"   column="update_time"  />
-        <result property="remark"       column="remark"       />
+        <id     property="userId"       column="au_user_id"      />
+        <result property="userName"     column="au_user_name"    />
+        <result property="nickName"     column="au_nick_name"    />
+        <result property="email"        column="au_email"        />
+        <result property="phonenumber"  column="au_phonenumber"  />
+        <result property="sex"          column="au_sex"          />
+        <result property="avatar"       column="au_avatar"       />
+        <result property="password"     column="au_password"     />
+        <result property="status"       column="au_status"       />
+        <result property="delFlag"      column="au_del_flag"     />
+        <result property="loginIp"      column="au_login_ip"     />
+        <result property="loginDate"    column="au_login_date"   />
+        <result property="createBy"     column="au_create_by"    />
+        <result property="createTime"   column="au_create_time"  />
+        <result property="updateBy"     column="au_update_by"    />
+        <result property="updateTime"   column="au_update_time"  />
+        <result property="remark"       column="au_remark"       />
     </resultMap>
 
     <resultMap type="LocationInfo" id="LocationInfoResult">
@@ -73,10 +73,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="delFlag" column="del_flag"/>
     </resultMap>
 
+    <resultMap type="SysDecentralizedPractice" id="DecentralizeByLocation">
+        <result property="locationId" column="location_id"/>
+        <result property="companyName" column="company_name"/>
+    </resultMap>
+
     <sql id="selectSysDecentralizedPracticeVo">
         select apply_id, stu_id, business_scope, acceptance_certificate, notes, auditor_id, audit_time, dp.status, dp.del_flag, dp.location_id ,
                tu.user_id, tu.dept_id, tu.user_name, tu.nick_name, tu.email, tu.avatar, tu.phonenumber, tu.password, tu.sex, tu.status, tu.del_flag, tu.login_ip, tu.login_date, tu.create_by, tu.create_time, tu.remark ,
-               au.user_id, au.dept_id, au.user_name, au.nick_name, au.email, au.avatar, au.phonenumber, au.password, au.sex, au.status, au.del_flag, au.login_ip, au.login_date, au.create_by, au.create_time, au.remark ,
+               au.user_id as au_user_id, au.dept_id as au_dept_id , au.user_name as au_user_name, au.nick_name as au_nick_name, au.email as au_email, au.avatar as au_avatar, au.phonenumber as au_phonenumber, au.password as au_password, au.sex as au_sex, au.status as au_status, au.del_flag as au_del_flag, au.login_ip as au_login_ip, au.login_date as au_login_date, au.create_by as au_create_by, au.create_time as au_create_time, au.remark as au_remark ,
                li.location_id, li.company_name, li.address, li.contacts, li.tude, li.phone, li.nature, li.leader, li.status, li.del_flag
         from sys_decentralized_practice dp
                  left join sys_user tu on dp.stu_id = tu.user_id
@@ -98,9 +103,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="getDecentralizeByLocation" resultMap="DecentralizeByLocation">
+        select distinct dp.location_id, li.company_name
+        from sys_decentralized_practice dp
+                 left join sys_location_info li on li.location_id = dp.location_id
+    </select>
+
+    <select id="getPracticeByStatus" parameterType="String" resultType="java.lang.Integer">
+        select count(*) from sys_decentralized_practice where status = #{status}
+    </select>
+
     <select id="selectSysDecentralizedPracticeById" parameterType="Long" resultMap="SysDecentralizedPracticeResult">
         <include refid="selectSysDecentralizedPracticeVo"/>
         where apply_id = #{applyId}
+    </select>
+
+    <select id="getDecentralizeInfo" parameterType="Long" resultMap="SysDecentralizedPracticeResult">
+        <include refid="selectSysDecentralizedPracticeVo"/>
+        where dp.location_id = #{locationId}
     </select>
 
     <select id="getPracticeStudentInfo" parameterType="String" resultMap="SysDecentralizedPracticeResult">

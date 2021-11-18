@@ -74,6 +74,17 @@ public class SysPracticeInfoController extends BaseController
     }
 
     /**
+     * 分配实习信息
+     */
+    @PreAuthorize("@ss.hasPermi('practice-info:practiceInfo:edit')")
+    @Log(title = "实习信息", businessType = BusinessType.UPDATE)
+    @PostMapping("/allocationPractice")
+    public AjaxResult allocationPractice(@RequestBody SysPracticeInfo sysPracticeInfo)
+    {
+        return toAjax(sysPracticeInfoService.allocationPractice(sysPracticeInfo));
+    }
+
+    /**
      * 修改实习信息
      */
     @PreAuthorize("@ss.hasPermi('practice-info:practiceInfo:edit')")

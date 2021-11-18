@@ -36,6 +36,14 @@ public interface ISysUserService
     public List<SysUser> selectUserListByRole(SysUser user);
 
     /**
+     * 根据角色名称查询所属的用户
+     *
+     * @param teacherId 教师编号
+     * @return 获取教师指导的学生
+     */
+    public List<SysUser> selectGuideStudent(Long teacherId);
+
+    /**
      * 根据条件分页查询已分配用户角色列表
      *
      * @param user 用户信息

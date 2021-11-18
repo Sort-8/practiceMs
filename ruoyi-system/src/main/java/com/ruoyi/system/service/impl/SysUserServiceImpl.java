@@ -83,7 +83,17 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserListByRole(SysUser user) {
-        return userMapper.selectUserListByRole(user);
+        List<SysUser> teachers = userMapper.selectUserListByRole(user);
+        for(SysUser teacher : teachers){
+            teacher.setGuideStudent(selectGuideStudent(teacher.getUserId()));
+        }
+        return teachers;
+    }
+
+    @Override
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<SysUser> selectGuideStudent(Long teacherId) {
+        return userMapper.selectGuideStudent(teacherId);
     }
 
     /**

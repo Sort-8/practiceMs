@@ -1,13 +1,12 @@
 package com.ruoyi.arrangement.service.impl;
 
 import java.beans.PropertyDescriptor;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.common.core.page.PageDomain;
+import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
 import com.ruoyi.decentralize.service.ISysDecentralizedPracticeService;
 import org.apache.commons.beanutils.PropertyUtilsBean;
@@ -16,6 +15,8 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.arrangement.mapper.SysPracticeArrangementMapper;
 import com.ruoyi.arrangement.domain.SysPracticeArrangement;
 import com.ruoyi.arrangement.service.ISysPracticeArrangementService;
+
+import javax.jws.Oneway;
 
 /**
  * 实习安排Service业务层处理
@@ -104,6 +105,60 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
     }
 
     /**
+     * 查询集中实习以及分散实习
+     *
+     * @param sysPracticeArrangement 实习安排
+     * @return 实习安排
+     */
+    @Override
+    public List<Object> selectAllPractice(SysPracticeArrangement sysPracticeArrangement)
+    {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        Integer pageNum = pageDomain.getPageNum();
+        Integer pageSize = pageDomain.getPageSize();
+        List<Object> practiceArrangement = new ArrayList<>();
+        List<SysPracticeArrangement> list_a = sysPracticeArrangementMapper.selectSysPracticeArrangementList(sysPracticeArrangement);
+        for(int i = 0 ; i < list_a.size() ; i++){
+            practiceArrangement.add(Arrays.asList(list_a.get(i)));
+        }
+
+        SysDecentralizedPractice practice = new SysDecentralizedPractice();
+        List<Object> decentralizedPractice = new ArrayList<>();
+        List<SysDecentralizedPractice> list_d = iSysDecentralizedPracticeService.selectSysDecentralizedPracticeList(practice);
+        for(int i = 0 ; i < list_d.size() ; i++){
+            decentralizedPractice.add(Arrays.asList(list_d.get(i)));
+        }
+
+        List<Object> result = new ArrayList<>();
+        List<Object> returnResult = new ArrayList<>();
+        for(Object o : practiceArrangement){
+            result.add(o);
+        }
+        for(Object o : decentralizedPractice){
+            result.add(o);
+        }
+        if((pageNum - 1) * pageSize > result.size()){
+            return returnResult;
+        }
+        int start = (pageNum - 1)* pageSize;
+        if(result.size() - (pageNum - 1)* pageSize <  pageSize){
+            pageSize = result.size() - (pageNum - 1)* pageSize;
+        }
+        returnResult = result.subList( start , start + pageSize);
+        return returnResult;
+    }
+
+    @Override
+    public Map getScreenData(SysPracticeArrangement sysPracticeArrangement) {
+        Map map = new HashMap();
+        map.put("focusPracticeNum",selectSysPracticeArrangementList(sysPracticeArrangement).size());
+        SysDecentralizedPractice decentralizedPractice = new SysDecentralizedPractice();
+        map.put("scatteredPracticeNum",iSysDecentralizedPracticeService.selectSysDecentralizedPracticeList(decentralizedPractice).size());
+        map.put("unPracticeNum",iSysDecentralizedPracticeService.getPracticeByStatus("1"));
+        return map;
+    }
+
+    /**
      * 查询老师指导的学生信息
      *
      * @param
@@ -112,6 +167,17 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
     @Override
     public List<SysPracticeArrangement> selectStudentInfo(SysPracticeArrangement sysPracticeArrangement) {
         return sysPracticeArrangementMapper.selectStudentInfo(sysPracticeArrangement);
+    }
+
+    /**
+     * 查询老师指导的学生信息
+     *
+     * @param
+     * @return
+     */
+    @Override
+    public List<SysUser> selectGuideStudent(Long teacherId) {
+        return sysPracticeArrangementMapper.selectGuideStudent(teacherId);
     }
 
     /**

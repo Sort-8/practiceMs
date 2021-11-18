@@ -7,6 +7,7 @@ import com.ruoyi.arrangement.domain.SysPracticeArrangement;
 import com.ruoyi.arrangement.mapper.SysPracticeArrangementMapper;
 import com.ruoyi.arrangement.service.ISysPracticeArrangementService;
 import com.ruoyi.arrangement.service.impl.SysPracticeArrangementServiceImpl;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.practiceInfo.domain.SysPracticeInfo;
 import com.ruoyi.practiceInfo.mapper.SysPracticeInfoMapper;
 import com.ruoyi.practiceInfo.service.ISysPracticeInfoService;
@@ -39,6 +40,10 @@ public class SysPracticeInfoServiceImpl implements ISysPracticeInfoService
     public SysPracticeInfo selectSysPracticeInfoById(Long infoId)
     {
         SysPracticeInfo practiceInfo = sysPracticeInfoMapper.selectSysPracticeInfoById(infoId);
+        if(practiceInfo.getTeacherId() != null){
+            List<SysUser> guideStudent = sysPracticeArrangementService.selectGuideStudent(practiceInfo.getTeacherId());
+            practiceInfo.getTeacher().setGuideStudent(guideStudent);
+        }
         practiceInfo.setStudentsId(selectPracticeStudentId(infoId));
         return practiceInfo;
 
@@ -74,15 +79,15 @@ public class SysPracticeInfoServiceImpl implements ISysPracticeInfoService
     }
 
     /**
-     * 修改实习信息
+     * 分配实习
      *
      * @param sysPracticeInfo 实习信息
      * @return 结果
      */
     @Override
-    public int updateSysPracticeInfo(SysPracticeInfo sysPracticeInfo)
+    public int allocationPractice(SysPracticeInfo sysPracticeInfo)
     {
-        if(sysPracticeInfo.getTeacherId() == null){
+        if(sysPracticeInfo.getStuStrings() != null && !"".equals(sysPracticeInfo.getStuStrings())){
             Long[] studentIds = stringToLong(sysPracticeInfo.getStuStrings().split(","));
             Long infoId = sysPracticeInfo.getInfoId();
             List<SysPracticeArrangement> list = new ArrayList<>();
@@ -98,6 +103,18 @@ public class SysPracticeInfoServiceImpl implements ISysPracticeInfoService
                 return 0;
             }
         }
+        return sysPracticeInfoMapper.updateSysPracticeInfo(sysPracticeInfo);
+    }
+
+    /**
+     * 修改实习信息
+     *
+     * @param sysPracticeInfo 实习信息
+     * @return 结果
+     */
+    @Override
+    public int updateSysPracticeInfo(SysPracticeInfo sysPracticeInfo)
+    {
         return sysPracticeInfoMapper.updateSysPracticeInfo(sysPracticeInfo);
     }
 

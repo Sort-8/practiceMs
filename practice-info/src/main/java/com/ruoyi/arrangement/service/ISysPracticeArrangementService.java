@@ -46,6 +46,22 @@ public interface ISysPracticeArrangementService
     public List<SysPracticeArrangement> selectSysPracticeArrangementList(SysPracticeArrangement sysPracticeArrangement);
 
     /**
+     * 查询实习安排列表
+     *
+     * @param sysPracticeArrangement 实习安排
+     * @return 实习安排集合
+     */
+    public List<Object> selectAllPractice(SysPracticeArrangement sysPracticeArrangement);
+
+    /**
+     * 获取大屏数据
+     *
+     * @param sysPracticeArrangement 实习安排
+     * @return 实习安排集合
+     */
+    public Map getScreenData(SysPracticeArrangement sysPracticeArrangement);
+
+    /**
      * 查询老师指导的学生信息
      *
      * @param
@@ -60,6 +76,14 @@ public interface ISysPracticeArrangementService
      * @return 结果
      */
     public int insertSysPracticeArrangement(SysPracticeArrangement sysPracticeArrangement);
+
+    /**
+     * 新增实习安排
+     *
+     * @param teacherId 老师编号
+     * @return 结果
+     */
+    public List<SysUser> selectGuideStudent(Long teacherId);
 
     /**
      * 修改实习安排
