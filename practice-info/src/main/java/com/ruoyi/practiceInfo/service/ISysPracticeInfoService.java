@@ -53,6 +53,14 @@ public interface ISysPracticeInfoService
     public int updateSysPracticeInfo(SysPracticeInfo sysPracticeInfo);
 
     /**
+     * 分配实习
+     *
+     * @param sysPracticeInfo 实习信息
+     * @return 结果
+     */
+    public int allocationPractice(SysPracticeInfo sysPracticeInfo);
+
+    /**
      * 修改实习信息状态
      *
      * @param sysPracticeInfo 实习信息

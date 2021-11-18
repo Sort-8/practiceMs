@@ -1,5 +1,6 @@
 package com.ruoyi.decentralize.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,11 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
     public SysDecentralizedPractice getPracticeStudentInfo(String username)
     {
         return sysDecentralizedPracticeMapper.getPracticeStudentInfo(username);
+    }
+
+    @Override
+    public int getPracticeByStatus(String status) {
+        return sysDecentralizedPracticeMapper.getPracticeByStatus(status);
     }
 
     /**
@@ -85,6 +91,50 @@ public class SysDecentralizedPracticeServiceImpl implements ISysDecentralizedPra
     {
         return sysDecentralizedPracticeMapper.updateSysDecentralizedPractice(sysDecentralizedPractice);
     }
+
+    @Override
+    public int updateSysDecentralizedPractices(SysDecentralizedPractice sysDecentralizedPractice) {
+        if(sysDecentralizedPractice.getApplyIds() != null){
+            for(String id : sysDecentralizedPractice.getApplyIds()){
+                SysDecentralizedPractice practice = sysDecentralizedPractice;
+                practice.setApplyId(Long.parseLong(id));
+                if(updateSysDecentralizedPractice(practice) == 0){
+                    return 0;
+                }
+            }
+        }
+        return 1;
+    }
+
+    @Override
+    public List<SysDecentralizedPractice> getDecentralizeInfo(Long locationId) {
+
+        return sysDecentralizedPracticeMapper.getDecentralizeInfo(locationId);
+    }
+
+    @Override
+    public List<SysDecentralizedPractice> getDecentralizeByLocation(SysDecentralizedPractice sysDecentralizedPractice) {
+        List<SysDecentralizedPractice> result = new ArrayList<>();
+        List<SysDecentralizedPractice> decentralizedPractices = sysDecentralizedPracticeMapper.selectSysDecentralizedPracticeList(sysDecentralizedPractice);
+        List<SysDecentralizedPractice> locations = sysDecentralizedPracticeMapper.getDecentralizeByLocation(sysDecentralizedPractice);
+        for(SysDecentralizedPractice location : locations){
+            int awaitingApprovalNum = 0;
+            int total = 0;
+            for(SysDecentralizedPractice practice : decentralizedPractices){
+                if(practice.getLocationId().equals(location.getLocationId())){
+                    total++;
+                    if(!"1".equals(practice.getStatus())){
+                        awaitingApprovalNum++;
+                    }
+                }
+            }
+            location.setAwaitingApprovalNum(awaitingApprovalNum);
+            location.setTotalNum(total);
+            result.add(location);
+        }
+        return result;
+    }
+
 
     /**
      * 批量删除分散实习申请

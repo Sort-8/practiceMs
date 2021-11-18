@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 实习安排Controller
@@ -42,6 +43,28 @@ public class SysPracticeArrangementController extends BaseController
     {
         startPage();
         List<SysPracticeArrangement> list = sysPracticeArrangementService.selectSysPracticeArrangementList(sysPracticeArrangement);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询实习安排列表
+     */
+    @PreAuthorize("@ss.hasPermi('arrangement:arrangement:list')")
+    @PostMapping("/getScreenData")
+    public AjaxResult getScreenData(SysPracticeArrangement sysPracticeArrangement)
+    {
+        Map map = sysPracticeArrangementService.getScreenData(sysPracticeArrangement);
+        return AjaxResult.success(map);
+    }
+
+    /**
+     * 查询实习安排列表
+     */
+    @PreAuthorize("@ss.hasPermi('arrangement:arrangement:list')")
+    @PostMapping("/selectAllPractice")
+    public TableDataInfo selectAllPractice(SysPracticeArrangement sysPracticeArrangement)
+    {
+        List<Object> list = sysPracticeArrangementService.selectAllPractice(sysPracticeArrangement);
         return getDataTable(list);
     }
 

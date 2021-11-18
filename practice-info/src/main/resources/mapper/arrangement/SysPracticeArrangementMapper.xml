@@ -85,6 +85,26 @@
         <result property="status" column="status"/>
         <result property="delFlag" column="del_flag"/>
         <result property="loginIp" column="login_ip"/>
+        <result property="expectNumber" column="expectStudentNum"/>
+        <result property="loginDate" column="login_date"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <resultMap type="SysUser" id="GuideStudentInfoResult">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="phonenumber" column="phonenumber"/>
+        <result property="sex" column="sex"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="loginIp" column="login_ip"/>
         <result property="loginDate" column="login_date"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -207,6 +227,17 @@
             (#{arrangement.stuId}, #{arrangement.infoId})
         </foreach>
     </insert>
+
+    <select id="selectGuideStudent" parameterType="Long" resultMap="GuideStudentInfoResult">
+        select su.user_id, su.dept_id, su.user_name, su.nick_name, su.email, su.expectStudentNum ,
+               su.avatar, su.phonenumber, su.password, su.sex, su.status,
+               su.del_flag, su.login_ip, su.login_date, su.create_by,
+               su.create_time, su.remark
+        from sys_practice_arrangement pa
+            left join sys_practice_info pi on pi.info_id = pa.info_id
+            left join sys_user su on su.user_id = pa.stu_id
+        where teacher_id = #{teacherId}
+    </select>
 
     <update id="updateSysPracticeArrangement" parameterType="SysPracticeArrangement">
         update sys_practice_arrangement

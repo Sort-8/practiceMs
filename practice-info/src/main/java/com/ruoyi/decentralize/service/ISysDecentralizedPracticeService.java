@@ -28,6 +28,14 @@ public interface ISysDecentralizedPracticeService
     public SysDecentralizedPractice getPracticeStudentInfo(String username);
 
     /**
+     * 查询特定状态的人数
+     *
+     * @param status
+     * @return 分散实习信息
+     */
+    public int getPracticeByStatus(String status);
+
+    /**
      * 查询分散实习申请列表
      *
      * @param sysDecentralizedPractice 分散实习申请
@@ -50,6 +58,30 @@ public interface ISysDecentralizedPracticeService
      * @return 结果
      */
     public int updateSysDecentralizedPractice(SysDecentralizedPractice sysDecentralizedPractice);
+
+    /**
+     * 批量修改分散实习申请
+     *
+     * @param sysDecentralizedPractice 分散实习申请
+     * @return 结果
+     */
+    public int updateSysDecentralizedPractices(SysDecentralizedPractice sysDecentralizedPractice);
+
+    /**
+     * 获取分散实习详情
+     *
+     * @param locationId 地点编号
+     * @return 结果
+     */
+    public List<SysDecentralizedPractice> getDecentralizeInfo(Long locationId);
+
+    /**
+     * 查询不同地点的实习申请
+     *
+     * @param sysDecentralizedPractice 分散实习申请
+     * @return 结果
+     */
+    public List<SysDecentralizedPractice> getDecentralizeByLocation(SysDecentralizedPractice sysDecentralizedPractice);
 
     /**
      * 批量删除分散实习申请

@@ -52,12 +52,36 @@ public interface SysDecentralizedPracticeMapper
     public int updateSysDecentralizedPractice(SysDecentralizedPractice sysDecentralizedPractice);
 
     /**
+     * 获取分散实习详情
+     *
+     * @param locationId 地点编号
+     * @return 结果
+     */
+    public List<SysDecentralizedPractice> getDecentralizeInfo(Long locationId);
+
+    /**
      * 删除分散实习申请
      *
      * @param applyId 分散实习申请ID
      * @return 结果
      */
     public int deleteSysDecentralizedPracticeById(Long applyId);
+
+    /**
+     * 查询不同地点的实习申请
+     *
+     * @param sysDecentralizedPractice 分散实习申请
+     * @return 结果
+     */
+    public List<SysDecentralizedPractice> getDecentralizeByLocation(SysDecentralizedPractice sysDecentralizedPractice);
+
+    /**
+     * 查询特定状态的人数
+     *
+     * @param status
+     * @return 分散实习信息
+     */
+    public int getPracticeByStatus(String status);
 
     /**
      * 删除学生分散实习申请

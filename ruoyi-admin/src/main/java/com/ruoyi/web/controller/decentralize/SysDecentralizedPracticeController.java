@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -49,10 +48,23 @@ public class SysDecentralizedPracticeController extends BaseController
      * 查询分散实习申请列表
      */
     @GetMapping("/list")
+    @PreAuthorize("@ss.hasPermi('decentralize:decentralize:list')")
     public TableDataInfo list(SysDecentralizedPractice sysDecentralizedPractice)
     {
         startPage();
         List<SysDecentralizedPractice> list = sysDecentralizedPracticeService.selectSysDecentralizedPracticeList(sysDecentralizedPractice);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询不同地点的实习申请
+     */
+    @GetMapping("/getDecentralizeByLocation")
+    @PreAuthorize("@ss.hasPermi('decentralize:decentralize:list')")
+    public TableDataInfo getDecentralizeByLocation(SysDecentralizedPractice sysDecentralizedPractice)
+    {
+        startPage();
+        List<SysDecentralizedPractice> list = sysDecentralizedPracticeService.getDecentralizeByLocation(sysDecentralizedPractice);
         return getDataTable(list);
     }
 
@@ -64,6 +76,16 @@ public class SysDecentralizedPracticeController extends BaseController
     public AjaxResult getPracticeStudentInfo(HttpServletRequest request)
     {
         return AjaxResult.success(sysDecentralizedPracticeService.getPracticeStudentInfo(tokenService.getLoginUser(request).getUsername()));
+    }
+
+    /**
+     * 查询某地点分散实习学生
+     */
+//    @PreAuthorize("@ss.hasPermi('decentralize:decentralize:list')")
+    @GetMapping(value = "/getDecentralizeInfo/{locationId}")
+    public AjaxResult getDecentralizeInfo(@PathVariable("locationId") Long locationId)
+    {
+        return AjaxResult.success(sysDecentralizedPracticeService.getDecentralizeInfo(locationId));
     }
 
     /**
@@ -171,6 +193,20 @@ public class SysDecentralizedPracticeController extends BaseController
         sysDecentralizedPractice.setAuditorId(u.getUserId());
         sysDecentralizedPractice.setAuditTime(new Date());
         return toAjax(sysDecentralizedPracticeService.updateSysDecentralizedPractice(sysDecentralizedPractice));
+    }
+
+    /**
+     * 批量修改分散实习申请
+     */
+    @PreAuthorize("@ss.hasPermi('decentralize:decentralize:edit')")
+    @Log(title = "分散实习申请", businessType = BusinessType.UPDATE)
+    @PostMapping("/updatePractices")
+    public AjaxResult edits(@RequestBody SysDecentralizedPractice sysDecentralizedPractice , HttpServletRequest request)
+    {
+        SysUser u = tokenService.getLoginUser(request).getUser();
+        sysDecentralizedPractice.setAuditorId(u.getUserId());
+        sysDecentralizedPractice.setAuditTime(new Date());
+        return toAjax(sysDecentralizedPracticeService.updateSysDecentralizedPractices(sysDecentralizedPractice));
     }
 
     /**

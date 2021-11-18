@@ -55,6 +55,12 @@ public class SysUser extends BaseEntity
     @Excel(name = "邮箱")
     private String email;
 
+    /** 期望人数 */
+    private int expectNumber;
+
+    /** 指导学生 */
+    private List<SysUser> guideStudent;
+
     /** 手机号码 */
     @ApiModelProperty("手机号码")
     @Excel(name = "手机号码")
@@ -117,8 +123,6 @@ public class SysUser extends BaseEntity
     @ApiModelProperty("角色组")
     private Long[] roleIds;
 
-    
-
     /** 岗位组 */
     @ApiModelProperty(hidden = true)
     private Long[] postIds;
@@ -135,6 +139,24 @@ public class SysUser extends BaseEntity
     public SysUser()
     {
 
+    }
+
+
+
+    public int getExpectNumber() {
+        return expectNumber;
+    }
+
+    public void setExpectNumber(int expectNumber) {
+        this.expectNumber = expectNumber;
+    }
+
+    public List<SysUser> getGuideStudent() {
+        return guideStudent;
+    }
+
+    public void setGuideStudent(List<SysUser> guideStudent) {
+        this.guideStudent = guideStudent;
     }
 
     public String getRoleName() {

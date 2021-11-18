@@ -1,6 +1,8 @@
 package com.ruoyi.arrangement.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.arrangement.domain.SysPracticeArrangement;
 import com.ruoyi.common.core.domain.entity.SysUser;
 
@@ -36,6 +38,7 @@ public interface SysPracticeArrangementMapper
      */
     public List<SysPracticeArrangement> selectSysPracticeArrangementList(SysPracticeArrangement sysPracticeArrangement);
 
+
     /**
      * 查询老师指导的学生信息
      *
@@ -43,6 +46,14 @@ public interface SysPracticeArrangementMapper
      * @return
      */
     public List<SysPracticeArrangement> selectStudentInfo(SysPracticeArrangement sysPracticeArrangement);
+
+    /**
+     * 查询老师指导的学生信息
+     *
+     * @param
+     * @return
+     */
+    public List<SysUser> selectGuideStudent(Long teacherId);
 
     /**
      * 新增实习安排

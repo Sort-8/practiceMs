@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.arrangement.domain.SysPracticeArrangement;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.practiceInfo.domain.SysPracticeInfo;
 
 /**

@@ -22,6 +22,9 @@ public class SysDecentralizedPractice extends BaseEntity
     /** 分散实习申请ID */
     private Long applyId;
 
+    /** 分散实习申请ID */
+    private String[] applyIds;
+
     /** 实习学生ID */
     @Excel(name = "实习学生ID")
     private Long stuId;
@@ -32,6 +35,15 @@ public class SysDecentralizedPractice extends BaseEntity
 
     /** 实习学生实体 */
     private SysUser student;
+
+    /** 待审批人数 */
+    private int awaitingApprovalNum;
+
+    /** 单位名称*/
+    private String companyName;
+
+    /** 总人数 */
+    private int totalNum;
 
     /** 实习单位经营（或业务）范围 */
     @Excel(name = "实习单位经营", readConverterExp = "或=业务")
@@ -78,6 +90,22 @@ public class SysDecentralizedPractice extends BaseEntity
     @Excel(name = "实习地点ID")
     private Long locationId;
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String[] getApplyIds() {
+        return applyIds;
+    }
+
+    public void setApplyIds(String[] applyIds) {
+        this.applyIds = applyIds;
+    }
+
     public LocationInfo getLocation() {
         return location;
     }
@@ -88,6 +116,22 @@ public class SysDecentralizedPractice extends BaseEntity
 
     public String getFlag() {
         return flag;
+    }
+
+    public int getAwaitingApprovalNum() {
+        return awaitingApprovalNum;
+    }
+
+    public void setAwaitingApprovalNum(int awaitingApprovalNum) {
+        this.awaitingApprovalNum = awaitingApprovalNum;
+    }
+
+    public int getTotalNum() {
+        return totalNum;
+    }
+
+    public void setTotalNum(int totalNum) {
+        this.totalNum = totalNum;
     }
 
     public void setFlag(String flag) {
