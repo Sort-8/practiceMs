@@ -28,9 +28,9 @@ public class SysPracticeScoreServiceImpl implements ISysPracticeScoreService
      * @return 实习成绩
      */
     @Override
-    public SysPracticeScore selectSysPracticeScoreById(Long scoreId)
+    public SysPracticeScore selectSysPracticeScoreById(SysPracticeScore sysPracticeScore)
     {
-        return sysPracticeScoreMapper.selectSysPracticeScoreById(scoreId);
+        return sysPracticeScoreMapper.selectSysPracticeScoreById(sysPracticeScore);
     }
 
     /**
@@ -40,7 +40,7 @@ public class SysPracticeScoreServiceImpl implements ISysPracticeScoreService
      * @return 实习成绩
      */
     @Override
-    @DataScope(userAlias = "sys_user",deptAlias = "sys_user")
+    @DataScope(userAlias = "su",deptAlias = "su")
     public List<SysPracticeScore> selectSysPracticeScoreList(SysPracticeScore sysPracticeScore)
     {
         return sysPracticeScoreMapper.selectSysPracticeScoreList(sysPracticeScore);

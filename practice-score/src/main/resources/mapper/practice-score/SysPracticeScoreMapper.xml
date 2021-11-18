@@ -47,34 +47,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
 
+    <sql id="selectSysPracticeScoreVo3">
+       select  score_id,su.user_id,su.user_name,su.nick_name,teacher_id,pi.location_id,entry_time as start_time,ending_time as end_time,sys_score,company_score,teacher_score,final_score,appraisal,summary,score.`status` from sys_practice_arrangement pa
+                 left join sys_practice_info pi on pa.info_id = pi.info_id
+                 left join sys_user su on stu_id = su.user_id
+                 left join sys_base_info bi on location_id = base_id
+                 left join sys_user tu on teacher_id = tu.user_id
+				 left join sys_practice_score score on score.user_id = su.user_id
+
+
+    </sql>
 
     <select id="selectSysPracticeScoreList" parameterType="SysPracticeScore" resultMap="SysPracticeScoreResult2">
-        <include refid="selectSysPracticeScoreVo2"/>
+        <include refid="selectSysPracticeScoreVo3"/>
         <where>
-            <if test="userId != null "> and sys_practice_score.user_id = #{userId}</if>
-            <if test="username != '' and username!=null"> and user_name = #{username}</if>
-            <if test="nickname != '' and nickname!=null"> and nick_name = #{nickname}</if>
+            pi.teacher_id = #{teacherId}
+            <if test="userId != null "> and su.user_id = #{userId}</if>
+            <if test="username != '' and username!=null"> and su.user_name = #{username}</if>
+            <if test="nickname != '' and nickname!=null"> and su.nick_name = #{nickname}</if>
             <if test="locationId != null "> and location_id = #{locationId}</if>
-            <if test="startTime != null "> and start_time = #{startTime}</if>
-            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="startTime != null "> and entry_time = #{startTime}</if>
+            <if test="endTime != null "> and ending_time = #{endTime}</if>
             <if test="sysScore != null "> and sys_score = #{sysScore}</if>
             <if test="companyScore != null "> and company_score = #{companyScore}</if>
             <if test="teacherScore != null "> and teacher_score = #{teacherScore}</if>
             <if test="finalScore != null "> and final_score = #{finalScore}</if>
             <if test="appraisal != null  and appraisal != ''"> and appraisal = #{appraisal}</if>
             <if test="summary != null  and summary != ''"> and summary = #{summary}</if>
-            <if test="status != null  and status != ''"> and status = #{status}</if>
-            and sys_user.user_id=sys_practice_score.user_id
+            <if test="status != null  and status != ''"> and score.status = #{status}</if>
+
         </where>
         <!-- 数据范围过滤 -->
-        ${params.dataScope}
     </select>
 
 
 
     <select id="selectSysPracticeScoreById" parameterType="Long" resultMap="SysPracticeScoreResult2">
-        <include refid="selectSysPracticeScoreVo2"/>
-        where score_id = #{scoreId} and sys_user.user_id=sys_practice_score.user_id
+        <include refid="selectSysPracticeScoreVo3"/>
+        where su.user_id = #{userId} and pi.teacher_id = #{teacherId}
     </select>
 
     <insert id="insertSysPracticeScore" parameterType="SysPracticeScore" useGeneratedKeys="true" keyProperty="scoreId">

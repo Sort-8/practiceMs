@@ -18,7 +18,7 @@ public interface ISysPracticeScoreService
      * @param scoreId 实习成绩ID
      * @return 实习成绩
      */
-    public SysPracticeScore selectSysPracticeScoreById(Long scoreId);
+    public SysPracticeScore selectSysPracticeScoreById(SysPracticeScore sysPracticeScore);
 
     /**
      * 查询实习成绩列表

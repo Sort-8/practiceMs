@@ -74,10 +74,10 @@ public class SysPracticeScoreController extends BaseController
      * 获取实习成绩详细信息
      */
     @PreAuthorize("@ss.hasPermi('practice-score:practiceScore:query')")
-    @GetMapping(value = "/{scoreId}")
-    public AjaxResult getInfo(@PathVariable("scoreId") Long scoreId)
+    @GetMapping(value = "/")
+    public AjaxResult getInfo(SysPracticeScore sysPracticeScore)
     {
-        return AjaxResult.success(sysPracticeScoreService.selectSysPracticeScoreById(scoreId));
+        return AjaxResult.success(sysPracticeScoreService.selectSysPracticeScoreById(sysPracticeScore));
     }
 
     /**

@@ -63,6 +63,10 @@ public class SysPracticeScore extends BaseEntity
     @Excel(name = "最终成绩")
     private BigDecimal finalScore;
 
+
+    /** 表示老师ID */
+    private Long teacherId;
+
     /** 习鉴定表(PDF路径) */
     @Excel(name = "习鉴定表(PDF路径)")
     private String appraisal;
@@ -78,6 +82,13 @@ public class SysPracticeScore extends BaseEntity
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
 
+    public Long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
+    }
 
     public String getNickname() {
         return nickname;
