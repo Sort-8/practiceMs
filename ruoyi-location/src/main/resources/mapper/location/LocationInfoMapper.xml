@@ -15,10 +15,11 @@
         <result property="leader" column="leader"/>
         <result property="status" column="status"/>
         <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
     </resultMap>
 
     <sql id="selectLocationInfoVo">
-        select location_id, company_name, address, contacts, tude, phone, nature, leader, status, del_flag from sys_location_info
+        select location_id, company_name, address, contacts, tude, phone, nature, leader, status, del_flag, create_time from sys_location_info
     </sql>
 
     <select id="selectLocationTude" parameterType="LocationInfo" resultMap="LocationInfoResult">
@@ -57,6 +58,7 @@
             <if test="leader != null and leader != ''">leader,</if>
             <if test="status != null">status,</if>
             <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="companyName != null and companyName != ''">#{companyName},</if>
@@ -68,6 +70,7 @@
             <if test="leader != null and leader != ''">#{leader},</if>
             <if test="status != null">#{status},</if>
             <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
         </trim>
     </insert>
 
@@ -83,6 +86,7 @@
             <if test="leader != null and leader != ''">leader = #{leader},</if>
             <if test="status != null">status = #{status},</if>
             <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
         </trim>
         where location_id = #{locationId}
     </update>
