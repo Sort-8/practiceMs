@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.practice;
 
 import java.util.List;
+
+import com.ruoyi.practiceScore.domain.Setting;
+import com.ruoyi.practiceScore.service.SettingService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +35,42 @@ public class SysPracticeScoreController extends BaseController
 {
     @Autowired
     private ISysPracticeScoreService sysPracticeScoreService;
+
+
+
+
+
+    /**
+     * 修改设定信息
+     */
+    @Log(title = "修改设定信息", businessType = BusinessType.UPDATE)
+    @PutMapping("/setting/edit")
+    public AjaxResult settingEdit(@RequestBody SysPracticeScore sysPracticeScore)
+    {
+        return toAjax(sysPracticeScoreService.updateScoreStatus(sysPracticeScore));
+    }
+
+
+    /**
+     * 重新计算成绩
+     */
+    @Log(title = "计算成绩", businessType = BusinessType.UPDATE)
+    @PutMapping("/calculate")
+    public AjaxResult calculate(@RequestBody SysPracticeScore sysPracticeScore)
+    {
+        return toAjax(sysPracticeScoreService.updateScoreStatus(sysPracticeScore));
+    }
+
+    /**
+     * 查询设置列表
+     */
+    @GetMapping("/setting/list")
+    public TableDataInfo settingList()
+    {
+
+        List<Setting> list = sysPracticeScoreService.getList();
+        return getDataTable(list);
+    }
 
     /**
      * 查询实习成绩列表

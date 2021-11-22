@@ -3,7 +3,9 @@ package com.ruoyi.practiceScore.service.impl;
 import java.util.List;
 
 import com.ruoyi.common.annotation.DataScope;
+import com.ruoyi.practiceScore.domain.Setting;
 import com.ruoyi.practiceScore.domain.SysPracticeScore;
+import com.ruoyi.practiceScore.mapper.SettingMapper;
 import com.ruoyi.practiceScore.mapper.SysPracticeScoreMapper;
 import com.ruoyi.practiceScore.service.ISysPracticeScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,23 @@ public class SysPracticeScoreServiceImpl implements ISysPracticeScoreService
 {
     @Autowired
     private SysPracticeScoreMapper sysPracticeScoreMapper;
+
+    private SettingMapper settingMapper;
+
+    @Override
+    public List<Setting> getList() {
+        return settingMapper.selectSettingList();
+    }
+
+    @Override
+    public int editSetting(Setting setting) {
+        return 0;
+    }
+
+    @Override
+    public int calculate() {
+        return 0;
+    }
 
     /**
      * 查询实习成绩

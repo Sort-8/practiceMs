@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.practiceScore.mapper.SettingMapper">
+
+    <resultMap id="SettingMap" type="Setting">
+        <result property="set_id" column="set_id"></result>
+        <result property="systemWeight" column="system_score_weight"></result>
+        <result property="teacherWeight" column="teacher_score_weight"></result>
+        <result property="companyWeight" column="company_score_weight"></result>
+        <result property="punchWeight" column="punch_weight"></result>
+        <result property="logWeight" column="log_weight"></result>
+
+    </resultMap>
+
+    <sql id="selectSettingVo">
+        SELECT * FROM sys_score_setting
+    </sql>
+    
+    <select id="selectSettingList" resultMap="SettingMap">
+        <include refid="selectSettingVo"></include>
+    </select>
+</mapper>

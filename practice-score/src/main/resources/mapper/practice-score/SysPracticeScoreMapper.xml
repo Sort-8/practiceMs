@@ -61,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectSysPracticeScoreList" parameterType="SysPracticeScore" resultMap="SysPracticeScoreResult2">
         <include refid="selectSysPracticeScoreVo3"/>
         <where>
-            pi.teacher_id = #{teacherId}
+            <if test="teacherId != null ">pi.teacher_id = #{teacherId}</if>
             <if test="userId != null "> and su.user_id = #{userId}</if>
             <if test="username != '' and username!=null"> and su.user_name = #{username}</if>
             <if test="nickname != '' and nickname!=null"> and su.nick_name = #{nickname}</if>
@@ -77,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null  and status != ''"> and score.status = #{status}</if>
 
         </where>
+        GROUP BY su.user_id
         <!-- 数据范围过滤 -->
     </select>
 
@@ -84,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectSysPracticeScoreById" parameterType="Long" resultMap="SysPracticeScoreResult2">
         <include refid="selectSysPracticeScoreVo3"/>
-        where su.user_id = #{userId} and pi.teacher_id = #{teacherId}
+        where su.user_id = #{userId} and pi.teacher_id = #{teacherId} GROUP BY su.user_id
     </select>
 
     <insert id="insertSysPracticeScore" parameterType="SysPracticeScore" useGeneratedKeys="true" keyProperty="scoreId">

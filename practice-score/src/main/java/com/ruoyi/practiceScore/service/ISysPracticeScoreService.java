@@ -2,6 +2,7 @@ package com.ruoyi.practiceScore.service;
 
 import java.util.List;
 
+import com.ruoyi.practiceScore.domain.Setting;
 import com.ruoyi.practiceScore.domain.SysPracticeScore;
 
 /**
@@ -10,8 +11,11 @@ import com.ruoyi.practiceScore.domain.SysPracticeScore;
  * @author ruoyi
  * @date 2021-10-03
  */
-public interface ISysPracticeScoreService 
+public interface ISysPracticeScoreService
 {
+    public List<Setting> getList();
+    public int editSetting(Setting setting);
+    public int calculate();
     /**
      * 查询实习成绩
      * 
