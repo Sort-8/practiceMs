@@ -23,6 +23,7 @@ public class SysPracticeScoreServiceImpl implements ISysPracticeScoreService
     @Autowired
     private SysPracticeScoreMapper sysPracticeScoreMapper;
 
+    @Autowired
     private SettingMapper settingMapper;
 
     @Override
@@ -32,7 +33,7 @@ public class SysPracticeScoreServiceImpl implements ISysPracticeScoreService
 
     @Override
     public int editSetting(Setting setting) {
-        return 0;
+        return settingMapper.editSetting(setting);
     }
 
     @Override

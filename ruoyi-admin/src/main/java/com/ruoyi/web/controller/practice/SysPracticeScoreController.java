@@ -43,11 +43,12 @@ public class SysPracticeScoreController extends BaseController
     /**
      * 修改设定信息
      */
-    @Log(title = "修改设定信息", businessType = BusinessType.UPDATE)
+    @Log(title = "修改设定信息")
     @PutMapping("/setting/edit")
-    public AjaxResult settingEdit(@RequestBody SysPracticeScore sysPracticeScore)
+    public AjaxResult settingEdit(@RequestBody Setting setting)
     {
-        return toAjax(sysPracticeScoreService.updateScoreStatus(sysPracticeScore));
+        System.out.println(setting);
+        return toAjax(sysPracticeScoreService.editSetting(setting));
     }
 
 

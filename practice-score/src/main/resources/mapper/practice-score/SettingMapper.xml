@@ -21,4 +21,16 @@
     <select id="selectSettingList" resultMap="SettingMap">
         <include refid="selectSettingVo"></include>
     </select>
+
+    <update id="editSetting">
+        update sys_score_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="systemWeight != null">system_score_weight = #{systemWeight},</if>
+            <if test="teacherWeight != null">teacher_score_weight = #{teacherWeight},</if>
+            <if test="companyWeight != null">company_score_weight = #{companyWeight},</if>
+            <if test="punchWeight != null">punch_weight = #{punchWeight},</if>
+            <if test="logWeight != null">log_weight = #{logWeight},</if>
+        </trim>
+        where `set_id` = 1
+    </update>
 </mapper>

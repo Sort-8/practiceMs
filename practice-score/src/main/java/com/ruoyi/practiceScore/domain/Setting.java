@@ -20,14 +20,6 @@ public class Setting extends BaseEntity {
     private float logWeight;
 
 
-    public Setting(int set_id, float systemWeight, float teacherWeight, float companyWeight, float punchWeight, float logWeight) {
-        this.set_id = set_id;
-        this.systemWeight = systemWeight;
-        this.teacherWeight = teacherWeight;
-        this.companyWeight = companyWeight;
-        this.punchWeight = punchWeight;
-        this.logWeight = logWeight;
-    }
 
     @Override
     public String toString() {
