@@ -458,6 +458,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 结果
      */
     @Override
+    @Transactional
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName, Long deptId) {
         if (StringUtils.isNull(userList) || userList.size() == 0) {
             throw new CustomException("导入用户数据不能为空！");
@@ -518,6 +519,13 @@ public class SysUserServiceImpl implements ISysUserService {
         }
         return successMsg.toString();
     }
+
+    @Override
+    @Transactional
+    public String dataArchiving(Integer year) {
+        return userMapper.dataArchiving(year);
+    }
+
 
     /**
      * 判断导入用户专业是否为操作者所属学院

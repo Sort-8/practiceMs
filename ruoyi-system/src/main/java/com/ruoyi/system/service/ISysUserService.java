@@ -213,4 +213,11 @@ public interface ISysUserService
      * @return 结果
      */
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName, Long deptId);
+
+    /**
+     * 数据归档
+     *
+     * @return 结果
+     */
+    public String dataArchiving(Integer year);
 }
