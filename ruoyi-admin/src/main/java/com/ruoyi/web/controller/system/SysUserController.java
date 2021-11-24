@@ -47,9 +47,6 @@ public class SysUserController extends BaseController {
     @Autowired
     private ISysRoleService roleService;
 
-//    @Autowired
-//    private ISysPostService postService;
-
     @Autowired
     private TokenService tokenService;
 
@@ -248,6 +245,17 @@ public class SysUserController extends BaseController {
     @PutMapping("/authRole")
     public AjaxResult insertAuthRole(Long userId, Long[] roleIds) {
         userService.insertUserAuth(userId, roleIds);
+        return success();
+    }
+
+    /**
+     * 数据归档
+     */
+    @ApiOperation("数据归档")
+    @PreAuthorize("@ss.hasPermi('system:user:archive')")
+    @PostMapping("/archived")
+    public AjaxResult dataArchiving(Integer year){
+        userService.dataArchiving(year);
         return success();
     }
 }
