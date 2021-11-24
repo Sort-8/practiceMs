@@ -56,10 +56,10 @@ public class SysPracticeScoreController extends BaseController
      * 重新计算成绩
      */
     @Log(title = "计算成绩", businessType = BusinessType.UPDATE)
-    @PutMapping("/calculate")
-    public AjaxResult calculate(@RequestBody SysPracticeScore sysPracticeScore)
+    @PutMapping("/calculate/{scoreIds}")
+    public AjaxResult calculate(@PathVariable Long[] scoreIds)
     {
-        return toAjax(sysPracticeScoreService.updateScoreStatus(sysPracticeScore));
+        return toAjax(sysPracticeScoreService.calculate(scoreIds));
     }
 
     /**

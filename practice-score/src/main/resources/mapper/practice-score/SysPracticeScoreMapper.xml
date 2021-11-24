@@ -20,6 +20,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="delFlag"    column="del_flag"    />
     </resultMap>
 
+    <resultMap id="Calculate" type="Calculate">
+        <result property="username" column="username"></result>
+        <result property="punchDay" column="punchDay"></result>
+        <result property="logDay" column="logDay"></result>
+    </resultMap>
+
     <resultMap type="SysPracticeScore" id="SysPracticeScoreResult2">
         <result property="scoreId"    column="score_id"    />
         <result property="userId"    column="user_id"    />
@@ -55,7 +61,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                  left join sys_user tu on teacher_id = tu.user_id
 				 left join sys_practice_score score on score.user_id = su.user_id
 
-
     </sql>
 
     <select id="selectSysPracticeScoreList" parameterType="SysPracticeScore" resultMap="SysPracticeScoreResult2">
@@ -75,17 +80,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="appraisal != null  and appraisal != ''"> and appraisal = #{appraisal}</if>
             <if test="summary != null  and summary != ''"> and summary = #{summary}</if>
             <if test="status != null  and status != ''"> and score.status = #{status}</if>
-
         </where>
         GROUP BY su.user_id
-        <!-- 数据范围过滤 -->
+
     </select>
 
+    <select id="getPunchDayByScoreId" resultMap="Calculate">
+        SELECT  count(*) AS punchDay FROM sys_attendance WHERE user_name IN
+        (SELECT user.user_name FROM sys_practice_score score LEFT JOIN sys_user user on score.user_id = user.user_id WHERE score_id =#{scoreId});
+    </select>
 
+    <select id="getLogDayByScoreId" resultMap="Calculate">
+         SELECT count(*) AS logDay FROM sys_practice_log WHERE user_name IN
+         (SELECT user.user_name FROM sys_practice_score score LEFT JOIN sys_user user on score.user_id = user.user_id WHERE score_id =#{scoreId});
+    </select>
 
     <select id="selectSysPracticeScoreById" parameterType="Long" resultMap="SysPracticeScoreResult2">
         <include refid="selectSysPracticeScoreVo3"/>
-        where su.user_id = #{userId} and pi.teacher_id = #{teacherId} GROUP BY su.user_id
+        <where>
+            <if test="userId != null">su.user_id = #{userId}</if>
+            <if test="teacherId!=null">and pi.teacher_id = #{teacherId}</if>
+            <if test="scoreId!=null ">and score_id = #{scoreId} </if>
+        </where>
+        GROUP BY su.user_id
     </select>
 
     <insert id="insertSysPracticeScore" parameterType="SysPracticeScore" useGeneratedKeys="true" keyProperty="scoreId">

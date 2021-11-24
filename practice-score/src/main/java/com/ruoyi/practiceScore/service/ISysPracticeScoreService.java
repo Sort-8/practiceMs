@@ -13,9 +13,26 @@ import com.ruoyi.practiceScore.domain.SysPracticeScore;
  */
 public interface ISysPracticeScoreService
 {
+    /**
+     * 查询设定信息
+     *
+     * @return 实习成绩
+     */
     public List<Setting> getList();
+
+    /**
+     * 查询设定信息
+     * @param setting 修改后的设定集
+     * @return 实习成绩
+     */
     public int editSetting(Setting setting);
-    public int calculate();
+
+    /**
+     * 查询设定信息
+     * @param scoreIds 需要计算的成绩组
+     * @return 实习成绩
+     */
+    public int calculate(Long[] scoreIds);
     /**
      * 查询实习成绩
      * 

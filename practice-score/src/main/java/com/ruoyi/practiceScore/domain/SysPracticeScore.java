@@ -151,39 +151,39 @@ public class SysPracticeScore extends BaseEntity
     {
         return endTime;
     }
-    public void setSysScore(BigDecimal sysScore) 
+    public void setSysScore(BigDecimal sysScore)
     {
         this.sysScore = sysScore;
     }
 
-    public BigDecimal getSysScore() 
+    public BigDecimal getSysScore()
     {
         return sysScore;
     }
-    public void setCompanyScore(BigDecimal companyScore) 
+    public void setCompanyScore(BigDecimal companyScore)
     {
         this.companyScore = companyScore;
     }
 
-    public BigDecimal getCompanyScore() 
+    public BigDecimal getCompanyScore()
     {
         return companyScore;
     }
-    public void setTeacherScore(BigDecimal teacherScore) 
+    public void setTeacherScore(BigDecimal teacherScore)
     {
         this.teacherScore = teacherScore;
     }
 
-    public BigDecimal getTeacherScore() 
+    public BigDecimal getTeacherScore()
     {
         return teacherScore;
     }
-    public void setFinalScore(BigDecimal finalScore) 
+    public void setFinalScore(BigDecimal finalScore)
     {
         this.finalScore = finalScore;
     }
 
-    public BigDecimal getFinalScore() 
+    public BigDecimal getFinalScore()
     {
         return finalScore;
     }
