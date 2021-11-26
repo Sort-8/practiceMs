@@ -13,13 +13,12 @@
         <result property="phone" column="phone"/>
         <result property="nature" column="nature"/>
         <result property="leader" column="leader"/>
-        <result property="status" column="status"/>
         <result property="delFlag" column="del_flag"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
 
     <sql id="selectLocationInfoVo">
-        select location_id, company_name, address, contacts, tude, phone, nature, leader, status, del_flag, create_time from sys_location_info
+        select location_id, company_name, address, contacts, tude, phone, nature, leader, del_flag, create_time from sys_location_info
     </sql>
 
     <select id="selectLocationTude" parameterType="LocationInfo" resultMap="LocationInfoResult">
@@ -32,13 +31,23 @@
     <select id="selectLocationInfoList" parameterType="LocationInfo" resultMap="LocationInfoResult">
         <include refid="selectLocationInfoVo"/>
         <where>
-            <if test="companyName != null  and companyName != ''">and company_name like concat('%', #{companyName},
-                '%')
+            <if test="searchKey == 'companyName'">and company_name like concat('%', #{searchValue},'%')</if>
+            <if test="searchKey == 'address'">and address like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'contacts'">and contacts like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'phone'">and phone like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'nature'">and nature like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'leader'">and leader like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'allKeys' or (searchKey == null and searchValue != null)">
+                company_name like concat('%', #{searchValue}, '%') or
+                address like concat('%', #{searchValue}, '%') or
+                contacts like concat('%', #{searchValue}, '%') or
+                phone like concat('%', #{searchValue}, '%') or
+                nature like concat('%', #{searchValue}, '%') or
+                leader like concat('%', #{searchValue}, '%')
             </if>
-            <if test="address != null  and address != ''">and address like concat('%', #{address}, '%')</if>
-            <if test="contacts != null  and contacts != ''">and contacts like concat('%', #{contacts}, '%')</if>
             and del_flag=0
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectLocationInfoById" parameterType="Long" resultMap="LocationInfoResult">
@@ -56,7 +65,6 @@
             <if test="phone != null">phone,</if>
             <if test="nature != null and nature != ''">nature,</if>
             <if test="leader != null and leader != ''">leader,</if>
-            <if test="status != null">status,</if>
             <if test="delFlag != null">del_flag,</if>
             <if test="createTime != null">create_time,</if>
         </trim>
@@ -68,7 +76,6 @@
             <if test="phone != null">#{phone},</if>
             <if test="nature != null and nature != ''">#{nature},</if>
             <if test="leader != null and leader != ''">#{leader},</if>
-            <if test="status != null">#{status},</if>
             <if test="delFlag != null">#{delFlag},</if>
             <if test="createTime != null">#{createTime},</if>
         </trim>
@@ -84,7 +91,6 @@
             <if test="phone != null">phone = #{phone},</if>
             <if test="nature != null and nature != ''">nature = #{nature},</if>
             <if test="leader != null and leader != ''">leader = #{leader},</if>
-            <if test="status != null">status = #{status},</if>
             <if test="delFlag != null">del_flag = #{delFlag},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
         </trim>
@@ -106,11 +112,4 @@
         </foreach>
     </update>
 
-    <update id="updateLocationStatus" parameterType="LocationInfo">
-        update sys_location_info
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="status != null">status = #{status},</if>
-        </trim>
-        where location_id = #{locationId}
-    </update>
 </mapper>

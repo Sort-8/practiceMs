@@ -107,14 +107,4 @@ public class LocationInfoController extends BaseController
         return toAjax(locationInfoService.deleteLocationInfoByIds(locationIds));
     }
 
-    /**
-     * 状态修改
-     */
-    @PreAuthorize("@ss.hasPermi('location:info:edit')")
-    @Log(title = "地点信息", businessType = BusinessType.UPDATE)
-    @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody LocationInfo locationInfo)
-    {
-        return toAjax(locationInfoService.updateLocationStatus(locationInfo));
-    }
 }
