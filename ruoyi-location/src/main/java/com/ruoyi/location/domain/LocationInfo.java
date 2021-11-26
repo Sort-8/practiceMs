@@ -1,9 +1,12 @@
 package com.ruoyi.location.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 地点信息对象 sys_location_info
@@ -48,6 +51,11 @@ public class LocationInfo extends BaseEntity
     /** 状态（0正常 1停用） */
     @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
     private String status;
+
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
@@ -142,6 +150,15 @@ public class LocationInfo extends BaseEntity
     {
         return delFlag;
     }
+    public void setCreateTime(Date createTime)
+    {
+        this.createTime = createTime;
+    }
+
+    public Date getCreateTime()
+    {
+        return createTime;
+    }
 
     @Override
     public String toString() {
@@ -156,6 +173,7 @@ public class LocationInfo extends BaseEntity
                 .append("leader", getLeader())
                 .append("status", getStatus())
                 .append("delFlag", getDelFlag())
+                .append("createTime", getCreateTime())
                 .toString();
     }
 }

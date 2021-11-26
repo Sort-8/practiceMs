@@ -2,6 +2,7 @@ package com.ruoyi.practiceScore.service;
 
 import java.util.List;
 
+import com.ruoyi.practiceScore.domain.Setting;
 import com.ruoyi.practiceScore.domain.SysPracticeScore;
 
 /**
@@ -10,15 +11,35 @@ import com.ruoyi.practiceScore.domain.SysPracticeScore;
  * @author ruoyi
  * @date 2021-10-03
  */
-public interface ISysPracticeScoreService 
+public interface ISysPracticeScoreService
 {
+    /**
+     * 查询设定信息
+     *
+     * @return 实习成绩
+     */
+    public List<Setting> getList();
+
+    /**
+     * 查询设定信息
+     * @param setting 修改后的设定集
+     * @return 实习成绩
+     */
+    public int editSetting(Setting setting);
+
+    /**
+     * 查询设定信息
+     * @param scoreIds 需要计算的成绩组
+     * @return 实习成绩
+     */
+    public int calculate(Long[] scoreIds);
     /**
      * 查询实习成绩
      * 
      * @param scoreId 实习成绩ID
      * @return 实习成绩
      */
-    public SysPracticeScore selectSysPracticeScoreById(Long scoreId);
+    public SysPracticeScore selectSysPracticeScoreById(SysPracticeScore sysPracticeScore);
 
     /**
      * 查询实习成绩列表

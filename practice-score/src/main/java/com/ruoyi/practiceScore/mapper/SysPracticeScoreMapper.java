@@ -1,6 +1,8 @@
 package com.ruoyi.practiceScore.mapper;
 
 import java.util.List;
+
+import com.ruoyi.practiceScore.domain.Calculate;
 import com.ruoyi.practiceScore.domain.SysPracticeScore;
 
 /**
@@ -11,13 +13,17 @@ import com.ruoyi.practiceScore.domain.SysPracticeScore;
  */
 public interface SysPracticeScoreMapper 
 {
+
+
+    public Calculate getLogDayByScoreId(Long scoreId);
+
+    public Calculate getPunchDayByScoreId(Long scoreId);
+
     /**
      * 查询实习成绩
-     * 
-     * @param scoreId 实习成绩ID
      * @return 实习成绩
      */
-    public SysPracticeScore selectSysPracticeScoreById(Long scoreId);
+    public SysPracticeScore selectSysPracticeScoreById(SysPracticeScore sysPracticeScore);
 
     /**
      * 查询实习成绩列表

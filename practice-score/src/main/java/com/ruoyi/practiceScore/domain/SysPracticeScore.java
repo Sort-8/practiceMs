@@ -63,6 +63,10 @@ public class SysPracticeScore extends BaseEntity
     @Excel(name = "最终成绩")
     private BigDecimal finalScore;
 
+
+    /** 表示老师ID */
+    private Long teacherId;
+
     /** 习鉴定表(PDF路径) */
     @Excel(name = "习鉴定表(PDF路径)")
     private String appraisal;
@@ -78,6 +82,13 @@ public class SysPracticeScore extends BaseEntity
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
 
+    public Long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
+    }
 
     public String getNickname() {
         return nickname;
@@ -140,39 +151,39 @@ public class SysPracticeScore extends BaseEntity
     {
         return endTime;
     }
-    public void setSysScore(BigDecimal sysScore) 
+    public void setSysScore(BigDecimal sysScore)
     {
         this.sysScore = sysScore;
     }
 
-    public BigDecimal getSysScore() 
+    public BigDecimal getSysScore()
     {
         return sysScore;
     }
-    public void setCompanyScore(BigDecimal companyScore) 
+    public void setCompanyScore(BigDecimal companyScore)
     {
         this.companyScore = companyScore;
     }
 
-    public BigDecimal getCompanyScore() 
+    public BigDecimal getCompanyScore()
     {
         return companyScore;
     }
-    public void setTeacherScore(BigDecimal teacherScore) 
+    public void setTeacherScore(BigDecimal teacherScore)
     {
         this.teacherScore = teacherScore;
     }
 
-    public BigDecimal getTeacherScore() 
+    public BigDecimal getTeacherScore()
     {
         return teacherScore;
     }
-    public void setFinalScore(BigDecimal finalScore) 
+    public void setFinalScore(BigDecimal finalScore)
     {
         this.finalScore = finalScore;
     }
 
-    public BigDecimal getFinalScore() 
+    public BigDecimal getFinalScore()
     {
         return finalScore;
     }

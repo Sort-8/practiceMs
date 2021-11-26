@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.practice;
 
 import java.util.List;
+
+import com.ruoyi.practiceScore.domain.Setting;
+import com.ruoyi.practiceScore.service.SettingService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +35,43 @@ public class SysPracticeScoreController extends BaseController
 {
     @Autowired
     private ISysPracticeScoreService sysPracticeScoreService;
+
+
+
+
+
+    /**
+     * 修改设定信息
+     */
+    @Log(title = "修改设定信息")
+    @PutMapping("/setting/edit")
+    public AjaxResult settingEdit(@RequestBody Setting setting)
+    {
+        System.out.println(setting);
+        return toAjax(sysPracticeScoreService.editSetting(setting));
+    }
+
+
+    /**
+     * 重新计算成绩
+     */
+    @Log(title = "计算成绩", businessType = BusinessType.UPDATE)
+    @PutMapping("/calculate/{scoreIds}")
+    public AjaxResult calculate(@PathVariable Long[] scoreIds)
+    {
+        return toAjax(sysPracticeScoreService.calculate(scoreIds));
+    }
+
+    /**
+     * 查询设置列表
+     */
+    @GetMapping("/setting/list")
+    public TableDataInfo settingList()
+    {
+
+        List<Setting> list = sysPracticeScoreService.getList();
+        return getDataTable(list);
+    }
 
     /**
      * 查询实习成绩列表
@@ -74,10 +114,10 @@ public class SysPracticeScoreController extends BaseController
      * 获取实习成绩详细信息
      */
     @PreAuthorize("@ss.hasPermi('practice-score:practiceScore:query')")
-    @GetMapping(value = "/{scoreId}")
-    public AjaxResult getInfo(@PathVariable("scoreId") Long scoreId)
+    @GetMapping(value = "/")
+    public AjaxResult getInfo(SysPracticeScore sysPracticeScore)
     {
-        return AjaxResult.success(sysPracticeScoreService.selectSysPracticeScoreById(scoreId));
+        return AjaxResult.success(sysPracticeScoreService.selectSysPracticeScoreById(sysPracticeScore));
     }
 
     /**

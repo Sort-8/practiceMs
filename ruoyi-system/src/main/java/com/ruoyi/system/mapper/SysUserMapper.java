@@ -158,5 +158,11 @@ public interface SysUserMapper
      */
     public SysUser checkEmailUnique(String email);
 
+    /**
+     * 数据归档
+     *
+     * @return 结果
+     */
+    public String dataArchiving(Integer year);
 
 }
