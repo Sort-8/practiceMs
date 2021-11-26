@@ -22,6 +22,13 @@ public interface ISysAttendanceService
     public SysAttendance selectSysAttendanceById(Long attendanceId);
 
     /**
+     * 查询本周每日的打卡情况
+     *
+     * @return 打卡签到
+     */
+    public int[] selectNowWeekAttendanceList();
+
+    /**
      * 查询打卡签到列表
      *
      * @param sysAttendance 打卡签到

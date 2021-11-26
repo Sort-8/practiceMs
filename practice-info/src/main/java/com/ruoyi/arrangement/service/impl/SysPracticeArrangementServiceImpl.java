@@ -9,7 +9,10 @@ import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
 import com.ruoyi.decentralize.service.ISysDecentralizedPracticeService;
+import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.system.service.impl.SysUserServiceImpl;
 import org.apache.commons.beanutils.PropertyUtilsBean;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.arrangement.mapper.SysPracticeArrangementMapper;
@@ -29,6 +32,9 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
 {
     @Autowired
     private SysPracticeArrangementMapper sysPracticeArrangementMapper;
+
+    @Autowired
+    private ISysUserService sysUserService;
 
     @Autowired
     private ISysDecentralizedPracticeService iSysDecentralizedPracticeService;
@@ -111,41 +117,50 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
      * @return 实习安排
      */
     @Override
-    public List<Object> selectAllPractice(SysPracticeArrangement sysPracticeArrangement)
+    public Map selectAllPractice(SysPracticeArrangement sysPracticeArrangement)
     {
         PageDomain pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
-        List<Object> practiceArrangement = new ArrayList<>();
+
         List<SysPracticeArrangement> list_a = sysPracticeArrangementMapper.selectSysPracticeArrangementList(sysPracticeArrangement);
-        for(int i = 0 ; i < list_a.size() ; i++){
-            practiceArrangement.add(Arrays.asList(list_a.get(i)));
-        }
 
         SysDecentralizedPractice practice = new SysDecentralizedPractice();
-        List<Object> decentralizedPractice = new ArrayList<>();
         List<SysDecentralizedPractice> list_d = iSysDecentralizedPracticeService.selectSysDecentralizedPracticeList(practice);
-        for(int i = 0 ; i < list_d.size() ; i++){
-            decentralizedPractice.add(Arrays.asList(list_d.get(i)));
+
+        List list = new ArrayList();
+        Iterator<SysPracticeArrangement> it1 = list_a.iterator();
+        while (it1.hasNext()) {
+            list.add(it1.next());
+        }
+        Iterator<SysDecentralizedPractice> it2 = list_d.iterator();
+        while (it2.hasNext()) {
+            list.add(it2.next());
         }
 
-        List<Object> result = new ArrayList<>();
-        List<Object> returnResult = new ArrayList<>();
-        for(Object o : practiceArrangement){
-            result.add(o);
-        }
-        for(Object o : decentralizedPractice){
-            result.add(o);
-        }
-        if((pageNum - 1) * pageSize > result.size()){
-            return returnResult;
+        Map r = new HashMap();
+        int i = 0;
+        if((pageNum - 1) * pageSize > list.size()){
+            for(Object obj : list){
+                r.put(i++ , obj);
+                if(i == list.size()){
+                    break;
+                }
+            }
         }
         int start = (pageNum - 1)* pageSize;
-        if(result.size() - (pageNum - 1)* pageSize <  pageSize){
-            pageSize = result.size() - (pageNum - 1)* pageSize;
+        if(list.size() - (pageNum - 1)* pageSize <  pageSize){
+            pageSize = list.size() - (pageNum - 1)* pageSize;
         }
-        returnResult = result.subList( start , start + pageSize);
-        return returnResult;
+        List returnResult = list.subList( start , start + pageSize);
+        r.put("total",list.size());
+        for(Object obj : returnResult){
+            r.put(i++ , obj);
+            if(i == returnResult.size()){
+                break;
+            }
+        }
+        return r;
     }
 
     @Override
@@ -154,7 +169,12 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
         map.put("focusPracticeNum",selectSysPracticeArrangementList(sysPracticeArrangement).size());
         SysDecentralizedPractice decentralizedPractice = new SysDecentralizedPractice();
         map.put("scatteredPracticeNum",iSysDecentralizedPracticeService.selectSysDecentralizedPracticeList(decentralizedPractice).size());
-        map.put("unPracticeNum",iSysDecentralizedPracticeService.getPracticeByStatus("1"));
+        SysUser user = new SysUser();
+        int noPracticeNum = iSysDecentralizedPracticeService.getPracticeByStatus("1");
+        int noApplyNum = sysUserService.selectNoPracticeStudent(user).size();
+        map.put("unPracticeTotalNum",noApplyNum + noPracticeNum);
+        map.put("noApplyNum",noApplyNum);
+        map.put("noPracticeNum",noPracticeNum);
         return map;
     }
 

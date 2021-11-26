@@ -2,10 +2,11 @@ package com.ruoyi.common.core.page;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 表格分页数据对象
- * 
+ *
  * @author ruoyi
  */
 public class TableDataInfo implements Serializable
@@ -17,6 +18,9 @@ public class TableDataInfo implements Serializable
 
     /** 列表数据 */
     private List<?> rows;
+
+    /** 列表数据(Map) */
+    private Map data;
 
     /** 消息状态码 */
     private int code;
@@ -33,7 +37,7 @@ public class TableDataInfo implements Serializable
 
     /**
      * 分页
-     * 
+     *
      * @param list 列表数据
      * @param total 总记录数
      */
@@ -41,6 +45,14 @@ public class TableDataInfo implements Serializable
     {
         this.rows = list;
         this.total = total;
+    }
+
+    public Map getData() {
+        return data;
+    }
+
+    public void setData(Map data) {
+        this.data = data;
     }
 
     public long getTotal()

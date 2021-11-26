@@ -1,8 +1,8 @@
 package com.ruoyi.common.core.controller;
 
 import java.beans.PropertyEditorSupport;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -20,7 +20,7 @@ import com.ruoyi.common.utils.sql.SqlUtil;
 
 /**
  * web层通用数据处理
- * 
+ *
  * @author ruoyi
  */
 public class BaseController
@@ -87,8 +87,33 @@ public class BaseController
     }
 
     /**
+     * 响应请求分页数据
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    protected TableDataInfo getDataObj(Map m)
+    {
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(HttpStatus.SUCCESS);
+        rspData.setMsg("查询成功");
+        try{
+            int total = Integer.parseInt(m.get("total").toString());
+            m.remove("total");
+            List list = new ArrayList();
+            for(int i = 0 ; i < m.size() ; i ++){
+                list.add(m.get(i));
+            }
+            rspData.setRows(list);
+            rspData.setTotal(total);
+        }catch (Exception e){
+            rspData.setMsg(e.getMessage());
+            return rspData;
+        }
+        return rspData;
+    }
+
+    /**
      * 响应返回结果
-     * 
+     *
      * @param rows 影响行数
      * @return 操作结果
      */
@@ -99,7 +124,7 @@ public class BaseController
 
     /**
      * 响应返回结果
-     * 
+     *
      * @param result 结果
      * @return 操作结果
      */

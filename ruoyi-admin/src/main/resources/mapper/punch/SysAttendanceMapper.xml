@@ -41,6 +41,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where attend.attendance_id = #{attendanceId} and attend.del_flag=0 and attend.user_name=u.user_name
     </select>
 
+    <select id="selectNowWeekAttendanceList" resultType="java.util.HashMap">
+        SELECT data.day,IFNULL(data.count, 0), day_list.day as date from
+            (select DATE_FORMAT(create_time, '%Y-%m-%d') day, count(attendance_id) count from sys_attendance GROUP BY day) data
+            right join
+            (SELECT @date := DATE_ADD(@date, interval 1 day) day from
+            (SELECT @date := DATE_ADD(date_sub(curdate(),INTERVAL WEEKDAY(curdate()) DAY), interval -1 day) from sys_attendance)
+            days limit 7) day_list on day_list.day = data.day
+    </select>
+
     <insert id="insertSysAttendance" parameterType="SysAttendance" useGeneratedKeys="true" keyProperty="attendanceId">
         insert into sys_attendance
         <trim prefix="(" suffix=")" suffixOverrides=",">

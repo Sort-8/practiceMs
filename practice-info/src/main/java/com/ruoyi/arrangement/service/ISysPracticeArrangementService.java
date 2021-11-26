@@ -51,7 +51,7 @@ public interface ISysPracticeArrangementService
      * @param sysPracticeArrangement 实习安排
      * @return 实习安排集合
      */
-    public List<Object> selectAllPractice(SysPracticeArrangement sysPracticeArrangement);
+    public Map selectAllPractice(SysPracticeArrangement sysPracticeArrangement);
 
     /**
      * 获取大屏数据

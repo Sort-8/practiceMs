@@ -146,4 +146,11 @@ public class SysAttendanceController extends BaseController
         return AjaxResult.success(sysAttendance);
     }
 
+    @GetMapping("/selectNowWeekAttendanceList")
+    public AjaxResult selectNowWeekAttendanceList()
+    {
+        int[] data = sysAttendanceService.selectNowWeekAttendanceList();
+        return AjaxResult.success(data);
+    }
+
 }

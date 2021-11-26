@@ -1,6 +1,8 @@
 package com.ruoyi.punch.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.punch.domain.SysAttendance;
 
 /**
@@ -18,6 +20,13 @@ public interface SysAttendanceMapper
      * @return 打卡签到
      */
     public SysAttendance selectSysAttendanceById(Long attendanceId);
+
+    /**
+     * 查询打卡签到
+     *
+     * @return 打卡签到
+     */
+    public List<Map<String,Object>> selectNowWeekAttendanceList();
 
     /**
      * 查询打卡签到列表

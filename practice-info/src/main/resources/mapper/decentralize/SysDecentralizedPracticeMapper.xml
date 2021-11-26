@@ -110,7 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getPracticeByStatus" parameterType="String" resultType="java.lang.Integer">
-        select count(*) from sys_decentralized_practice where status = #{status}
+        select count(*) from sys_decentralized_practice where status != #{status}
     </select>
 
     <select id="selectSysDecentralizedPracticeById" parameterType="Long" resultMap="SysDecentralizedPracticeResult">

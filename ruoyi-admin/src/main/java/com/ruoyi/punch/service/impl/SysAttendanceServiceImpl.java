@@ -36,6 +36,20 @@ public class SysAttendanceServiceImpl implements ISysAttendanceService
         return sysAttendanceMapper.selectSysAttendanceById(attendanceId);
     }
 
+    @Override
+    public int[] selectNowWeekAttendanceList() {
+        List<Map<String,Object>> result = sysAttendanceMapper.selectNowWeekAttendanceList();
+        System.out.println(result);
+        int[] data = new int[7];
+        int i = 0;
+        for(Map<String,Object> map : result){
+            String r = StringUtils.substring(map.get("IFNULL(data").toString() , 11 , 13).replace("}" , "");
+            data[i] = Integer.parseInt(r);
+            i++;
+        }
+        return data;
+    }
+
     /**
      * 查询打卡签到列表
      *

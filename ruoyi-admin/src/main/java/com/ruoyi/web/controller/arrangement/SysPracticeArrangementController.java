@@ -64,8 +64,8 @@ public class SysPracticeArrangementController extends BaseController
     @PostMapping("/selectAllPractice")
     public TableDataInfo selectAllPractice(SysPracticeArrangement sysPracticeArrangement)
     {
-        List<Object> list = sysPracticeArrangementService.selectAllPractice(sysPracticeArrangement);
-        return getDataTable(list);
+        Map m = sysPracticeArrangementService.selectAllPractice(sysPracticeArrangement);
+        return getDataObj(m);
     }
 
     /**
