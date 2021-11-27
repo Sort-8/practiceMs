@@ -48,6 +48,12 @@ public class SysPracticeArrangement extends BaseEntity
     @Excel(name = "备注")
     private String notes;
 
+    /** 实习状态 */
+    private String practiceStatus;
+
+    /** 实习类型 */
+    private String practiceType;
+
     /** 实习信息对象 */
     @Excels({
             @Excel(name = "实习信息ID", targetAttr = "infoId", type = Excel.Type.EXPORT),
@@ -65,6 +71,22 @@ public class SysPracticeArrangement extends BaseEntity
     /** 状态（0同意 1拒绝） */
     @Excel(name = "状态", readConverterExp = "0=同意,1=拒绝")
     private String stuOption;
+
+    public String getPracticeStatus() {
+        return practiceStatus;
+    }
+
+    public void setPracticeStatus(String practiceStatus) {
+        this.practiceStatus = practiceStatus;
+    }
+
+    public String getPracticeType() {
+        return practiceType;
+    }
+
+    public void setPracticeType(String practiceType) {
+        this.practiceType = practiceType;
+    }
 
     /** 状态（0启用 1停用） */
     @Excel(name = "状态", readConverterExp = "0=启用,1=停用")

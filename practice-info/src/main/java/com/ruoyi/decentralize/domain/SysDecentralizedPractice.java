@@ -33,6 +33,9 @@ public class SysDecentralizedPractice extends BaseEntity
     @Excel(name = "实习学生姓名")
     private String stuName;
 
+    /** 实习学生学号 */
+    private String userName;
+
     /** 实习学生实体 */
     private SysUser student;
 
@@ -89,6 +92,14 @@ public class SysDecentralizedPractice extends BaseEntity
     /** 实习地点ID */
     @Excel(name = "实习地点ID")
     private Long locationId;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getCompanyName() {
         return companyName;

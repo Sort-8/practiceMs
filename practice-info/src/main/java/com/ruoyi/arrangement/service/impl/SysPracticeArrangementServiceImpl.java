@@ -122,12 +122,19 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
         PageDomain pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
-
-        List<SysPracticeArrangement> list_a = sysPracticeArrangementMapper.selectSysPracticeArrangementList(sysPracticeArrangement);
-
         SysDecentralizedPractice practice = new SysDecentralizedPractice();
-        List<SysDecentralizedPractice> list_d = iSysDecentralizedPracticeService.selectSysDecentralizedPracticeList(practice);
-
+        practice.setUserName(sysPracticeArrangement.getUserName());
+        practice.setStuName(sysPracticeArrangement.getNickName());
+        List<SysPracticeArrangement> list_a = new ArrayList<>();
+        List<SysDecentralizedPractice> list_d = new ArrayList<>();
+        if("1".equals(sysPracticeArrangement.getPracticeType())){
+            list_a = sysPracticeArrangementMapper.selectSysPracticeArrangementList(sysPracticeArrangement);
+        }else if("2".equals(sysPracticeArrangement.getPracticeType())){
+            list_d = iSysDecentralizedPracticeService.selectSysDecentralizedPracticeList(practice);
+        }else{
+            list_a = sysPracticeArrangementMapper.selectSysPracticeArrangementList(sysPracticeArrangement);
+            list_d = iSysDecentralizedPracticeService.selectSysDecentralizedPracticeList(practice);
+        }
         List list = new ArrayList();
         Iterator<SysPracticeArrangement> it1 = list_a.iterator();
         while (it1.hasNext()) {
