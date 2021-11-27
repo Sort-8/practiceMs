@@ -7,7 +7,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 基地信息管理对象 sys_base_info
- * 
+ *
  * @author xieweiming
  * @date 2021-10-01
  */
@@ -20,198 +20,226 @@ public class SysBaseInfo extends BaseEntity
     private Long baseId;
 
     /** 单位名称 */
+    @Excel(name = "单位名称")
     private String companyName;
 
     /** 基地名称 */
+    @Excel(name = "基地名称")
     private String baseName;
 
     /** 基地单位性质 */
+    @Excel(name = "基地单位性质")
     private String baseNature;
 
     /** 基地法定代表（负责人） */
+    @Excel(name = "基地法定代表（负责人）")
     private String baseLeader;
 
     /** 基地联系人 */
+    @Excel(name = "基地联系人")
     private String baseContacts;
 
     /** 联系电话 */
+    @Excel(name = "联系电话")
     private String basePhone;
 
     /** 传真 */
+    @Excel(name = "传真")
     private String baseFax;
 
     /** 基地单位地址 */
+    @Excel(name = "基地单位地址")
     private String baseAddress;
 
-    /** 地点经纬度 */
+    /** 基地经纬度 */
+    @Excel(name = "基地经纬度")
     private String tude;
 
     /** 邮箱 */
+    @Excel(name = "邮箱")
     private String baseEmail;
 
     /** 学校基地负责人 */
+    @Excel(name = "学校基地负责人")
     private String schoolLeader;
 
     /** 学校基地负责人电话 */
+    @Excel(name = "学校基地负责人电话")
     private String schoolPhone;
 
     /** 基地情况简介 */
+    @Excel(name = "基地情况简介")
     private String baseIntroduction;
 
     /** 实习环境 */
+    @Excel(name = "实习环境")
     private String practiceEnvironment;
 
-    /** 基地状态（0正常 1停用） */
-    private String status;
+/*    *//** 基地状态（0正常 1停用） *//*
+    @Excel(name = "基地状态")
+    private String status;*/
 
     /** 基地申请表存放地址（PDF） */
+    @Excel(name = "基地申请表存放地址")
     private String appliForm;
 
+    /** 搜索字段 */
+    private String searchKey;
+
     /** 删除标志（0代表存在 2代表删除） */
+    @Excel(name = "删除标志")
     private String delFlag;
 
-    public void setBaseId(Long baseId) 
+    public void setBaseId(Long baseId)
     {
         this.baseId = baseId;
     }
 
-    public Long getBaseId() 
+    public Long getBaseId()
     {
         return baseId;
     }
-    public void setCompanyName(String companyName) 
+    public void setCompanyName(String companyName)
     {
         this.companyName = companyName;
     }
 
-    public String getCompanyName() 
+    public String getCompanyName()
     {
         return companyName;
     }
-    public void setBaseName(String baseName) 
+    public void setBaseName(String baseName)
     {
         this.baseName = baseName;
     }
 
-    public String getBaseName() 
+    public String getBaseName()
     {
         return baseName;
     }
-    public void setBaseNature(String baseNature) 
+    public void setBaseNature(String baseNature)
     {
         this.baseNature = baseNature;
     }
 
-    public String getBaseNature() 
+    public String getBaseNature()
     {
         return baseNature;
     }
-    public void setBaseLeader(String baseLeader) 
+    public void setBaseLeader(String baseLeader)
     {
         this.baseLeader = baseLeader;
     }
 
-    public String getBaseLeader() 
+    public String getBaseLeader()
     {
         return baseLeader;
     }
-    public void setBaseContacts(String baseContacts) 
+    public void setBaseContacts(String baseContacts)
     {
         this.baseContacts = baseContacts;
     }
 
-    public String getBaseContacts() 
+    public String getBaseContacts()
     {
         return baseContacts;
     }
-    public void setBasePhone(String basePhone) 
+    public void setBasePhone(String basePhone)
     {
         this.basePhone = basePhone;
     }
 
-    public String getBasePhone() 
+    public String getBasePhone()
     {
         return basePhone;
     }
-    public void setBaseFax(String baseFax) 
+    public void setBaseFax(String baseFax)
     {
         this.baseFax = baseFax;
     }
 
-    public String getBaseFax() 
+    public String getBaseFax()
     {
         return baseFax;
     }
-    public void setBaseAddress(String baseAddress) 
+    public void setBaseAddress(String baseAddress)
     {
         this.baseAddress = baseAddress;
     }
 
-    public String getBaseAddress() 
+    public String getBaseAddress()
     {
         return baseAddress;
     }
-    public void setBaseEmail(String baseEmail) 
+    public void setBaseEmail(String baseEmail)
     {
         this.baseEmail = baseEmail;
     }
 
-    public String getBaseEmail() 
+    public String getBaseEmail()
     {
         return baseEmail;
     }
-    public void setSchoolLeader(String schoolLeader) 
+    public void setSchoolLeader(String schoolLeader)
     {
         this.schoolLeader = schoolLeader;
     }
 
-    public String getSchoolLeader() 
+    public String getSchoolLeader()
     {
         return schoolLeader;
     }
-    public void setSchoolPhone(String schoolPhone) 
+    public void setSchoolPhone(String schoolPhone)
     {
         this.schoolPhone = schoolPhone;
     }
 
-    public String getSchoolPhone() 
+    public String getSchoolPhone()
     {
         return schoolPhone;
     }
-    public void setBaseIntroduction(String baseIntroduction) 
+    public void setBaseIntroduction(String baseIntroduction)
     {
         this.baseIntroduction = baseIntroduction;
     }
 
-    public String getBaseIntroduction() 
+    public String getBaseIntroduction()
     {
         return baseIntroduction;
     }
-    public void setPracticeEnvironment(String practiceEnvironment) 
+    public void setPracticeEnvironment(String practiceEnvironment)
     {
         this.practiceEnvironment = practiceEnvironment;
     }
 
-    public String getPracticeEnvironment() 
+    public String getPracticeEnvironment()
     {
         return practiceEnvironment;
     }
-    public void setStatus(String status) 
+    /*public void setStatus(String status)
     {
         this.status = status;
     }
 
-    public String getStatus() 
+    public String getStatus()
     {
         return status;
+    }*/
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
     }
 
-    public void setDelFlag(String delFlag) 
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
     }
 
-    public String getDelFlag() 
+    public String getDelFlag()
     {
         return delFlag;
     }
@@ -253,7 +281,8 @@ public class SysBaseInfo extends BaseEntity
             .append("schoolPhone", getSchoolPhone())
             .append("baseIntroduction", getBaseIntroduction())
             .append("practiceEnvironment", getPracticeEnvironment())
-            .append("status", getStatus())
+            /*.append("status", getStatus())*/
+            .append("searchKey", getSearchKey())
             .append("appliForm", getAppliForm())
             .append("delFlag", getDelFlag())
             .toString();

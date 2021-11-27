@@ -88,11 +88,11 @@ public class SysBaseInfoServiceImpl implements ISysBaseInfoService
      * @param sysBaseInfo 基地信息
      * @return 结果
      */
-    @Override
+    /*@Override
     public int updateBaseInfoStatus(SysBaseInfo sysBaseInfo)
     {
         return sysBaseInfoMapper.updateSysBaseInfo(sysBaseInfo);
-    }
+    }*/
 
     /**
      * 批量删除基地信息管理
