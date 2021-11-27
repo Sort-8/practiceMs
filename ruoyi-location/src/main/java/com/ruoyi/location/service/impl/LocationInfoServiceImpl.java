@@ -112,8 +112,4 @@ public class LocationInfoServiceImpl implements ILocationInfoService
         return locationInfoMapper.deleteLocationInfoById(locationId);
     }
 
-    @Override
-    public int updateLocationStatus(LocationInfo locationInfo) {
-        return locationInfoMapper.updateLocationStatus(locationInfo);
-    }
 }

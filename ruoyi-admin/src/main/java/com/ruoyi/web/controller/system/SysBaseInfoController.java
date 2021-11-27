@@ -3,7 +3,10 @@ package com.ruoyi.web.controller.system;
 import java.util.List;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.ServletUtils;
+import com.ruoyi.framework.web.service.TokenService;
 import com.ruoyi.system.domain.SysBaseInfo;
 import com.ruoyi.system.service.ISysBaseInfoService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +26,7 @@ import com.ruoyi.common.enums.BusinessType;
 
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 基地信息管理Controller
@@ -77,14 +81,14 @@ public class SysBaseInfoController extends BaseController
     /**
      * 状态修改
      */
-    @PreAuthorize("@ss.hasPermi('baseInfo:baseInfo:edit')")
+    /*@PreAuthorize("@ss.hasPermi('baseInfo:baseInfo:edit')")
     @Log(title = "基地信息管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysBaseInfo sysBaseInfo)
     {
         sysBaseInfo.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(sysBaseInfoService.updateBaseInfoStatus(sysBaseInfo));
-    }
+    }*/
 
     /**
      * 获取基地信息管理详细信息

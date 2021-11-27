@@ -60,7 +60,7 @@ public interface ISysBaseInfoService
      * @param sysBaseInfo 基地信息管理
      * @return 结果
      */
-    public int updateBaseInfoStatus(SysBaseInfo sysBaseInfo);
+    //public int updateBaseInfoStatus(SysBaseInfo sysBaseInfo);
 
     /**
      * 批量删除基地信息管理

@@ -67,11 +67,4 @@ public interface ILocationInfoService
      */
     public int deleteLocationInfoById(Long locationId);
 
-    /**
-     * 地点信息状态修改
-     *
-     * @param locationInfo 地点信息
-     * @return 结果
-     */
-    public int updateLocationStatus(LocationInfo locationInfo);
 }

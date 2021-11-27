@@ -20,13 +20,12 @@
         <result property="schoolPhone"    column="school_phone"    />
         <result property="baseIntroduction"    column="base_introduction"    />
         <result property="practiceEnvironment"    column="practice_environment"    />
-        <result property="status"    column="status"    />
         <result property="appliForm"    column="appli_form"    />
         <result property="delFlag"    column="del_flag"    />
     </resultMap>
 
     <sql id="selectSysBaseInfoVo">
-        select base_id, company_name, base_name, base_nature, base_leader, base_contacts, base_phone, base_fax, base_address, tude, base_email, school_leader, school_phone, base_introduction, practice_environment, status, appli_form, del_flag from sys_base_info
+        select base_id, company_name, base_name, base_nature, base_leader, base_contacts, base_phone, base_fax, base_address, tude, base_email, school_leader, school_phone, base_introduction, practice_environment, appli_form, del_flag from sys_base_info
     </sql>
 
     <select id="selectBaseTudeAndID" parameterType="SysBaseInfo" resultMap="SysBaseInfoResult">
@@ -39,20 +38,23 @@
     <select id="selectSysBaseInfoList" parameterType="SysBaseInfo" resultMap="SysBaseInfoResult">
         <include refid="selectSysBaseInfoVo"/>
         <where>
-            <if test="baseId != null "> and base_id = #{baseId}</if>
-            <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
-            <if test="baseName != null  and baseName != ''"> and base_name like concat('%', #{baseName}, '%')</if>
-            <if test="baseNature != null  and baseNature != ''"> and base_nature = #{baseNature}</if>
-            <if test="baseLeader != null  and baseLeader != ''"> and base_leader = #{baseLeader}</if>
-            <if test="baseContacts != null  and baseContacts != ''"> and base_contacts = #{baseContacts}</if>
-            <if test="basePhone != null  and basePhone != ''"> and base_phone = #{basePhone}</if>
-            <if test="baseFax != null  and baseFax != ''"> and base_fax = #{baseFax}</if>
-            <if test="baseAddress != null  and baseAddress != ''"> and base_address like concat('%', #{baseAddress}, '%')</if>
-            <if test="baseEmail != null  and baseEmail != ''"> and base_email = #{baseEmail}</if>
-            <if test="schoolLeader != null  and schoolLeader != ''"> and school_leader = #{schoolLeader}</if>
-            <if test="schoolPhone != null  and schoolPhone != ''"> and school_phone = #{schoolPhone}</if>
-            <if test="status != null  and status != ''"> and status = #{status}</if>
-            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
+            <if test="searchKey == 'companyName'">and company_name like concat('%', #{searchValue},'%')</if>
+            <if test="searchKey == 'baseAddress'">and base_address like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'baseContacts'">and base_contacts like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'basePhone'">and base_phone like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'baseNature'">and base_nature like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'schoolLeader'">and school_leader like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'schoolPhone'">and school_phone like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'allKeys' or (searchKey == null and searchValue != null)">
+                company_name like concat('%', #{searchValue}, '%') or
+                base_address like concat('%', #{searchValue}, '%') or
+                base_contacts like concat('%', #{searchValue}, '%') or
+                base_phone like concat('%', #{searchValue}, '%') or
+                base_nature like concat('%', #{searchValue}, '%') or
+                school_leader like concat('%', #{searchValue}, '%') or
+                school_phone like concat('%', #{searchValue}, '%')
+            </if>
+            and del_flag=0
         </where>
     </select>
 

@@ -48,10 +48,6 @@ public class LocationInfo extends BaseEntity
     @Excel(name = "法定代表")
     private String leader;
 
-    /** 状态（0正常 1停用） */
-    @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
-    private String status;
-
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
@@ -59,6 +55,9 @@ public class LocationInfo extends BaseEntity
 
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
+
+    /** 搜索字段 */
+    private String searchKey;
 
     public void setLocationId(Long locationId)
     {
@@ -132,15 +131,6 @@ public class LocationInfo extends BaseEntity
     {
         return leader;
     }
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
     public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
@@ -159,6 +149,13 @@ public class LocationInfo extends BaseEntity
     {
         return createTime;
     }
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
 
     @Override
     public String toString() {
@@ -171,9 +168,9 @@ public class LocationInfo extends BaseEntity
                 .append("phone", getPhone())
                 .append("nature", getNature())
                 .append("leader", getLeader())
-                .append("status", getStatus())
                 .append("delFlag", getDelFlag())
                 .append("createTime", getCreateTime())
+                .append("searchKey", getSearchKey())
                 .toString();
     }
 }
