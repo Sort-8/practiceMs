@@ -42,6 +42,10 @@ public class BaseEntity implements Serializable
     @ApiModelProperty("备注")
     private String remark;
 
+    /** 归档年份 */
+    private Integer year;
+
+
     /** 请求参数 */
     @ApiModelProperty("请求参数")
     private Map<String, Object> params;
@@ -66,6 +70,13 @@ public class BaseEntity implements Serializable
         this.createBy = createBy;
     }
 
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
     public Date getCreateTime()
     {
         return createTime;

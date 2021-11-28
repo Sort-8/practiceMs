@@ -7,6 +7,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.location.domain.LocationInfo;
+import com.ruoyi.location.service.ArchivedLocationInfoService;
 import com.ruoyi.location.service.ILocationInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,9 @@ public class LocationInfoController extends BaseController
 {
     @Autowired
     private ILocationInfoService locationInfoService;
+
+    @Autowired
+    private ArchivedLocationInfoService archivedLocationInfoService;
 
     /**
      * 获取所有地点信息的经纬度
@@ -82,6 +86,9 @@ public class LocationInfoController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody LocationInfo locationInfo)
     {
+        if (locationInfoService.selectLocationInfo(locationInfo) != null){
+            return AjaxResult.error("单位名称重复，添加失败");
+        }
         return toAjax(locationInfoService.insertLocationInfo(locationInfo));
     }
 
@@ -93,6 +100,9 @@ public class LocationInfoController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody LocationInfo locationInfo)
     {
+        if (locationInfoService.selectLocationInfo(locationInfo) != null){
+            return AjaxResult.error("单位名称重复，添加失败");
+        }
         return toAjax(locationInfoService.updateLocationInfo(locationInfo));
     }
 
@@ -105,6 +115,14 @@ public class LocationInfoController extends BaseController
     public AjaxResult remove(@PathVariable Long[] locationIds)
     {
         return toAjax(locationInfoService.deleteLocationInfoByIds(locationIds));
+    }
+
+    @GetMapping("/exportArchived")
+    public AjaxResult exportArchived(LocationInfo locationInfo)
+    {
+        List<LocationInfo> list = archivedLocationInfoService.selectLocationInfoList(locationInfo);
+        ExcelUtil<LocationInfo> util = new ExcelUtil<LocationInfo>(LocationInfo.class);
+        return util.exportExcel(list, "地点信息数据");
     }
 
 }

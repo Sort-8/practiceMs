@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.practicelog.mapper.ArchivedPracticeLogMapper">
+
+    <resultMap type="SysPracticeLog" id="SysPracticeLogResult">
+        <result property="logId" column="log_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="locationName" column="location_name"/>
+        <result property="time" column="time"/>
+        <result property="logContents" column="log_contents"/>
+        <association property="user" column="user_name" javaType="SysUser" resultMap="userResult"/>
+        <!--        <result property="delFlag"    column="del_flag"    />-->
+    </resultMap>
+
+    <resultMap id="userResult" type="SysUser">
+        <result property="nickName" column="nick_name"/>
+    </resultMap>
+
+
+    <select id="selectSysPracticeLogList" parameterType="SysPracticeLog" resultMap="SysPracticeLogResult" statementType="STATEMENT">
+        select log.log_id, log.user_name, log.location_id, log.time, log.log_contents, log.del_flag,u.nick_name from ${year}_sys_practice_log log,${year}_sys_user u
+        ${params.dataScope}
+        ORDER BY log.time DESC
+    </select>
+</mapper>

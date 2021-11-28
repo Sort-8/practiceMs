@@ -1,10 +1,10 @@
 package com.ruoyi.web.controller.system;
 
-import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
@@ -15,11 +15,12 @@ import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.web.service.TokenService;
+import com.ruoyi.system.service.ISysDictDataService;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.system.service.ArchivedUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,12 +44,17 @@ import java.util.stream.Collectors;
 public class SysUserController extends BaseController {
     @Autowired
     private ISysUserService userService;
+    @Autowired
+    private ArchivedUserService archivedUserService;
 
     @Autowired
     private ISysRoleService roleService;
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private ISysDictDataService dictDataService;
 
     /**
      * 获取用户列表
@@ -79,8 +85,7 @@ public class SysUserController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/listByRole")
-    public TableDataInfo listByRole(SysUser user)
-    {
+    public TableDataInfo listByRole(SysUser user) {
         List<SysUser> list = userService.selectUserListByRole(user);
         return getDataTable(list);
     }
@@ -123,7 +128,7 @@ public class SysUserController extends BaseController {
     @ApiOperation("根据用户编号获取用户详细信息")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @PreAuthorize("@ss.hasPermi('system:user:query')")
-    @GetMapping(value = { "/", "/{userId}" })
+    @GetMapping(value = {"/", "/{userId}"})
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
         AjaxResult ajax = AjaxResult.success();
         List<SysRole> roles = roleService.selectRoleAll();
@@ -254,8 +259,38 @@ public class SysUserController extends BaseController {
     @ApiOperation("数据归档")
     @PreAuthorize("@ss.hasPermi('system:user:archive')")
     @PostMapping("/archived")
-    public AjaxResult dataArchiving(Integer year){
-        userService.dataArchiving(year);
-        return success();
+    public AjaxResult dataArchiving(Integer year) {
+        String str = dictDataService.selectDictLabel("sys_archived_year", year.toString());
+        System.out.println(str);
+        if (str != null) {   /** 存在年份字典 */
+            userService.dataArchiving(year);
+            return success();
+        } else{
+            /** 新增归档年份字典 */
+            SysDictData dict = new SysDictData();
+            dict.setDictType("sys_archived_year");
+            dict.setCreateBy(SecurityUtils.getUsername());
+            dict.setDictLabel(year.toString());
+            dict.setDictValue(year.toString());
+            dict.setDictSort(0L);
+            dict.setIsDefault("Y");
+            dict.setStatus("0");
+            dictDataService.insertDictData(dict);
+
+            userService.dataArchiving(year);
+            return success();
+        }
+    }
+    /**
+     * 导出归档数据
+     */
+    @GetMapping("/exportArchived")
+    public AjaxResult exportArchived(SysUser user) {
+        System.out.println(user.getYear());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        user.setDeptId(loginUser.getUser().getDeptId());    //获取登录账号院系id
+        List<SysUser> list = archivedUserService.selectUserList(user);
+        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+        return util.exportExcel(list, "用户数据");
     }
 }

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.arrangement.mapper.ArchivedArrangementMapper">
+
+    <resultMap type="SysPracticeArrangement" id="SysPracticeArrangementResult">
+        <result property="arrangementId" column="arrangement_id"/>
+        <result property="stuId" column="stu_id"/>
+        <result property="infoId" column="info_id"/>
+        <result property="notes" column="notes"/>
+        <result property="stuOption" column="stu_option"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="punchTime" column="punchTime"/>
+        <result property="logTime" column="logTime"/>
+        <association property="user" column="user_id" javaType="SysUser" resultMap="SysUserResult"/>
+        <association property="info" column="info_id" javaType="SysPracticeInfo" resultMap="SysPracticeInfoResult"/>
+    </resultMap>
+
+    <resultMap type="SysUser" id="SysUserResult">
+        <id property="userId" column="user_id"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="phonenumber" column="phonenumber"/>
+        <result property="sex" column="sex"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="loginIp" column="login_ip"/>
+        <result property="loginDate" column="login_date"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+        <association property="dept" column="dept_id" javaType="SysDept" resultMap="deptResult"/>
+        <collection property="roles" javaType="java.util.List" resultMap="RoleResult"/>
+    </resultMap>
+
+    <resultMap id="deptResult" type="SysDept">
+        <id property="deptId" column="dept_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="leader" column="leader"/>
+        <result property="status" column="dept_status"/>
+    </resultMap>
+
+    <resultMap id="RoleResult" type="SysRole">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleKey" column="role_key"/>
+        <result property="roleSort" column="role_sort"/>
+        <result property="dataScope" column="data_scope"/>
+        <result property="status" column="role_status"/>
+    </resultMap>
+
+    <resultMap type="SysPracticeInfo" id="SysPracticeInfoResult">
+        <result property="infoId" column="info_id"/>
+        <result property="locationId" column="location_id"/>
+        <result property="postName" column="post_name"/>
+        <result property="number" column="number"/>
+        <result property="surplus" column="surplus"/>
+        <result property="entryTime" column="entry_time"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="teacherId" column="teacher_id"/>
+        <association property="baseInfo" column="base_id" javaType="SysBaseInfo" resultMap="SysBaseInfoResult"/>
+        <association property="teacher" column="user_id" javaType="SysUser" resultMap="TeacherInfoResult"/>
+    </resultMap>
+
+    <resultMap type="SysUser" id="TeacherInfoResult">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="phonenumber" column="phonenumber"/>
+        <result property="sex" column="sex"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="loginIp" column="login_ip"/>
+        <result property="expectNumber" column="expectStudentNum"/>
+        <result property="loginDate" column="login_date"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <resultMap type="SysUser" id="GuideStudentInfoResult">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="phonenumber" column="phonenumber"/>
+        <result property="sex" column="sex"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="loginIp" column="login_ip"/>
+        <result property="loginDate" column="login_date"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <resultMap type="SysBaseInfo" id="SysBaseInfoResult">
+        <result property="baseId" column="base_id"/>
+        <result property="companyName" column="company_name"/>
+        <result property="baseName" column="base_name"/>
+        <result property="baseNature" column="base_nature"/>
+        <result property="baseLeader" column="base_leader"/>
+        <result property="baseContacts" column="base_contacts"/>
+        <result property="basePhone" column="base_phone"/>
+        <result property="tude" column="tude"/>
+        <result property="baseFax" column="base_fax"/>
+        <result property="baseAddress" column="base_address"/>
+        <result property="baseEmail" column="base_email"/>
+        <result property="schoolLeader" column="school_leader"/>
+        <result property="schoolPhone" column="school_phone"/>
+        <result property="baseIntroduction" column="base_introduction"/>
+        <result property="practiceEnvironment" column="practice_environment"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+
+    <select id="selectSysPracticeArrangementList" parameterType="SysPracticeArrangement"
+            resultMap="SysPracticeArrangementResult" statementType="STATEMENT">
+        select arrangement_id, stu_id, pa.info_id, notes, stu_option, pa.status, pa.del_flag ,
+               pa.info_id, location_id, post_name, number, entry_time, pi.status, pi.del_flag, teacher_id ,
+               base_id , company_name , base_name , base_nature , base_leader , base_contacts , tude ,
+               base_phone , base_fax , base_address , base_email , school_leader , school_phone ,
+               base_introduction , practice_environment , bi.status , bi.del_flag , surplus ,
+               su.user_id, su.dept_id, su.user_name, su.nick_name, su.email, su.avatar, su.phonenumber, su.password, su.sex, su.status, su.del_flag, su.login_ip, su.login_date, su.create_by, su.create_time, su.remark ,
+               tu.user_id, tu.dept_id, tu.user_name, tu.nick_name, tu.email, tu.avatar, tu.phonenumber, tu.password, tu.sex, tu.status, tu.del_flag, tu.login_ip, tu.login_date, tu.create_by, tu.create_time,
+               d.dept_name
+        from ${year}_sys_practice_arrangement pa
+                 left join ${year}_sys_practice_info pi on pa.info_id = pi.info_id
+                 left join ${year}_sys_user su on stu_id = su.user_id
+                 left join ${year}_sys_base_info bi on location_id = base_id
+                 left join ${year}_sys_user tu on teacher_id = tu.user_id
+                 left join ${year}_sys_dept d on d.dept_id = su.dept_id
+
+    </select>
+
+
+
+
+
+</mapper>

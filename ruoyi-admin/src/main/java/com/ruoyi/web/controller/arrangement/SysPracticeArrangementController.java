@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.arrangement;
 
 import com.ruoyi.arrangement.domain.SysPracticeArrangement;
+import com.ruoyi.arrangement.service.ArchivedArrangmentService;
 import com.ruoyi.arrangement.service.ISysPracticeArrangementService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
@@ -30,6 +31,9 @@ public class SysPracticeArrangementController extends BaseController
 {
     @Autowired
     private ISysPracticeArrangementService sysPracticeArrangementService;
+
+    @Autowired
+    private ArchivedArrangmentService archivedArrangmentService;
 
     @Autowired
     private TokenService tokenService;
@@ -157,5 +161,14 @@ public class SysPracticeArrangementController extends BaseController
     public AjaxResult remove(@PathVariable Long[] arrangementIds)
     {
         return toAjax(sysPracticeArrangementService.deleteSysPracticeArrangementByIds(arrangementIds));
+    }
+
+
+    @GetMapping("/exportArchived")
+    public AjaxResult exportArchived(SysPracticeArrangement sysPracticeArrangement)
+    {
+        List<SysPracticeArrangement> list = archivedArrangmentService.selectSysPracticeArrangementList(sysPracticeArrangement);
+        ExcelUtil<SysPracticeArrangement> util = new ExcelUtil<SysPracticeArrangement>(SysPracticeArrangement.class);
+        return util.exportExcel(list, "实习安排数据");
     }
 }

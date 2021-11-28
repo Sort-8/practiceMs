@@ -106,8 +106,8 @@ public class SysUser extends BaseEntity
     /** 专业对象 */
     @ApiModelProperty("专业对象")
     @Excels({
-        @Excel(name = "专业", targetAttr = "deptName", type = Type.EXPORT),
-        @Excel(name = "专业负责人", targetAttr = "leader", type = Type.EXPORT)
+        @Excel(name = "专业班级", targetAttr = "deptName", type = Type.EXPORT),
+//        @Excel(name = "专业负责人", targetAttr = "leader", type = Type.EXPORT)
     })
     private SysDept dept;
 
@@ -116,7 +116,7 @@ public class SysUser extends BaseEntity
     private List<SysRole> roles;
 
     /** 角色名称*/
-    @Excel(name = "角色", type = Type.IMPORT)
+    @Excel(name = "角色", type = Type.IMPORT, prompt = "实习学生、指导老师")
     private String roleName;
 
     /** 角色组 */
@@ -133,7 +133,7 @@ public class SysUser extends BaseEntity
 
     /** 专业名称 */
     @ApiModelProperty(hidden = true)
-    @Excel(name = "专业名称", type = Type.IMPORT)
+    @Excel(name = "专业班级", type = Type.IMPORT)
     private String deptName;
 
     public SysUser()
