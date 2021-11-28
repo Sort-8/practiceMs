@@ -45,6 +45,17 @@ public class LocationInfoServiceImpl implements ILocationInfoService
     }
 
     /**
+     * 查询地点信息
+     *
+     * @param locationInfo 地点信息
+     * @return 地点信息
+     */
+    @Override
+    public LocationInfo selectLocationInfo(LocationInfo locationInfo) {
+        return locationInfoMapper.selectLocationInfo(locationInfo);
+    }
+
+    /**
      * 查询地点信息列表
      *
      * @param locationInfo 地点信息

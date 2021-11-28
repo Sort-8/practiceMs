@@ -27,6 +27,14 @@ public interface LocationInfoMapper
     public LocationInfo selectLocationInfoById(Long locationId);
 
     /**
+     * 查询地点信息
+     *
+     * @param locationInfo 地点信息
+     * @return 地点信息
+     */
+    public LocationInfo selectLocationInfo(LocationInfo locationInfo);
+
+    /**
      * 查询地点信息列表
      *
      * @param locationInfo 地点信息

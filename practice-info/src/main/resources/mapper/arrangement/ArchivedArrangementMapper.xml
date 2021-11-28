@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.arrangement.mapper.SysPracticeArrangementMapper">
+<mapper namespace="com.ruoyi.arrangement.mapper.ArchivedArrangementMapper">
 
     <resultMap type="SysPracticeArrangement" id="SysPracticeArrangementResult">
         <result property="arrangementId" column="arrangement_id"/>
@@ -111,7 +111,6 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
-
     <resultMap type="SysBaseInfo" id="SysBaseInfoResult">
         <result property="baseId" column="base_id"/>
         <result property="companyName" column="company_name"/>
@@ -128,10 +127,13 @@
         <result property="schoolPhone" column="school_phone"/>
         <result property="baseIntroduction" column="base_introduction"/>
         <result property="practiceEnvironment" column="practice_environment"/>
+        <result property="status" column="status"/>
         <result property="delFlag" column="del_flag"/>
     </resultMap>
 
-    <sql id="selectSysPracticeArrangementVo">
+
+    <select id="selectSysPracticeArrangementList" parameterType="SysPracticeArrangement"
+            resultMap="SysPracticeArrangementResult" statementType="STATEMENT">
         select arrangement_id, stu_id, pa.info_id, notes, stu_option, pa.status, pa.del_flag ,
                pa.info_id, location_id, post_name, number, entry_time, pi.status, pi.del_flag, teacher_id ,
                base_id , company_name , base_name , base_nature , base_leader , base_contacts , tude ,
@@ -140,131 +142,17 @@
                su.user_id, su.dept_id, su.user_name, su.nick_name, su.email, su.avatar, su.phonenumber, su.password, su.sex, su.status, su.del_flag, su.login_ip, su.login_date, su.create_by, su.create_time, su.remark ,
                tu.user_id, tu.dept_id, tu.user_name, tu.nick_name, tu.email, tu.avatar, tu.phonenumber, tu.password, tu.sex, tu.status, tu.del_flag, tu.login_ip, tu.login_date, tu.create_by, tu.create_time,
                d.dept_name
-        from sys_practice_arrangement pa
-                 left join sys_practice_info pi on pa.info_id = pi.info_id
-                 left join sys_user su on stu_id = su.user_id
-                 left join sys_base_info bi on location_id = base_id
-                 left join sys_user tu on teacher_id = tu.user_id
-                 left join sys_dept d on d.dept_id = su.dept_id
-    </sql>
+        from ${year}_sys_practice_arrangement pa
+                 left join ${year}_sys_practice_info pi on pa.info_id = pi.info_id
+                 left join ${year}_sys_user su on stu_id = su.user_id
+                 left join ${year}_sys_base_info bi on location_id = base_id
+                 left join ${year}_sys_user tu on teacher_id = tu.user_id
+                 left join ${year}_sys_dept d on d.dept_id = su.dept_id
 
-    <sql id="selectSysPracticeArrangementVo2">
-    SELECT * from(
-								select distinct arrangement_id, stu_id, pa.info_id, stu_option,
-                pi.location_id, post_name, number, entry_time,  teacher_id ,
-               base_id , company_name , base_name , base_nature , base_leader , base_contacts , tude ,
-               base_phone , base_fax , base_address , base_email , school_leader , school_phone ,
-               base_introduction , practice_environment , surplus ,
-               su.user_id, su.dept_id, su.user_name, su.nick_name, su.email, su.avatar, su.phonenumber, su.password, su.sex, su.status, su.del_flag, su.login_ip, su.login_date, su.create_by, su.create_time, su.remark ,
-               d.dept_name,attend.create_time AS punchTime,log.time AS logTime
-        from sys_practice_arrangement pa
-                 left join sys_practice_info pi on pa.info_id = pi.info_id
-                 left join sys_user su on stu_id = su.user_id
-                 left join sys_base_info bi on location_id = base_id
-                 left join sys_user tu on teacher_id = tu.user_id
-                 left join sys_dept d on d.dept_id = su.dept_id
-								 left join sys_attendance attend on attend.user_name = su.user_name
-								 left join sys_practice_log log on log.user_name = su.user_name
-			 					ORDER BY log.time DESC )  as G </sql>
-
-    <select id="selectSysPracticeArrangementList" parameterType="SysPracticeArrangement"
-            resultMap="SysPracticeArrangementResult">
-        <include refid="selectSysPracticeArrangementVo"/>
-        <where>
-            <if test="stuId != null ">and stu_id = #{stuId}</if>
-            <if test="infoId != null ">and pa.info_id = #{infoId}</if>
-            <if test="notes != null  and notes != ''">and notes = #{notes}</if>
-            <if test="arrangementId != null">and arrangement_id = #{stuOption}</if>
-            <if test="stuOption != null  and stuOption != ''">and stu_option = #{stuOption}</if>
-            <if test="status != null  and status != ''">and pa.status = #{status}</if>
-            <if test="delFlag != null  and delFlag != ''">and pa.del_flag = #{delFlag}</if>
-            <if test="stuId != null  and stuId != ''">and su.user_id = #{stuId}</if>
-            <if test="user != null  and user.userName != null">and su.user_name = #{user.userName}</if>
-            <if test="nickName != null  and nickName != ''">and su.nick_name like concat('%',#{nickName},'%')</if>
-            <if test="userName != null  and userName != ''">and su.user_name like concat('%',#{userName},'%')</if>
-            <if test="postName != null  and postName != ''">and pi.post_name like concat('%',#{postName},'%')</if>
-        </where>
     </select>
 
-    <select id="selectSysPracticeArrangementById" parameterType="Long" resultMap="SysPracticeArrangementResult">
-        <include refid="selectSysPracticeArrangementVo"/>
-        where arrangement_id = #{arrangementId}
-    </select>
 
-    <select id="selectStudentInfo" parameterType="SysPracticeArrangement" resultMap="SysPracticeArrangementResult">
-        <include refid="selectSysPracticeArrangementVo2"/>
-        where G.teacher_id = #{teacherId}
-        <if test="nickName != null  and nickName != ''">and G.nick_name like concat('%',#{nickName},'%')</if>
-        <if test="userName != null  and userName != ''">and G.user_name like concat('%',#{userName},'%')</if>
-        GROUP BY G.stu_id
-    </select>
 
-    <insert id="insertSysPracticeArrangement" parameterType="SysPracticeArrangement" useGeneratedKeys="true"
-            keyProperty="arrangementId">
-        insert into sys_practice_arrangement
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="stuId != null">stu_id,</if>
-            <if test="infoId != null">info_id,</if>
-            <if test="notes != null">notes,</if>
-            <if test="stuOption != null">stu_option,</if>
-            <if test="status != null">status,</if>
-            <if test="delFlag != null">del_flag,</if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="stuId != null">#{stuId},</if>
-            <if test="infoId != null">#{infoId},</if>
-            <if test="notes != null">#{notes},</if>
-            <if test="stuOption != null">#{stuOption},</if>
-            <if test="status != null">#{status},</if>
-            <if test="delFlag != null">#{delFlag},</if>
-        </trim>
-    </insert>
 
-    <insert id="insertBatchSysPracticeArrangement" parameterType="SysPracticeArrangement" useGeneratedKeys="true"
-            keyProperty="arrangementId">
-        insert into sys_practice_arrangement(stu_id , info_id)
-        VALUES
-        <foreach collection="list" item="arrangement" separator=",">
-            (#{arrangement.stuId}, #{arrangement.infoId})
-        </foreach>
-    </insert>
 
-    <select id="selectGuideStudent" parameterType="Long" resultMap="GuideStudentInfoResult">
-        select su.user_id, su.dept_id, su.user_name, su.nick_name, su.email, su.expectStudentNum ,
-               su.avatar, su.phonenumber, su.password, su.sex, su.status,
-               su.del_flag, su.login_ip, su.login_date, su.create_by,
-               su.create_time, su.remark
-        from sys_practice_arrangement pa
-            left join sys_practice_info pi on pi.info_id = pa.info_id
-            left join sys_user su on su.user_id = pa.stu_id
-        where teacher_id = #{teacherId}
-    </select>
-
-    <update id="updateSysPracticeArrangement" parameterType="SysPracticeArrangement">
-        update sys_practice_arrangement
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="stuId != null">stu_id = #{stuId},</if>
-            <if test="infoId != null">info_id = #{infoId},</if>
-            <if test="notes != null">notes = #{notes},</if>
-            <if test="stuOption != null">stu_option = #{stuOption},</if>
-            <if test="status != null">status = #{status},</if>
-            <if test="delFlag != null">del_flag = #{delFlag},</if>
-        </trim>
-        where arrangement_id = #{arrangementId}
-    </update>
-
-    <delete id="deleteSysPracticeArrangementById" parameterType="Long">
-        delete from sys_practice_arrangement where arrangement_id = #{arrangementId}
-    </delete>
-
-    <delete id="deleteSysPracticeArrangementByInfoId" parameterType="Long">
-        delete from sys_practice_arrangement where info_id = #{infoId}
-    </delete>
-
-    <delete id="deleteSysPracticeArrangementByIds" parameterType="String">
-        delete from sys_practice_arrangement where arrangement_id in
-        <foreach item="arrangementId" collection="array" open="(" separator="," close=")">
-            #{arrangementId}
-        </foreach>
-    </delete>
 </mapper>

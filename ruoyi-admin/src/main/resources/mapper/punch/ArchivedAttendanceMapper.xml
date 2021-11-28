@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.punch.mapper.ArchivedAttendanceMapper">
+
+    <resultMap type="SysAttendance" id="SysAttendanceResult">
+        <result property="attendanceId" column="attendance_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="location" column="location"/>
+        <result property="notes" column="notes"/>
+        <result property="createTime" column="create_time"/>
+        <result property="status" column="status"/>
+        <association property="user" column="user_name" javaType="SysUser" resultMap="userResult"/>
+    </resultMap>
+
+    <resultMap id="userResult" type="SysUser">
+        <result property="nickName" column="nick_name"/>
+    </resultMap>
+
+
+    <select id="selectSysAttendanceList" parameterType="SysAttendance" resultMap="SysAttendanceResult" statementType="STATEMENT">
+        select attend.attendance_id, attend.user_name, attend.location,attend.create_time, attend.notes, attend.status,u.nick_name from ${year}_sys_attendance attend,${year}_sys_user u
+        ${params.dataScope}
+        ORDER BY attend.create_time DESC
+    </select>
+
+</mapper>

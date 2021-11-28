@@ -55,6 +55,13 @@
         where location_id = #{locationId} and del_flag=0
     </select>
 
+    <select id="selectLocationInfo" parameterType="LocationInfo" resultMap="LocationInfoResult">
+        <include refid="selectLocationInfoVo" />
+        where company_name = #{companyName}
+        <if test="locationId != null">and location_id != #{locationId}</if>
+        and del_flag=0
+    </select>
+
     <insert id="insertLocationInfo" parameterType="LocationInfo" useGeneratedKeys="true" keyProperty="locationId" keyColumn="location_id">
         insert into sys_location_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
