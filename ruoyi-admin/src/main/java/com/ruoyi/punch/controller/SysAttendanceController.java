@@ -6,6 +6,7 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.framework.web.service.TokenService;
+import com.ruoyi.punch.service.ArchivedAttendanceService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,9 @@ public class SysAttendanceController extends BaseController
 {
     @Autowired
     private ISysAttendanceService sysAttendanceService;
+
+    @Autowired
+    private ArchivedAttendanceService archivedAttendanceService;
 
     @Autowired
     private TokenService tokenService;
@@ -151,6 +155,18 @@ public class SysAttendanceController extends BaseController
     {
         int[] data = sysAttendanceService.selectNowWeekAttendanceList();
         return AjaxResult.success(data);
+    }
+
+
+    /**
+     * 导出归档数据
+     */
+    @GetMapping("/exportArchived")
+    public AjaxResult exportArchived(SysAttendance sysAttendance)
+    {
+        List<SysAttendance> list = archivedAttendanceService.selectSysAttendanceList(sysAttendance);
+        ExcelUtil<SysAttendance> util = new ExcelUtil<SysAttendance>(SysAttendance.class);
+        return util.exportExcel(list, "打卡签到数据");
     }
 
 }

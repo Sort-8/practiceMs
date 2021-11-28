@@ -3,6 +3,7 @@ package com.ruoyi.web.controller.practice;
 import java.util.List;
 
 import com.ruoyi.practiceScore.domain.Setting;
+import com.ruoyi.practiceScore.service.ArchivedScoreService;
 import com.ruoyi.practiceScore.service.SettingService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ public class SysPracticeScoreController extends BaseController
     @Autowired
     private ISysPracticeScoreService sysPracticeScoreService;
 
-
+    @Autowired
+    private ArchivedScoreService archivedScoreService;
 
 
 
@@ -163,5 +165,16 @@ public class SysPracticeScoreController extends BaseController
     public AjaxResult remove(@PathVariable Long[] scoreIds)
     {
         return toAjax(sysPracticeScoreService.deleteSysPracticeScoreByIds(scoreIds));
+    }
+
+    /**
+     * 导出归档数据
+     */
+    @GetMapping("/exportArchived")
+    public AjaxResult exportArchived(SysPracticeScore sysPracticeScore)
+    {
+        List<SysPracticeScore> list = archivedScoreService.selectSysPracticeScoreList(sysPracticeScore);
+        ExcelUtil<SysPracticeScore> util = new ExcelUtil<SysPracticeScore>(SysPracticeScore.class);
+        return util.exportExcel(list, "实习成绩数据");
     }
 }

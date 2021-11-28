@@ -7,6 +7,7 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.framework.web.service.TokenService;
+import com.ruoyi.practicelog.service.ArchivedPracticeLogService;
 import com.ruoyi.punch.domain.SysAttendance;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -44,6 +45,9 @@ public class SysPracticeLogController extends BaseController
 {
     @Autowired
     private ISysPracticeLogService sysPracticeLogService;
+
+    @Autowired
+    private ArchivedPracticeLogService archivedPracticeLogService;
 
     @Autowired
     private TokenService tokenService;
@@ -147,6 +151,14 @@ public class SysPracticeLogController extends BaseController
         sysPracticeLog.setUserName(user.getUserName());
         List<SysPracticeLog> list = sysPracticeLogService.selectSysPracticeLogList(sysPracticeLog);
         return AjaxResult.success(list);
+    }
+
+    @GetMapping("/exportArchived")
+    public AjaxResult exportArchived(SysPracticeLog sysPracticeLog)
+    {
+        List<SysPracticeLog> list = archivedPracticeLogService.selectSysPracticeLogList(sysPracticeLog);
+        ExcelUtil<SysPracticeLog> util = new ExcelUtil<SysPracticeLog>(SysPracticeLog.class);
+        return util.exportExcel(list, "实习日志数据");
     }
 
 }

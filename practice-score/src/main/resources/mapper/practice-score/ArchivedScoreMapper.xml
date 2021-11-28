@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.practiceScore.mapper.ArchivedScoreMapper">
+
+    <resultMap type="SysPracticeScore" id="SysPracticeScoreResult2">
+        <result property="scoreId"    column="score_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="username"    column="user_name"  />
+        <result property="nickname"    column="nick_name"    />
+        <result property="locationId"    column="location_id"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="sysScore"    column="sys_score"    />
+        <result property="companyScore"    column="company_score"    />
+        <result property="teacherScore"    column="teacher_score"    />
+        <result property="finalScore"    column="final_score"    />
+        <result property="appraisal"    column="appraisal"    />
+        <result property="summary"    column="summary"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <select id="selectSysPracticeScoreList" parameterType="SysPracticeScore" resultMap="SysPracticeScoreResult2" statementType="STATEMENT">
+        select  score_id,su.user_id,su.user_name,su.nick_name,teacher_id,pi.location_id,entry_time as start_time,ending_time as end_time,sys_score,company_score,teacher_score,final_score,appraisal,summary,score.`status` from ${year}_sys_practice_arrangement pa
+                 left join ${year}_sys_practice_info pi on pa.info_id = pi.info_id
+                 left join ${year}_sys_user su on stu_id = su.user_id
+                 left join ${year}_sys_base_info bi on location_id = base_id
+                 left join ${year}_sys_user tu on teacher_id = tu.user_id
+				 left join ${year}_sys_practice_score score on score.user_id = su.user_id
+    </select>
+
+</mapper>
