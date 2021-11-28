@@ -82,6 +82,9 @@ public class LocationInfoController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody LocationInfo locationInfo)
     {
+        if (locationInfoService.selectLocationInfo(locationInfo) != null){
+            return AjaxResult.error("单位名称重复，添加失败");
+        }
         return toAjax(locationInfoService.insertLocationInfo(locationInfo));
     }
 
@@ -93,6 +96,9 @@ public class LocationInfoController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody LocationInfo locationInfo)
     {
+        if (locationInfoService.selectLocationInfo(locationInfo) != null){
+            return AjaxResult.error("单位名称重复，添加失败");
+        }
         return toAjax(locationInfoService.updateLocationInfo(locationInfo));
     }
 
