@@ -57,15 +57,12 @@ public class SysPracticeLogServiceImpl implements ISysPracticeLogService
      * @return 结果
      */
     @Override
-    public int insertSysPracticeLog(SysPracticeLog sysPracticeLog)
-    {
+    public int insertSysPracticeLog(SysPracticeLog sysPracticeLog) throws Exception {
         sysPracticeLog.setLogId(StringUtils.geneId());
         sysPracticeLog.setLocationId(1L);
         SysPracticeLog isRepeatLog = sysPracticeLogMapper.isRepeatPracticalLogTimeByUName(sysPracticeLog.getUserName());
         if(isRepeatLog!=null){
-            isRepeatLog.setLogContents(sysPracticeLog.getLogContents());
-            sysPracticeLogMapper.updateSysPracticeLog(isRepeatLog);
-            return 0;
+            throw new Exception("今天已填写日志，请勿重复填写！");
         }
         return sysPracticeLogMapper.insertSysPracticeLog(sysPracticeLog);
     }

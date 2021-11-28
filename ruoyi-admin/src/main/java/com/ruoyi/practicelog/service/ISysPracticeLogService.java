@@ -35,7 +35,7 @@ public interface ISysPracticeLogService
      * @param sysPracticeLog 实习日志
      * @return 结果
      */
-    public int insertSysPracticeLog(SysPracticeLog sysPracticeLog);
+    public int insertSysPracticeLog(SysPracticeLog sysPracticeLog) throws Exception;
 
     /**
      * 修改实习日志

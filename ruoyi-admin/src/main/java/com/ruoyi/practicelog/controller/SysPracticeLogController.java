@@ -95,7 +95,13 @@ public class SysPracticeLogController extends BaseController
         SysUser user = loginUser.getUser();
         sysPracticeLog.setUserName(user.getUserName());
         sysPracticeLog.setTime(new Date());
-        return toAjax(sysPracticeLogService.insertSysPracticeLog(sysPracticeLog));
+        int flag = 0;
+        try{
+            flag = sysPracticeLogService.insertSysPracticeLog(sysPracticeLog);
+        }catch (Exception e){
+            return error(e.getMessage());
+        }
+        return toAjax(flag);
     }
 
     /**
