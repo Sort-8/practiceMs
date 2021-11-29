@@ -83,7 +83,6 @@ public class SysUserController extends BaseController {
     /**
      * 获取指定角色的用户
      */
-    @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/listByRole")
     public TableDataInfo listByRole(SysUser user) {
         List<SysUser> list = userService.selectUserListByRole(user);

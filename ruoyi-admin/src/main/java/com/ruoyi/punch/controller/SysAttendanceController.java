@@ -129,7 +129,6 @@ public class SysAttendanceController extends BaseController
     /**
      * 获得当天所有打卡人数
      */
-//    @PreAuthorize("@ss.hasPermi('punch:punch:list')")
     @GetMapping("/getTodayPunchList")
     public AjaxResult getTodayPunchList()
     {

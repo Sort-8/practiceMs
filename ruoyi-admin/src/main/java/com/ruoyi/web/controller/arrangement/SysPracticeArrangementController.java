@@ -54,7 +54,6 @@ public class SysPracticeArrangementController extends BaseController
     /**
      * 查询实习安排列表
      */
-    @PreAuthorize("@ss.hasPermi('arrangement:arrangement:list')")
     @PostMapping("/getScreenData")
     public AjaxResult getScreenData(SysPracticeArrangement sysPracticeArrangement)
     {
@@ -65,7 +64,6 @@ public class SysPracticeArrangementController extends BaseController
     /**
      * 查询各实习点人数
      */
-    @PreAuthorize("@ss.hasPermi('arrangement:arrangement:list')")
     @PostMapping("/getLocationStudentNum")
     public AjaxResult getLocationStudentNum(SysPracticeArrangement sysPracticeArrangement)
     {

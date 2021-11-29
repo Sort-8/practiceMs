@@ -46,7 +46,6 @@ public class SysBaseInfoController extends BaseController
      *
      * @return 所有基地信息的经纬度
      */
-    @PreAuthorize("@ss.hasPermi('baseInfo:baseInfo:list')")
     @GetMapping("/selectBaseTudeAndID")
     public AjaxResult selectBaseTudeAndID()
     {

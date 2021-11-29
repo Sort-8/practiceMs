@@ -36,7 +36,6 @@ public class LocationInfoController extends BaseController
      *
      * @return 所有地点信息的经纬度
      */
-    @PreAuthorize("@ss.hasPermi('location:info:list')")
     @GetMapping("/selectLocationTude")
     public AjaxResult selectLocationTude()
     {
