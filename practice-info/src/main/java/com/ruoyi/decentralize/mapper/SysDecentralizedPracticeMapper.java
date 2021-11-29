@@ -1,6 +1,9 @@
 package com.ruoyi.decentralize.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
 
 /**
@@ -74,6 +77,13 @@ public interface SysDecentralizedPracticeMapper
      * @return 结果
      */
     public List<SysDecentralizedPractice> getDecentralizeByLocation(SysDecentralizedPractice sysDecentralizedPractice);
+
+    /**
+     * 查询实习安排
+     *
+     * @return 实习安排
+     */
+    public List<Map> getLocationStudentNum();
 
     /**
      * 查询特定状态的人数

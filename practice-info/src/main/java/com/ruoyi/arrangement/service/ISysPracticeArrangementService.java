@@ -1,5 +1,6 @@
 package com.ruoyi.arrangement.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,14 @@ public interface ISysPracticeArrangementService
      * @return 实习安排集合
      */
     public Map getScreenData(SysPracticeArrangement sysPracticeArrangement);
+
+    /**
+     * 获取大屏数据
+     *
+     * @param sysPracticeArrangement 实习安排
+     * @return 实习安排集合
+     */
+    public List<ArrayList> getLocationStudentNum(SysPracticeArrangement sysPracticeArrangement);
 
     /**
      * 查询老师指导的学生信息

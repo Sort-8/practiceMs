@@ -32,6 +32,10 @@ public class SysPracticeInfo extends BaseEntity
     @Excel(name = "岗位名称")
     private String postName;
 
+    private String searchKey;
+
+    private String searchValue;
+
     /** 指导老师 */
     private String teacherName;
 
@@ -82,6 +86,24 @@ public class SysPracticeInfo extends BaseEntity
     /** 指导老师ID */
     @Excel(name = "指导老师ID")
     private Long teacherId;
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    @Override
+    public String getSearchValue() {
+        return searchValue;
+    }
+
+    @Override
+    public void setSearchValue(String searchValue) {
+        this.searchValue = searchValue;
+    }
 
     public Date getEndingTime() {
         return endingTime;

@@ -88,6 +88,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                  left join sys_location_info li on li.location_id = dp.location_id
     </sql>
 
+    <select id="getLocationStudentNum" parameterType="SysDecentralizedPractice" resultType="java.util.Map">
+        select count(*) as count , li.company_name , dp.location_id
+        from sys_decentralized_practice dp
+            left join sys_user tu on dp.stu_id = tu.user_id
+            left join sys_user au on dp.auditor_id = au.user_id
+            left join sys_location_info li on li.location_id = dp.location_id
+        GROUP BY dp.location_id
+    </select>
+
     <select id="selectSysDecentralizedPracticeList" parameterType="SysDecentralizedPractice" resultMap="SysDecentralizedPracticeResult">
         <include refid="selectSysDecentralizedPracticeVo"/>
         <where>
@@ -95,11 +104,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="businessScope != null  and businessScope != ''"> and business_scope = #{businessScope}</if>
             <if test="acceptanceCertificate != null  and acceptanceCertificate != ''"> and acceptance_certificate = #{acceptanceCertificate}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
-            <if test="auditorId != null "> and auditor_id = #{auditorId}</if>
-            <if test="auditTime != null "> and audit_time = #{auditTime}</if>
-            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="auditorId != null "> and au.auditor_id = #{auditorId}</if>
+            <if test="stuName != null "> and au.nick_name = #{stuName}</if>
+            <if test="auditTime != null "> and au.audit_time = #{auditTime}</if>
+            <if test="status != null  and status != ''"> and dp.status = #{status}</if>
             <if test="locationId != null "> and location_id = #{locationId}</if>
+
+            <if test="searchKey == 'userName'">and au.user_name like concat('%', #{searchValue},'%')</if>
+            <if test="searchKey == 'nickName'">and au.nick_name like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'practiceStatus'">and dp.status like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'allKeys' or (searchKey == null and searchValue != null)">
+                (au.user_name like concat('%', #{searchValue}, '%') or
+                au.nick_name like concat('%', #{searchValue}, '%'))
+            </if>
         </where>
+        AND dp.del_flag = 0
     </select>
 
     <select id="getDecentralizeByLocation" resultMap="DecentralizeByLocation">

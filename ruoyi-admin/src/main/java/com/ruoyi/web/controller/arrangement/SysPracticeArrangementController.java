@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,17 @@ public class SysPracticeArrangementController extends BaseController
     public AjaxResult getScreenData(SysPracticeArrangement sysPracticeArrangement)
     {
         Map map = sysPracticeArrangementService.getScreenData(sysPracticeArrangement);
+        return AjaxResult.success(map);
+    }
+
+    /**
+     * 查询各实习点人数
+     */
+    @PreAuthorize("@ss.hasPermi('arrangement:arrangement:list')")
+    @PostMapping("/getLocationStudentNum")
+    public AjaxResult getLocationStudentNum(SysPracticeArrangement sysPracticeArrangement)
+    {
+        List<ArrayList> map = sysPracticeArrangementService.getLocationStudentNum(sysPracticeArrangement);
         return AjaxResult.success(map);
     }
 

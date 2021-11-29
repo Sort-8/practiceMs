@@ -8,6 +8,7 @@ import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
+import com.ruoyi.decentralize.mapper.SysDecentralizedPracticeMapper;
 import com.ruoyi.decentralize.service.ISysDecentralizedPracticeService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.system.service.impl.SysUserServiceImpl;
@@ -32,6 +33,9 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
 {
     @Autowired
     private SysPracticeArrangementMapper sysPracticeArrangementMapper;
+
+    @Autowired
+    private SysDecentralizedPracticeMapper sysDecentralizedPracticeMapper;
 
     @Autowired
     private ISysUserService sysUserService;
@@ -127,11 +131,18 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
         practice.setStuName(sysPracticeArrangement.getNickName());
         List<SysPracticeArrangement> list_a = new ArrayList<>();
         List<SysDecentralizedPractice> list_d = new ArrayList<>();
-        if("1".equals(sysPracticeArrangement.getPracticeType())){
+
+        practice.setSearchKey(sysPracticeArrangement.getSearchKey());
+        practice.setSearchValue(sysPracticeArrangement.getSearchValue());
+
+        if("1".equals(sysPracticeArrangement.getSearchValue()) && "practiceType".equals(sysPracticeArrangement.getSearchKey())){
             list_a = sysPracticeArrangementMapper.selectSysPracticeArrangementList(sysPracticeArrangement);
-        }else if("2".equals(sysPracticeArrangement.getPracticeType())){
+        }else if("2".equals(sysPracticeArrangement.getSearchValue()) && "practiceType".equals(sysPracticeArrangement.getSearchKey()) ){
             list_d = iSysDecentralizedPracticeService.selectSysDecentralizedPracticeList(practice);
         }else{
+            if("2".equals(sysPracticeArrangement.getSearchValue()) && "practiceStatus".equals(sysPracticeArrangement.getSearchKey())){
+                sysPracticeArrangement.setSearchKey("0");
+            }
             list_a = sysPracticeArrangementMapper.selectSysPracticeArrangementList(sysPracticeArrangement);
             list_d = iSysDecentralizedPracticeService.selectSysDecentralizedPracticeList(practice);
         }
@@ -183,6 +194,26 @@ public class SysPracticeArrangementServiceImpl implements ISysPracticeArrangemen
         map.put("noApplyNum",noApplyNum);
         map.put("noPracticeNum",noPracticeNum);
         return map;
+    }
+
+    @Override
+    public List<ArrayList> getLocationStudentNum(SysPracticeArrangement sysPracticeArrangement) {
+        List<Map> practiceMap = sysPracticeArrangementMapper.getLocationStudentNum();
+        List<Map> decentralizedMap = sysDecentralizedPracticeMapper.getLocationStudentNum();
+        List<ArrayList> result = new ArrayList<>();
+        ArrayList count = new ArrayList();
+        ArrayList baseName = new ArrayList();
+        for(Map m : practiceMap){
+            count.add(m.get("count"));
+            baseName.add(m.get("base_name"));
+        }
+        for(Map m : decentralizedMap){
+            count.add(m.get("count"));
+            baseName.add(m.get("company_name"));
+        }
+        result.add(count);
+        result.add(baseName);
+        return result;
     }
 
     /**

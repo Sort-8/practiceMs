@@ -30,6 +30,10 @@ public class SysPracticeArrangement extends BaseEntity
     /** 用户名称 */
     private String userName;
 
+    private String searchKey;
+
+    private String searchValue;
+
     /** 用户姓名 */
     private String nickName;
 
@@ -102,6 +106,24 @@ public class SysPracticeArrangement extends BaseEntity
 
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    @Override
+    public String getSearchValue() {
+        return searchValue;
+    }
+
+    @Override
+    public void setSearchValue(String searchValue) {
+        this.searchValue = searchValue;
+    }
 
     public Date getPunchTime() {
         return punchTime;

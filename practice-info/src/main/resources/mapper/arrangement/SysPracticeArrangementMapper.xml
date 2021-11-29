@@ -66,6 +66,7 @@
         <result property="number" column="number"/>
         <result property="surplus" column="surplus"/>
         <result property="entryTime" column="entry_time"/>
+        <result property="endingTime" column="ending_time"/>
         <result property="status" column="status"/>
         <result property="delFlag" column="del_flag"/>
         <result property="teacherId" column="teacher_id"/>
@@ -74,23 +75,23 @@
     </resultMap>
 
     <resultMap type="SysUser" id="TeacherInfoResult">
-        <id property="userId" column="user_id"/>
-        <result property="userName" column="user_name"/>
-        <result property="nickName" column="nick_name"/>
-        <result property="email" column="email"/>
-        <result property="phonenumber" column="phonenumber"/>
-        <result property="sex" column="sex"/>
-        <result property="avatar" column="avatar"/>
-        <result property="password" column="password"/>
-        <result property="status" column="status"/>
-        <result property="delFlag" column="del_flag"/>
-        <result property="loginIp" column="login_ip"/>
-        <result property="expectNumber" column="expectStudentNum"/>
-        <result property="loginDate" column="login_date"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
+        <id property="userId" column="t_user_id"/>
+        <result property="userName" column="t_user_name"/>
+        <result property="nickName" column="t_nick_name"/>
+        <result property="email" column="t_email"/>
+        <result property="phonenumber" column="t_phonenumber"/>
+        <result property="sex" column="t_sex"/>
+        <result property="avatar" column="t_avatar"/>
+        <result property="password" column="t_password"/>
+        <result property="status" column="t_status"/>
+        <result property="delFlag" column="t_del_flag"/>
+        <result property="loginIp" column="t_login_ip"/>
+        <result property="expectNumber" column="t_expectStudentNum"/>
+        <result property="loginDate" column="t_login_date"/>
+        <result property="createBy" column="t_create_by"/>
+        <result property="createTime" column="t_create_time"/>
+        <result property="updateBy" column="t_update_by"/>
+        <result property="updateTime" column="t_update_time"/>
     </resultMap>
 
     <resultMap type="SysUser" id="GuideStudentInfoResult">
@@ -133,12 +134,12 @@
 
     <sql id="selectSysPracticeArrangementVo">
         select arrangement_id, stu_id, pa.info_id, notes, stu_option, pa.status, pa.del_flag ,
-               pa.info_id, location_id, post_name, number, entry_time, pi.status, pi.del_flag, teacher_id ,
+               pa.info_id, location_id, post_name, number, entry_time,ending_time, pi.status, pi.del_flag, teacher_id ,
                base_id , company_name , base_name , base_nature , base_leader , base_contacts , tude ,
                base_phone , base_fax , base_address , base_email , school_leader , school_phone ,
                base_introduction , practice_environment , bi.status , bi.del_flag , surplus ,
                su.user_id, su.dept_id, su.user_name, su.nick_name, su.email, su.avatar, su.phonenumber, su.password, su.sex, su.status, su.del_flag, su.login_ip, su.login_date, su.create_by, su.create_time, su.remark ,
-               tu.user_id, tu.dept_id, tu.user_name, tu.nick_name, tu.email, tu.avatar, tu.phonenumber, tu.password, tu.sex, tu.status, tu.del_flag, tu.login_ip, tu.login_date, tu.create_by, tu.create_time,
+               tu.user_id as t_user_id, tu.dept_id as t_dept_id, tu.user_name as t_user_name, tu.nick_name as t_nick_name, tu.email as t_email, tu.avatar as t_avatar, tu.phonenumber as t_phonenumber, tu.password as t_password, tu.sex as t_sex, tu.status as t_status, tu.del_flag as t_del_flag, tu.login_ip as t_login_ip, tu.login_date as t_login_date, tu.create_by as t_create_by, tu.create_time as t_create_time,
                d.dept_name
         from sys_practice_arrangement pa
                  left join sys_practice_info pi on pa.info_id = pi.info_id
@@ -151,7 +152,7 @@
     <sql id="selectSysPracticeArrangementVo2">
     SELECT * from(
 								select distinct arrangement_id, stu_id, pa.info_id, stu_option,
-                pi.location_id, post_name, number, entry_time,  teacher_id ,
+                pi.location_id, post_name, number, entry_time, ending_time,  teacher_id ,
                base_id , company_name , base_name , base_nature , base_leader , base_contacts , tude ,
                base_phone , base_fax , base_address , base_email , school_leader , school_phone ,
                base_introduction , practice_environment , surplus ,
@@ -165,7 +166,8 @@
                  left join sys_dept d on d.dept_id = su.dept_id
 								 left join sys_attendance attend on attend.user_name = su.user_name
 								 left join sys_practice_log log on log.user_name = su.user_name
-			 					ORDER BY log.time DESC )  as G </sql>
+			 					ORDER BY log.time DESC )  as G
+    </sql>
 
     <select id="selectSysPracticeArrangementList" parameterType="SysPracticeArrangement"
             resultMap="SysPracticeArrangementResult">
@@ -173,17 +175,34 @@
         <where>
             <if test="stuId != null ">and stu_id = #{stuId}</if>
             <if test="infoId != null ">and pa.info_id = #{infoId}</if>
-            <if test="notes != null  and notes != ''">and notes = #{notes}</if>
             <if test="arrangementId != null">and arrangement_id = #{stuOption}</if>
-            <if test="stuOption != null  and stuOption != ''">and stu_option = #{stuOption}</if>
-            <if test="status != null  and status != ''">and pa.status = #{status}</if>
             <if test="delFlag != null  and delFlag != ''">and pa.del_flag = #{delFlag}</if>
             <if test="stuId != null  and stuId != ''">and su.user_id = #{stuId}</if>
             <if test="user != null  and user.userName != null">and su.user_name = #{user.userName}</if>
             <if test="nickName != null  and nickName != ''">and su.nick_name like concat('%',#{nickName},'%')</if>
             <if test="userName != null  and userName != ''">and su.user_name like concat('%',#{userName},'%')</if>
             <if test="postName != null  and postName != ''">and pi.post_name like concat('%',#{postName},'%')</if>
+
+            <if test="searchKey == 'userName'">and su.user_name like concat('%', #{searchValue},'%')</if>
+            <if test="searchKey == 'nickName'">and su.nick_name like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'practiceStatus'">and pa.status like concat('%', #{searchValue}, '%')</if>
+            <if test="searchKey == 'allKeys' or (searchKey == null and searchValue != null)">
+                (su.user_name like concat('%', #{searchValue}, '%') or
+                su.nick_name like concat('%', #{searchValue}, '%'))
+            </if>
+            and pa.del_flag=0
         </where>
+    </select>
+
+    <select id="getLocationStudentNum" parameterType="SysPracticeArrangement" resultType="java.util.Map">
+        select count(*) as count,pa.info_id , bi.base_name
+        from sys_practice_arrangement pa
+                 left join sys_practice_info pi on pa.info_id = pi.info_id
+                 left join sys_user su on stu_id = su.user_id
+                 left join sys_base_info bi on location_id = base_id
+                 left join sys_user tu on teacher_id = tu.user_id
+                 left join sys_dept d on d.dept_id = su.dept_id
+        GROUP BY info_id
     </select>
 
     <select id="selectSysPracticeArrangementById" parameterType="Long" resultMap="SysPracticeArrangementResult">

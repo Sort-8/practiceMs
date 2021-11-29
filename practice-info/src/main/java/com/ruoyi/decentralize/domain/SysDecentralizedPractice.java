@@ -25,6 +25,10 @@ public class SysDecentralizedPractice extends BaseEntity
     /** 分散实习申请ID */
     private String[] applyIds;
 
+    private String searchKey;
+
+    private String searchValue;
+
     /** 实习学生ID */
     @Excel(name = "实习学生ID")
     private Long stuId;
@@ -92,6 +96,24 @@ public class SysDecentralizedPractice extends BaseEntity
     /** 实习地点ID */
     @Excel(name = "实习地点ID")
     private Long locationId;
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    @Override
+    public String getSearchValue() {
+        return searchValue;
+    }
+
+    @Override
+    public void setSearchValue(String searchValue) {
+        this.searchValue = searchValue;
+    }
 
     public String getUserName() {
         return userName;

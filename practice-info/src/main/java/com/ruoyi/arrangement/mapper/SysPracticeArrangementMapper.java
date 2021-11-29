@@ -23,6 +23,13 @@ public interface SysPracticeArrangementMapper
     public SysPracticeArrangement selectSysPracticeArrangementById(Long arrangementId);
 
     /**
+     * 查询实习安排
+     *
+     * @return 实习安排
+     */
+    public List<Map> getLocationStudentNum();
+
+    /**
      * 查询所有指导老师
      *
      * @param teacher 指导老师

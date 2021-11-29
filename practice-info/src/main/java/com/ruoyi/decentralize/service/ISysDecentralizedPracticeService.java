@@ -1,6 +1,8 @@
 package com.ruoyi.decentralize.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.decentralize.domain.SysDecentralizedPractice;
 
 /**
@@ -106,4 +108,5 @@ public interface ISysDecentralizedPracticeService
      * @return 结果
      */
     public int deleteSysDecentralizedPracticeByUserId(Long userId);
+
 }
