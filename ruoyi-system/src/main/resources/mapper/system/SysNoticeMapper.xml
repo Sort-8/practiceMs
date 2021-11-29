@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="status"         column="status"          />
         <result property="createBy"       column="create_by"       />
         <result property="nickname"       column="nick_name"       />
+        <result property="email"          column="email"       />
         <result property="createTime"     column="create_time"     />
         <result property="updateBy"       column="update_by"       />
         <result property="updateTime"     column="update_time"     />
@@ -24,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="selectNoticeVo2">
-        select notice_id, notice_title, notice_type, cast(notice_content as char) as notice_content, sys_notice.status,nick_name,sys_notice.create_by, sys_notice.create_time, sys_notice.update_by, sys_notice.update_time, sys_notice.remark
+        select notice_id, notice_title, notice_type, cast(notice_content as char) as notice_content, sys_notice.status,nick_name,email,sys_notice.create_by, sys_notice.create_time, sys_notice.update_by, sys_notice.update_time, sys_notice.remark
 		from sys_notice,sys_user
     </sql>
     
