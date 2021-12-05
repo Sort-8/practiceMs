@@ -24,6 +24,7 @@ public class ArchivedScoreServiceImpl implements ArchivedScoreService {
      * @param sysPracticeScore 实习成绩
      * @return 实习成绩
      */
+    @DataScope(deptAlias = "d", userAlias = "su")
     public List<SysPracticeScore> selectSysPracticeScoreList(SysPracticeScore sysPracticeScore)
     {
         return archivedScoreMapper.selectSysPracticeScoreList(sysPracticeScore);

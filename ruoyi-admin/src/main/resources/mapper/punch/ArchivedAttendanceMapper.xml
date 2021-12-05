@@ -19,8 +19,16 @@
     </resultMap>
 
 
-    <select id="selectSysAttendanceList" parameterType="SysAttendance" resultMap="SysAttendanceResult" statementType="STATEMENT">
-        select attend.attendance_id, attend.user_name, attend.location,attend.create_time, attend.notes, attend.status,u.nick_name from ${year}_sys_attendance attend,${year}_sys_user u
+    <select id="selectSysAttendanceList" parameterType="SysAttendance" resultMap="SysAttendanceResult">
+        select attend.attendance_id, attend.user_name, attend.location,attend.create_time, attend.notes, attend.status,u.nick_name from #{year}_sys_attendance attend,#{year}_sys_user u
+        <where>
+            attend.user_name=u.user_name and attend.del_flag=0
+            <if test="userName != null  and userName != ''"> and attend.user_name like concat('%', #{userName}, '%')</if>
+            <if test="location != null  and location != ''"> and attend.location = #{location}</if>
+            <if test="createTime != null "> and date_format(attend.create_time,'%y%m%d')=date_format(#{createTime},'%y%m%d')</if>
+            <if test="notes != null  and notes != ''"> and attend.notes = #{notes}</if>
+            <if test="status != null  and status != ''"> and attend.status = #{status}</if>
+        </where>
         ${params.dataScope}
         ORDER BY attend.create_time DESC
     </select>

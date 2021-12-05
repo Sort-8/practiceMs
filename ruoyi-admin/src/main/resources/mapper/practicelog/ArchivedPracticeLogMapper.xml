@@ -19,8 +19,15 @@
     </resultMap>
 
 
-    <select id="selectSysPracticeLogList" parameterType="SysPracticeLog" resultMap="SysPracticeLogResult" statementType="STATEMENT">
-        select log.log_id, log.user_name, log.location_id, log.time, log.log_contents, log.del_flag,u.nick_name from ${year}_sys_practice_log log,${year}_sys_user u
+    <select id="selectSysPracticeLogList" parameterType="SysPracticeLog" resultMap="SysPracticeLogResult">
+        select log.log_id, log.user_name, log.location_id, log.time, log.log_contents, log.del_flag,u.nick_name from #{year}_sys_practice_log log,#{year}_sys_user u
+        <where>
+            log.user_name=u.user_name and log.del_flag=0
+            <if test="userName != null "> and log.user_name like concat('%', #{userName}, '%')</if>
+            <if test="locationId != null "> and log.location_id like concat('%', #{locationId}, '%')</if>
+            <if test="time != null "> and date_format(log.time,'%y%m%d')=date_format(#{time},'%y%m%d')</if>
+            <if test="logContents != null  and logContents != ''"> and log.log_contents = #{logContents}</if>
+        </where>
         ${params.dataScope}
         ORDER BY log.time DESC
     </select>
