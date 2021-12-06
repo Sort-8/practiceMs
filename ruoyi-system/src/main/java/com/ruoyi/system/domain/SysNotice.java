@@ -36,6 +36,16 @@ public class SysNotice extends BaseEntity
 
     private String email;
 
+    private String refuseReason;
+
+    public String getRefuseReason() {
+        return refuseReason;
+    }
+
+    public void setRefuseReason(String refuseReason) {
+        this.refuseReason = refuseReason;
+    }
+
     public String getEmail() {
         return email;
     }

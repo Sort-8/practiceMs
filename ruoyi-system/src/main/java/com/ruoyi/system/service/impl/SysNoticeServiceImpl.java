@@ -78,8 +78,15 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     @Override
     public int updateNotice(SysNotice notice)
     {
-
-        if (notice.getStatus().equals("1")){
+        if (notice.getStatus().equals("-1")){
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+            simpleMailMessage.setFrom("2380024671@qq.com");
+            simpleMailMessage.setTo(notice.getEmail());
+            simpleMailMessage.setText("未通过的理由是： "+notice.getRefuseReason());
+            simpleMailMessage.setSubject("您的公告审核未通过");
+            mailSender.send(simpleMailMessage);
+        }
+        else if (notice.getStatus().equals("1")){
             //emailService.sendSimpleMail("2380024671@qq.com","您的审核已经通过","来自实习管理系统");
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setFrom("2380024671@qq.com");
