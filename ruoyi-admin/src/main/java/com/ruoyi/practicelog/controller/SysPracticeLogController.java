@@ -167,4 +167,15 @@ public class SysPracticeLogController extends BaseController
         return util.exportExcel(list, "实习日志数据");
     }
 
+    /**
+     * 查询归档实习日志列表
+     */
+    @PreAuthorize("@ss.hasPermi('practicelog:practicelog:list')")
+    @GetMapping("/archivedList")
+    public TableDataInfo archivedList(SysPracticeLog sysPracticeLog)
+    {
+        startPage();
+        List<SysPracticeLog> list = archivedPracticeLogService.selectSysPracticeLogList(sysPracticeLog);
+        return getDataTable(list);
+    }
 }

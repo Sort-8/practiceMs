@@ -10,7 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 实习成绩对象 sys_practice_score
- * 
+ *
  * @author ruoyi
  * @date 2021-10-03
  */
@@ -111,43 +111,43 @@ public class SysPracticeScore extends BaseEntity
         this.scoreId = scoreId;
     }
 
-    public Long getScoreId() 
+    public Long getScoreId()
     {
         return scoreId;
     }
-    public void setUserId(Long userId) 
+    public void setUserId(Long userId)
     {
         this.userId = userId;
     }
 
-    public Long getUserId() 
+    public Long getUserId()
     {
         return userId;
     }
-    public void setLocationId(Long locationId) 
+    public void setLocationId(Long locationId)
     {
         this.locationId = locationId;
     }
 
-    public Long getLocationId() 
+    public Long getLocationId()
     {
         return locationId;
     }
-    public void setStartTime(Date startTime) 
+    public void setStartTime(Date startTime)
     {
         this.startTime = startTime;
     }
 
-    public Date getStartTime() 
+    public Date getStartTime()
     {
         return startTime;
     }
-    public void setEndTime(Date endTime) 
+    public void setEndTime(Date endTime)
     {
         this.endTime = endTime;
     }
 
-    public Date getEndTime() 
+    public Date getEndTime()
     {
         return endTime;
     }
@@ -187,39 +187,39 @@ public class SysPracticeScore extends BaseEntity
     {
         return finalScore;
     }
-    public void setAppraisal(String appraisal) 
+    public void setAppraisal(String appraisal)
     {
         this.appraisal = appraisal;
     }
 
-    public String getAppraisal() 
+    public String getAppraisal()
     {
         return appraisal;
     }
-    public void setSummary(String summary) 
+    public void setSummary(String summary)
     {
         this.summary = summary;
     }
 
-    public String getSummary() 
+    public String getSummary()
     {
         return summary;
     }
-    public void setStatus(String status) 
+    public void setStatus(String status)
     {
         this.status = status;
     }
 
-    public String getStatus() 
+    public String getStatus()
     {
         return status;
     }
-    public void setDelFlag(String delFlag) 
+    public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
     }
 
-    public String getDelFlag() 
+    public String getDelFlag()
     {
         return delFlag;
     }

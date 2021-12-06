@@ -292,4 +292,15 @@ public class SysUserController extends BaseController {
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         return util.exportExcel(list, "用户数据");
     }
+
+    /**
+     * 获取用户列表
+     */
+    @GetMapping("/archivedList")
+    @ApiOperation("获取归档用户列表")
+    public TableDataInfo archivedList(SysUser user) {
+        startPage();
+        List<SysUser> list = archivedUserService.selectUserList(user);
+        return getDataTable(list);
+    }
 }

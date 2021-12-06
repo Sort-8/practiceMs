@@ -28,8 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/arrangement/arrangement")
-public class SysPracticeArrangementController extends BaseController
-{
+public class SysPracticeArrangementController extends BaseController {
     @Autowired
     private ISysPracticeArrangementService sysPracticeArrangementService;
 
@@ -44,8 +43,7 @@ public class SysPracticeArrangementController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('arrangement:arrangement:list')")
     @PostMapping("/list")
-    public TableDataInfo list(SysPracticeArrangement sysPracticeArrangement)
-    {
+    public TableDataInfo list(SysPracticeArrangement sysPracticeArrangement) {
         startPage();
         List<SysPracticeArrangement> list = sysPracticeArrangementService.selectSysPracticeArrangementList(sysPracticeArrangement);
         return getDataTable(list);
@@ -55,8 +53,7 @@ public class SysPracticeArrangementController extends BaseController
      * 查询实习安排列表
      */
     @PostMapping("/getScreenData")
-    public AjaxResult getScreenData(SysPracticeArrangement sysPracticeArrangement)
-    {
+    public AjaxResult getScreenData(SysPracticeArrangement sysPracticeArrangement) {
         Map map = sysPracticeArrangementService.getScreenData(sysPracticeArrangement);
         return AjaxResult.success(map);
     }
@@ -65,8 +62,7 @@ public class SysPracticeArrangementController extends BaseController
      * 查询各实习点人数
      */
     @PostMapping("/getLocationStudentNum")
-    public AjaxResult getLocationStudentNum(SysPracticeArrangement sysPracticeArrangement)
-    {
+    public AjaxResult getLocationStudentNum(SysPracticeArrangement sysPracticeArrangement) {
         List<ArrayList> map = sysPracticeArrangementService.getLocationStudentNum(sysPracticeArrangement);
         return AjaxResult.success(map);
     }
@@ -76,8 +72,7 @@ public class SysPracticeArrangementController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('arrangement:arrangement:list')")
     @PostMapping("/selectAllPractice")
-    public TableDataInfo selectAllPractice(SysPracticeArrangement sysPracticeArrangement)
-    {
+    public TableDataInfo selectAllPractice(SysPracticeArrangement sysPracticeArrangement) {
         Map m = sysPracticeArrangementService.selectAllPractice(sysPracticeArrangement);
         return getDataObj(m);
     }
@@ -86,8 +81,7 @@ public class SysPracticeArrangementController extends BaseController
      * 老师指导的学生信息列表
      */
     @GetMapping("/stuInfoList")
-    public TableDataInfo stuInfoList(SysPracticeArrangement sysPracticeArrangement)
-    {
+    public TableDataInfo stuInfoList(SysPracticeArrangement sysPracticeArrangement) {
         startPage();
         List<SysPracticeArrangement> list = sysPracticeArrangementService.selectStudentInfo(sysPracticeArrangement);
         return getDataTable(list);
@@ -97,8 +91,7 @@ public class SysPracticeArrangementController extends BaseController
      * 查询学生实习情况
      */
     @GetMapping("/getPracticeInfo")
-    public AjaxResult getPracticeInfo(HttpServletRequest request)
-    {
+    public AjaxResult getPracticeInfo(HttpServletRequest request) {
         SysPracticeArrangement pa = new SysPracticeArrangement();
         pa.setStuId(tokenService.getLoginUser(request).getUser().getUserId());
         pa.setUserName(tokenService.getLoginUser(request).getUsername());
@@ -111,8 +104,7 @@ public class SysPracticeArrangementController extends BaseController
     @PreAuthorize("@ss.hasPermi('arrangement:arrangement:export')")
     @Log(title = "实习安排", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
-    public AjaxResult export(SysPracticeArrangement sysPracticeArrangement)
-    {
+    public AjaxResult export(SysPracticeArrangement sysPracticeArrangement) {
         List<SysPracticeArrangement> list = sysPracticeArrangementService.selectSysPracticeArrangementList(sysPracticeArrangement);
         ExcelUtil<SysPracticeArrangement> util = new ExcelUtil<SysPracticeArrangement>(SysPracticeArrangement.class);
         return util.exportExcel(list, "实习安排数据");
@@ -123,11 +115,9 @@ public class SysPracticeArrangementController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('arrangement:arrangement:query')")
     @GetMapping(value = "/{arrangementId}")
-    public AjaxResult getInfo(@PathVariable("arrangementId") Long arrangementId)
-    {
+    public AjaxResult getInfo(@PathVariable("arrangementId") Long arrangementId) {
         return AjaxResult.success(sysPracticeArrangementService.selectSysPracticeArrangementById(arrangementId));
     }
-
 
 
     /**
@@ -135,8 +125,7 @@ public class SysPracticeArrangementController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('arrangement:arrangement:query')")
     @RequestMapping(value = "/getAllTeacher")
-    public AjaxResult getAllTeacher(SysUser teacher)
-    {
+    public AjaxResult getAllTeacher(SysUser teacher) {
         return AjaxResult.success(sysPracticeArrangementService.getAllTeacher(teacher));
     }
 
@@ -146,8 +135,7 @@ public class SysPracticeArrangementController extends BaseController
     @PreAuthorize("@ss.hasPermi('arrangement:arrangement:add')")
     @Log(title = "实习安排", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody SysPracticeArrangement sysPracticeArrangement)
-    {
+    public AjaxResult add(@RequestBody SysPracticeArrangement sysPracticeArrangement) {
         return toAjax(sysPracticeArrangementService.insertSysPracticeArrangement(sysPracticeArrangement));
     }
 
@@ -157,8 +145,7 @@ public class SysPracticeArrangementController extends BaseController
     @PreAuthorize("@ss.hasPermi('arrangement:arrangement:edit')")
     @Log(title = "实习安排", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody SysPracticeArrangement sysPracticeArrangement)
-    {
+    public AjaxResult edit(@RequestBody SysPracticeArrangement sysPracticeArrangement) {
         return toAjax(sysPracticeArrangementService.updateSysPracticeArrangement(sysPracticeArrangement));
     }
 
@@ -167,18 +154,30 @@ public class SysPracticeArrangementController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('arrangement:arrangement:remove')")
     @Log(title = "实习安排", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{arrangementIds}")
-    public AjaxResult remove(@PathVariable Long[] arrangementIds)
-    {
+    @DeleteMapping("/{arrangementIds}")
+    public AjaxResult remove(@PathVariable Long[] arrangementIds) {
         return toAjax(sysPracticeArrangementService.deleteSysPracticeArrangementByIds(arrangementIds));
     }
 
-
+    /**
+     *导出归档数据
+     */
     @GetMapping("/exportArchived")
-    public AjaxResult exportArchived(SysPracticeArrangement sysPracticeArrangement)
-    {
+    public AjaxResult exportArchived(SysPracticeArrangement sysPracticeArrangement) {
         List<SysPracticeArrangement> list = archivedArrangmentService.selectSysPracticeArrangementList(sysPracticeArrangement);
         ExcelUtil<SysPracticeArrangement> util = new ExcelUtil<SysPracticeArrangement>(SysPracticeArrangement.class);
         return util.exportExcel(list, "实习安排数据");
+    }
+
+    /**
+     * 查询实归档习安排列表
+     */
+    @PostMapping("/archivedList")
+    public TableDataInfo archivedList(SysPracticeArrangement sysPracticeArrangement) {
+        Map m = archivedArrangmentService.selectAllPractice(sysPracticeArrangement);
+        return getDataObj(m);
+//        startPage();
+//        List<SysPracticeArrangement> list = archivedArrangmentService.selectSysPracticeArrangementList(sysPracticeArrangement);
+//        return getDataTable(list);
     }
 }

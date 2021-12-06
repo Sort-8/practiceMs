@@ -18,7 +18,7 @@ public class ArchivedAttendanceServiceImpl implements ArchivedAttendanceService 
     private ArchivedAttendanceMapper archivedAttendanceMapper;
 
     @Override
-    @DataScope(deptAlias = "u", userAlias = "u")
+    @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysAttendance> selectSysAttendanceList(SysAttendance sysAttendance)
     {
         return archivedAttendanceMapper.selectSysAttendanceList(sysAttendance);

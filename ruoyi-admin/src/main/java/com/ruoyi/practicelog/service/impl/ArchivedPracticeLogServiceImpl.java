@@ -24,7 +24,7 @@ public class ArchivedPracticeLogServiceImpl implements ArchivedPracticeLogServic
      * @return 实习日志
      */
     @Override
-    @DataScope(deptAlias = "u", userAlias = "u")
+    @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysPracticeLog> selectSysPracticeLogList(SysPracticeLog sysPracticeLog)
     {
         return archivedPracticeLogMapper.selectSysPracticeLogList(sysPracticeLog);

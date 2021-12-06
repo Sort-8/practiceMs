@@ -22,13 +22,27 @@
         <result property="delFlag"    column="del_flag"    />
     </resultMap>
 
-    <select id="selectSysPracticeScoreList" parameterType="SysPracticeScore" resultMap="SysPracticeScoreResult2" statementType="STATEMENT">
-        select  score_id,su.user_id,su.user_name,su.nick_name,teacher_id,pi.location_id,entry_time as start_time,ending_time as end_time,sys_score,company_score,teacher_score,final_score,appraisal,summary,score.`status` from ${year}_sys_practice_arrangement pa
-                 left join ${year}_sys_practice_info pi on pa.info_id = pi.info_id
-                 left join ${year}_sys_user su on stu_id = su.user_id
-                 left join ${year}_sys_base_info bi on location_id = base_id
-                 left join ${year}_sys_user tu on teacher_id = tu.user_id
-				 left join ${year}_sys_practice_score score on score.user_id = su.user_id
+    <select id="selectSysPracticeScoreList" parameterType="SysPracticeScore" resultMap="SysPracticeScoreResult2">
+        select  score_id,su.user_id,su.user_name,su.nick_name,teacher_id,pi.location_id,entry_time as start_time,ending_time as end_time,sys_score,company_score,teacher_score,final_score,appraisal,summary,score.`status` from #{year}_sys_practice_arrangement pa
+                 left join #{year}_sys_practice_info pi on pa.info_id = pi.info_id
+                 left join #{year}_sys_user su on stu_id = su.user_id
+                 left join #{year}_sys_base_info bi on location_id = base_id
+                 left join #{year}_sys_user tu on teacher_id = tu.user_id
+				 left join #{year}_sys_practice_score score on score.user_id = su.user_id
+        <where>
+            <if test="username != null and username != ''">
+                AND su.user_name like concat('%', #{username}, '%')
+            </if>
+            <if test="nickname != null and nickname != ''">
+                AND su.nick_name like concat('%', #{nickname}, '%')
+            </if>
+<!--            <if test="deptId != null and deptId != 0">-->
+<!--                AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM #{year}_sys_dept t WHERE find_in_set(#{deptId},-->
+<!--                ancestors) ))-->
+<!--            </if>-->
+        </where>
+        GROUP BY su.user_id
+
     </select>
 
 </mapper>

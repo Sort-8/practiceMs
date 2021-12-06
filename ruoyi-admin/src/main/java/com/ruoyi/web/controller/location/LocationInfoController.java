@@ -124,4 +124,16 @@ public class LocationInfoController extends BaseController
         return util.exportExcel(list, "地点信息数据");
     }
 
+    /**
+     * 查询归档地点信息列表
+     */
+    @PreAuthorize("@ss.hasPermi('location:info:list')")
+    @GetMapping("/archivedList")
+    public TableDataInfo archivedList(LocationInfo locationInfo)
+    {
+        startPage();
+        List<LocationInfo> list = archivedLocationInfoService.selectLocationInfoList(locationInfo);
+        return getDataTable(list);
+    }
+
 }

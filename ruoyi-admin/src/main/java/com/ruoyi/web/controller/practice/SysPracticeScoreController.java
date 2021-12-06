@@ -177,4 +177,16 @@ public class SysPracticeScoreController extends BaseController
         ExcelUtil<SysPracticeScore> util = new ExcelUtil<SysPracticeScore>(SysPracticeScore.class);
         return util.exportExcel(list, "实习成绩数据");
     }
+
+
+    /**
+     * 查询归档实习成绩列表
+     */
+    @GetMapping("/archivedList")
+    public TableDataInfo archivedList(SysPracticeScore sysPracticeScore)
+    {
+        startPage();
+        List<SysPracticeScore> list = archivedScoreService.selectSysPracticeScoreList(sysPracticeScore);
+        return getDataTable(list);
+    }
 }

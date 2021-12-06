@@ -168,4 +168,16 @@ public class SysAttendanceController extends BaseController
         return util.exportExcel(list, "打卡签到数据");
     }
 
+
+    /**
+     * 查询归档打卡签到列表
+     */
+    @GetMapping("/archivedList")
+    public TableDataInfo archivedList(SysAttendance sysAttendance)
+    {
+        startPage();
+        List<SysAttendance> list = archivedAttendanceService.selectSysAttendanceList(sysAttendance);
+        return getDataTable(list);
+    }
+
 }
