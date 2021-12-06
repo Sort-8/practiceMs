@@ -41,7 +41,6 @@
 <!--                ancestors) ))-->
 <!--            </if>-->
         </where>
-        ${params.dataScope}
         GROUP BY su.user_id
 
     </select>

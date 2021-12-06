@@ -29,7 +29,6 @@
             <if test="notes != null  and notes != ''"> and attend.notes = #{notes}</if>
             <if test="status != null  and status != ''"> and attend.status = #{status}</if>
         </where>
-        ${params.dataScope}
         ORDER BY attend.create_time DESC
     </select>
 

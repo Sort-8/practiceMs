@@ -28,7 +28,6 @@
             <if test="time != null "> and date_format(log.time,'%y%m%d')=date_format(#{time},'%y%m%d')</if>
             <if test="logContents != null  and logContents != ''"> and log.log_contents = #{logContents}</if>
         </where>
-        ${params.dataScope}
         ORDER BY log.time DESC
     </select>
 </mapper>
